@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groww GenZ: Post-KYC Activation Engine · FinTech Product Case Study & Architecture | Prathamesh Deshmane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #04b488;
+    --green-dark: #00825c;
+    --green-light: rgba(4, 180, 136, 0.12);
+    --purple: #5367ff;
+    --purple-light: rgba(83, 103, 255, 0.12);
+    --bg: #090c10;
+    --surface: #12171f;
+    --surface-card: #18202c;
+    --surface-card-hover: #1f2a3a;
+    --border: #263142;
+    --border-light: #36445a;
+    --text-primary: #f0f6fc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent-red: #f87171;
+    --accent-gold: #fbbf24;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  header {
+    background: rgba(18, 23, 31, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(4, 180, 136, 0.25);
+  }
+  .brand-title {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .brand-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    margin-top: 1px;
+  }
+  .brand-subtitle span {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    color: var(--text-primary);
+  }
+  .btn:hover {
+    border-color: var(--border-light);
+    background: var(--surface-card-hover);
+    transform: translateY(-1px);
+  }
+  .btn-primary {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(4, 180, 136, 0.3);
+  }
+  .btn-primary:hover {
+    background: var(--green-dark);
+    border-color: var(--green-dark);
+  }
+
+  /* Main Split Layout */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 430px 1fr;
+    flex: 1;
+    height: calc(100vh - 67px);
+    overflow: hidden;
+  }
+  @media (max-width: 1040px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+      height: auto;
+      overflow: visible;
+    }
+  }
+
+  /* Left Column: iPhone 17 Pro Simulator Pane */
+  .simulator-pane {
+    background: radial-gradient(circle at 50% 20%, #161f2e 0%, #080c12 85%);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 16px 24px;
+    overflow-y: auto;
+    position: relative;
+  }
+  .sim-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 12px;
+  }
+  .sim-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+  }
+  .sim-badge i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+  }
+
+  .sim-controls {
+    display: flex;
+    gap: 6px;
+    background: var(--surface);
+    padding: 3px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+  }
+  .sim-tab {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .sim-tab.active {
+    background: var(--surface-card);
+    color: var(--green);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  /* =========================================================
+     iPhone 17 Pro Device Hardware Representation
+     Exact 19.5:9 Apple Screen Proportions
+     ========================================================= */
+  .device-wrapper {
+    position: relative;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Side Hardware Buttons attached directly to chassis */
+  .btn-action {
+    position: absolute;
+    left: -7px;
+    top: 105px;
+    width: 4px;
+    height: 26px;
+    background: #475569;
+    border-radius: 3px 0 0 3px;
+  }
+  .btn-vol-up {
+    position: absolute;
+    left: -7px;
+    top: 145px;
+    width: 4px;
+    height: 46px;
+    background: #475569;
+    border-radius: 3px 0 0 3px;
+  }
+  .btn-vol-down {
+    position: absolute;
+    left: -7px;
+    top: 204px;
+    width: 4px;
+    height: 46px;
+    background: #475569;
+    border-radius: 3px 0 0 3px;
+  }
+  .btn-power {
+    position: absolute;
+    right: -7px;
+    top: 160px;
+    width: 4px;
+    height: 64px;
+    background: #475569;
+    border-radius: 0 3px 3px 0;
+  }
+
+  /* iPhone 17 Pro Titanium Chassis - Exact 19.5:9 Slender Proportions */
+  .iphone-17 {
+    width: 360px;
+    height: 780px;
+    aspect-ratio: 393 / 852;
+    background: #000;
+    border-radius: 50px;
+    padding: 7px; /* Ultra-thin border bezel matching iPhone 16/17 Pro */
+    position: relative;
+    box-shadow:
+      0 0 0 1.5px #64748b, /* Outer chamfered titanium rim */
+      0 0 0 4px #1e293b,   /* Titanium body */
+      0 25px 60px -10px rgba(0, 0, 0, 0.85),
+      0 0 35px rgba(4, 180, 136, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  /* Inner Screen Bezel */
+  .screen-bezel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 43px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Dynamic Island (iPhone 17 Pro) */
+  .dynamic-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 114px;
+    height: 30px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    pointer-events: none;
+  }
+  .island-cam {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #1e293b 0%, #030712 90%);
+    border: 1px solid #111827;
+  }
+  .island-sensor {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #090d16;
+  }
+
+  /* Home Bar Pill */
+  .home-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 125px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 99px;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  .screen-bezel iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #fff;
+  }
+
+  /* Right Column: PM Portfolio Content */
+  .pm-pane {
+    padding: 36px 44px 60px;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 99px;
+    background: var(--green-light);
+    border: 1px solid rgba(4, 180, 136, 0.25);
+    color: var(--green);
+    font-size: 12.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    background: linear-gradient(180deg, #ffffff 20%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 860px;
+  }
+
+  /* Executive Metrics */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), transparent);
+  }
+  .metric-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--green);
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+  }
+  .metric-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 6px;
+    color: #fff;
+  }
+  .metric-sub {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    line-height: 1.45;
+  }
+
+  /* Architecture Deep-Dive Callout */
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+  .section-heading h2 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .section-heading span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Pillar Grid */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .pillar-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .pillar-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--purple);
+    background: var(--purple-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .pillar-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .pillar-text {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Deliverables Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .doc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+  }
+  .doc-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  .doc-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .doc-heading {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .doc-body {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+
+  /* Terminal Code Box */
+  .cli-box {
+    background: #05080e;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #e2e8f0;
+    line-height: 1.65;
+  }
+  .cli-comment { color: var(--text-muted); }
+  .cli-cmd { color: var(--green); font-weight: 600; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="brand">
+    <div class="brand-logo">G</div>
+    <div>
+      <div class="brand-title">Groww GenZ: Post-KYC Activation Engine</div>
+      <div class="brand-subtitle">FinTech Product Case Study & Architecture · <span>Prathamesh Deshmane</span></div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="/app/v2-groww-genz.html" target="_blank" class="btn btn-primary">Open Prototype Fullscreen ↗</a>
+    <a href="/one-pager.html" target="_blank" class="btn">View One-Pager</a>
+  </div>
+</header>
+
+<div class="main-layout">
+  <!-- Left: iPhone 17 Pro Device Frame Simulator -->
+  <div class="simulator-pane">
+    <div class="sim-header">
+      <div class="sim-badge">
+        <i></i> iPhone 17 Pro · 6.3"
+      </div>
+      <div class="sim-controls">
+        <button class="sim-tab active" id="tabV2" onclick="setApp('/app/v2-groww-genz.html', this)">v2: Final Prototype</button>
+        <button class="sim-tab" id="tabV1" onclick="setApp('/app/v1-first500.html', this)">v1: User-Tested Baseline</button>
+      </div>
+    </div>
+
+    <!-- Realistic Hardware Frame -->
+    <div class="device-wrapper">
+      <div class="iphone-17">
+        <!-- Hardware buttons attached to titanium chassis -->
+        <div class="btn-action"></div>
+        <div class="btn-vol-up"></div>
+        <div class="btn-vol-down"></div>
+        <div class="btn-power"></div>
+
+        <div class="screen-bezel">
+          <!-- iPhone 17 Pro Dynamic Island -->
+          <div class="dynamic-island">
+            <div class="island-cam"></div>
+            <div class="island-sensor"></div>
+          </div>
+          <!-- App Iframe -->
+          <iframe id="appFrame" src="/app/v2-groww-genz.html" title="Groww GenZ Prototype"></iframe>
+          <!-- Home Indicator -->
+          <div class="home-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: PM Case Study & Architecture Portal -->
+  <div class="pm-pane">
+    <div class="hero-badge">FinTech Product Case Study & Architecture</div>
+    <h1 class="hero-title">Groww GenZ: Post-KYC Activation & 30-Day Habit Engine</h1>
+    <p class="hero-desc">
+      A targeted onboarding architecture engineered to eliminate drop-off between KYC clearance and the first ₹500 investment.
+      Designed around the North Star Metric: <strong>2nd Investment within 30 Days</strong>.
+    </p>
+
+    <!-- Key Metrics Dashboard -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-num">40%</div>
+        <div class="metric-label">Demat Dormancy in India</div>
+        <div class="metric-sub">~5.9% of broking installs ever trade; 86% stall immediately post-onboarding.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">74%</div>
+        <div class="metric-label">Blocked by Complexity</div>
+        <div class="metric-sub">SEBI finding: Novices fail at product catalog selection, not account setup.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">₹18.22</div>
+        <div class="metric-label">₹500 Stock Roundtrip Drag</div>
+        <div class="metric-sub">₹15.93 flat CDSL depository fee ruins small-ticket equity buying.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">23 / 23</div>
+        <div class="metric-label">Math Assertions Verified</div>
+        <div class="metric-sub">Deterministic compounding fee drag, exit loads, and SBI FD rates.</div>
+      </div>
+    </div>
+
+    <!-- Core Architecture Pillars -->
+    <div class="section-heading">
+      <h2>System Architecture & Strategic Pillars</h2>
+      <span>Product Principles</span>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-box">
+        <div class="pillar-badge">Information Architecture</div>
+        <div class="pillar-title">Pots, Not Products</div>
+        <div class="pillar-text">
+          Replaces the 5,000+ instrument mutual fund and equity catalog with intent-based buckets (Safety Net, Trip, Gadget, Long Run). Horizon determines asset allocation automatically.
+        </div>
+      </div>
+      <div class="pillar-box">
+        <div class="pillar-badge">Deterministic Engine</div>
+        <div class="pillar-title">Real Compounding Cost Drag</div>
+        <div class="pillar-text">
+          Rejects naive principal calculations. Dynamically models daily NAV fee drag compounding on growing balances (+53% higher than static models) and benchmarks against SBI FDs.
+        </div>
+      </div>
+      <div class="pillar-box">
+        <div class="pillar-badge">Psychological Guardrail</div>
+        <div class="pillar-title">The First Red Day Defense</div>
+        <div class="pillar-text">
+          87% of dormancy is driven by immediate market drawdowns. Screen 9 normalizes a -4.2% correction with historical recovery data (2008 & 2020) and habituates holding.
+        </div>
+      </div>
+      <div class="pillar-box">
+        <div class="pillar-badge">Retention Loop</div>
+        <div class="pillar-title">30-Day Frictionless Habit</div>
+        <div class="pillar-text">
+          Screen 10 eliminates re-onboarding questionnaires on return visits. Greets user with <em>"Welcome back. We are not asking you everything again"</em> with a 1-tap repeat top-up.
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study Deliverables & Research Artifacts -->
+    <div class="section-heading">
+      <h2>Project Deliverables & Research Artifacts</h2>
+      <span>Interview & Case Study Material</span>
+    </div>
+    <div class="cards-grid">
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">Deliverable 1 · Executive Strategy</div>
+          <div class="doc-heading">Strategic One-Pager (~700 Words)</div>
+          <div class="doc-body">
+            The core product thesis: scoping boundaries, target ICP insights, why inside Groww, and research-backed corrections.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/one-pager.html" target="_blank" class="btn">Read One-Pager ↗</a>
+          <a href="/one-pager.md" target="_blank" class="btn" style="color:var(--text-muted);" title="View Raw Markdown">.md</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">Deliverable 2 · Development Log</div>
+          <div class="doc-heading">Prompting Steer Log</div>
+          <div class="doc-body">
+            Verbatim instructions, pushbacks accepted vs. overruled, and mathematical steering decisions made during development.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/prompts.html" target="_blank" class="btn">Read Prompts Log ↗</a>
+          <a href="/prompts.md" target="_blank" class="btn" style="color:var(--text-muted);" title="View Raw Markdown">.md</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">Deliverable 3 · Verification</div>
+          <div class="doc-heading">Evaluation Suite (Evals)</div>
+          <div class="doc-body">
+            Dual-layer evaluation framework: Layer 1 automated test crawler + Layer 2 think-aloud qualitative user testing.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/evals.html" target="_blank" class="btn">Read Evals Suite ↗</a>
+          <a href="/evals.md" target="_blank" class="btn" style="color:var(--text-muted);" title="View Raw Markdown">.md</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">Decisions · Product Specifications</div>
+          <div class="doc-heading">Decision Register & Screen Scope</div>
+          <div class="doc-body">
+            Evidence-backed decision log (what changed and why) alongside the screen-by-screen product scope specification.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/decisions/decision-log.html" target="_blank" class="btn">Decision Log ↗</a>
+          <a href="/decisions/prototype-scope.html" target="_blank" class="btn">Scope Spec ↗</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">Research · Discovery</div>
+          <div class="doc-heading">Market Dossier & Competitive Map</div>
+          <div class="doc-body">
+            Analysis of SEBI retail data, 145 Play Store customer reviews, and competitive teardowns of ET Money, Zerodha, and MF Prime.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/research/problem-dossier.html" target="_blank" class="btn">Problem Dossier ↗</a>
+          <a href="/research/competitive-landscape.html" target="_blank" class="btn">Competitor Map ↗</a>
+        </div>
+      </div>
+
+      <div class="doc-card">
+        <div>
+          <div class="doc-tag">User Research · Think-Aloud Sessions</div>
+          <div class="doc-heading">User Transcripts & Analysis</div>
+          <div class="doc-body">
+            Transcripts and behavioral analyses of participants Prakhar (in-ICP) and Pulin (active trader) detailing what broke in v1.
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <a href="/interviews/1-prakhar-analysis.html" target="_blank" class="btn">Prakhar Analysis ↗</a>
+          <a href="/interviews/2-pulin-analysis.html" target="_blank" class="btn">Pulin Analysis ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Local Verification -->
+    <div class="section-heading">
+      <h2>Local Reproduction & Verification</h2>
+      <span>Automated Verification</span>
+    </div>
+    <div class="cli-box">
+      <span class="cli-comment"># 1. Run the financial arithmetic test suite (23 assertions)</span><br>
+      <span class="cli-cmd">node app/cost-model.test.mjs</span><br><br>
+      <span class="cli-comment"># 2. Run the quantitative survey response analysis (n=24)</span><br>
+      <span class="cli-cmd">python3 research/survey-analysis.py</span><br><br>
+      <span class="cli-comment"># 3. Start local development server via npm</span><br>
+      <span class="cli-cmd">npm start</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Groww for GenZ · Product Strategy, Architecture & Prototypes</div>
+  <div>Created by <strong>Prathamesh Deshmane</strong></div>
+</footer>
+
+<script>
+  function setApp(url, btn) {
+    document.getElementById('appFrame').src = url;
+    document.querySelectorAll('.sim-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

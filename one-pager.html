@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive One-Pager · Groww GenZ Activation Engine | Prathamesh Deshmane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #04b488;
+    --green-dark: #00825c;
+    --green-light: rgba(4, 180, 136, 0.12);
+    --purple: #5367ff;
+    --purple-light: rgba(83, 103, 255, 0.12);
+    --bg: #090c10;
+    --surface: #12171f;
+    --surface-card: #18202c;
+    --border: #263142;
+    --border-light: #36445a;
+    --text-primary: #f0f6fc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    background: rgba(18, 23, 31, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    transition: all 0.15s ease;
+  }
+  .back-btn:hover {
+    color: #fff;
+    border-color: var(--border-light);
+  }
+
+  .nav-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+  }
+  .btn:hover { border-color: var(--green); color: var(--green); }
+  .btn-primary { background: var(--green); border-color: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green-dark); color: #fff; }
+
+  .content-wrap {
+    max-width: 840px;
+    margin: 40px auto 80px;
+    padding: 0 24px;
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+  .meta-bar strong { color: #fff; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 40px 0 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    background: var(--green);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 24px 0 10px;
+    color: #f1f5f9;
+  }
+
+  p { margin-bottom: 18px; color: #cbd5e1; }
+
+  ul, ol {
+    margin: 0 0 20px 24px;
+    color: #cbd5e1;
+  }
+  li { margin-bottom: 10px; }
+
+  blockquote {
+    background: var(--surface);
+    border-left: 3px solid var(--green);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 24px 0;
+    color: #e2e8f0;
+  }
+  blockquote strong { color: var(--green); }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .stat-val {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .stat-lbl {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 4px;
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14.5px;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    background: var(--surface-card);
+    font-weight: 700;
+    color: #fff;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    color: var(--green);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--surface-card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #38bdf8;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-left">
+    <a href="/" class="back-btn">← Back to Workspace</a>
+    <span class="nav-title">Deliverable 1 · Strategic One-Pager</span>
+  </div>
+  <div class="nav-right">
+    <a href="/one-pager.md" target="_blank" class="btn">View Raw .md</a>
+    <a href="/app/v2-groww-genz.html" target="_blank" class="btn btn-primary">Open v2 Prototype ↗</a>
+  </div>
+</header>
+
+<div class="content-wrap">
+  <div class="kicker">FinTech Product Strategy & Case Study</div>
+  <h1>Designing Groww for the GenZ Investor</h1>
+  <div class="meta-bar">
+    <div>Author: <strong>Prathamesh Deshmane</strong></div>
+    <div>Scope: <strong>Post-KYC Activation Engine</strong></div>
+    <div>Target: <strong>September 2026</strong></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-val">40%</div>
+      <div class="stat-lbl">Demat Dormancy</div>
+      <div class="stat-desc">SEBI finding: only ~5.9% of broking installs ever execute a first trade.</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">74%</div>
+      <div class="stat-lbl">Blocked by Complexity</div>
+      <div class="stat-desc">Non-investors drop out at security selection, not at account opening.</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">₹18.22</div>
+      <div class="stat-lbl">₹500 Stock Roundtrip Drag</div>
+      <div class="stat-desc">₹15.93 flat CDSL fee hurts small tickets by 3.64% before price movement.</div>
+    </div>
+  </div>
+
+  <h2>1. Executive Problem Diagnosis</h2>
+  <p>
+    Groww has solved sign-up and KYC. It has not solved what comes next.
+    <strong>40% of Indian demat accounts sit dormant</strong>, and roughly <strong>5.9% of broking app installs ever complete a first trade</strong> (~86% stall immediately post-onboarding). In our survey of 24 young adults (mostly ages 21–23), <strong>17 of 24 are stalled pre-activation</strong>.
+  </p>
+  <p>
+    The blocker is neither lack of capital nor general risk aversion. <strong>It is decision paralysis.</strong> SEBI reports that complexity blocks <strong>74%</strong> of non-investors, with 27% stating <em>"I don't know how to start"</em>. Exactly half our sample reported being blocked by this exact wall. Participant Prakhar (21) opened a Groww account specifically because he heard its AI would recommend what to buy; once his demat activated, he got overwhelmed, distracted, and never invested a single rupee.
+  </p>
+
+  <blockquote>
+    <strong>The Core Thesis:</strong> The account is not the problem. <strong>The first ₹500 is.</strong><br>
+    Therefore, the metric to optimize is not vanity installs or even the initial deposit, but <strong>the second investment within 30 days</strong> — the inflection point where an intentional habit forms.
+  </blockquote>
+
+  <h2>2. Product Scoping & Boundaries</h2>
+  <h3>In Scope</h3>
+  <ul>
+    <li>The Groww experience immediately <strong>after KYC clears</strong>.</li>
+    <li>Guided first investment flow without security selection catalogues.</li>
+    <li>Return dashboard anchored around user-defined goals (Pots).</li>
+    <li>Transparent pre-trade cost breakdown displayed in rupees on the exact investment ticket.</li>
+    <li>The "First Red Day" psychological guardrail.</li>
+    <li>Tappable, plain-language financial explainers backed by primary regulatory sources.</li>
+  </ul>
+
+  <h3>Out of Scope & Strategic Exclusions</h3>
+  <ul>
+    <li><strong>KYC & Account Opening:</strong> Groww already excels here (only 7 of 145 recent Play Store reviews cited KYC issues).</li>
+    <li><strong>F&O and Intraday Trading:</strong> SEBI data shows 43% of Indian F&O traders are under 30 and <strong>89% lose money</strong>, capturing 53% of all market losses. Placing leveraged derivatives in front of a novice is predatory.</li>
+    <li><strong>Personal Loans & High-Cost Credit:</strong> Groww cross-sells loans at 13–48% APR. Placing high-interest debt adjacent to a first ₹500 investment destroys trust.</li>
+    <li><strong>IPOs, Tax Advisory, and Social Feeds:</strong> Each re-introduces the cognitive clutter and FOMO this product strips away.</li>
+    <li><strong>Multi-Month Learning AI:</strong> Untestable in an interactive prototype; instead, we engineered the demonstrable half: a seamless return habit loop that remembers context without re-asking.</li>
+  </ul>
+
+  <h2>3. The Solution Architecture</h2>
+  <h3>Pillar 1: Pots, Not Products</h3>
+  <p>
+    Users declare <strong>what the money is for</strong> (Emergency Net, Phone, Trip, Long Run) and <strong>when they need it</strong>. The algorithm deterministically assigns the asset class (Liquid Fund for &lt;12 months, Balanced Advantage for 1–3 years, Nifty 50 Index for &gt;3 years). The user is never forced to decipher mutual funds vs. index funds vs. ETFs vs. direct equities — a distinction that <strong>11 of 24 users confirmed nobody had ever explained to them</strong>.
+  </p>
+
+  <h3>Pillar 2: Pre-Trade Cost Transparency in Rupees</h3>
+  <p>
+    <strong>17 of 24 users were wrong about transaction charges</strong>, with 15 significantly underestimating them and zero selecting "no idea". Buying and selling a ₹500 equity round-trip costs <strong>₹18.22</strong>, of which <strong>₹15.93 is a flat depository fee (CDSL)</strong>. This imposes an immediate 3.64% penalty on small tickets. While Groww's own advisory tier (MF Prime) shows zero fee visibility across eight onboarding screens, our product itemizes every rupee before confirmation.
+  </p>
+
+  <h3>Pillar 3: The First Red Day Defense</h3>
+  <p>
+    Poor initial performance accounts for <strong>87% of demat dormancy</strong>. When the market dips (-4.2%), the app normalizes the drawdown by charting historical market recoveries (the 2008 crash recovered in 3 years; March 2020 recovered in 9 months). Prominently guides users toward <strong>"Do Nothing"</strong> while keeping the <strong>"Sell it all"</strong> action unblocked to preserve user agency. Both interviewed participants held when presented with this screen.
+  </p>
+
+  <h3>Pillar 4: Independent Auditable Trust</h3>
+  <p>
+    Every financial term is interactive. Tapping a drawer explains the term and provides exact citations (AMFI factsheets, CDSL tariffs, SEBI circulars). Both think-aloud participants unprompted asked how to independently verify claims rather than blind trust. Participant Pulin: <em>"Main apne aap se zyada kisko trust karunga? Kisi ko bhi nahi"</em>.
+  </p>
+
+  <h3>Pillar 5: The Incumbent Advantage (Why Groww)</h3>
+  <p>
+    Competitor platforms like ET Money Genius charge ₹249/month — creating a <strong>4.76% drag on a ₹5,000 monthly SIP and an impossible 50% drag on ₹500</strong>. Guidance for small tickets must be free. Only an incumbent with multi-product brokerage revenue can subsidize zero-commission onboarding guidance as an acquisition moat.
+  </p>
+
+  <h2>4. What User Testing Broke & Key Iterative Pivots</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>v1 Flaw Observed</th>
+        <th>User Signal</th>
+        <th>Architectural Pivot in v2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fee Miscomprehension</strong></td>
+        <td>Prakhar interpreted a ₹43 charge ledger as returns he would receive.</td>
+        <td>Redesigned cost ledger with explicit charge labeling and green/neutral outcome separation.</td>
+      </tr>
+      <tr>
+        <td><strong>Invalid Benchmarking</strong></td>
+        <td>Pulin rejected the cost comparison (<em>"comparison hi fuddu hai"</em>), catching that it compared a lump-sum against a 10-year SIP.</td>
+        <td>Re-benchmarked against an identical-tenure SBI Fixed Deposit rate (5.65%–6.40%).</td>
+      </tr>
+      <tr>
+        <td><strong>Mathematical Understatement</strong></td>
+        <td>Initial math charged expense ratios on principal alone.</td>
+        <td>Refactored to a compounding NAV fee drag model; revealed real lifetime drag is <strong>53% higher</strong> than naive models.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. Limitations & Future Roadmap</h2>
+  <ul>
+    <li><strong>Sample Skew:</strong> Survey n=24 skewed toward college students and early-career grads (ages 21–23).</li>
+    <li><strong>Qualitative Scope:</strong> 2 deep think-aloud interviews; future rounds require multi-variant A/B cohort tracking on live traffic.</li>
+    <li><strong>Return Illustrations:</strong> Trailing 10-year annualized returns are historical benchmarks, not forward-looking guarantees.</li>
+  </ul>
+</div>
+
+</body>
+</html>

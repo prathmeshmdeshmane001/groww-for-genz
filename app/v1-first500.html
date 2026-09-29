@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Five Hundred</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F7F9F8; --surface:#FFFFFF;
+  --ink:#0F1A16; --ink-2:#31423B; --muted:#5C6B65; --line:#E2E8E5; --line-2:#EFF3F1;
+  --accent:#00A37A; --accent-ink:#00795A; --accent-soft:#E4F4EE;
+  --warn:#9A5B08; --warn-soft:#FBF1E0; --warn-line:#EBD5B2;
+  --danger:#B53A2C; --danger-soft:#FBEBE8;
+  --ff:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1310; --surface:#141D19;
+    --ink:#E8EFEB; --ink-2:#C3D1CB; --muted:#8FA098; --line:#25322D; --line-2:#1E2A25;
+    --accent:#00D09C; --accent-ink:#4FE3BC; --accent-soft:#11291F;
+    --warn:#E9B468; --warn-soft:#241C10; --warn-line:#3D2F18;
+    --danger:#FF8474; --danger-soft:#2A1512;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1310; --surface:#141D19;
+  --ink:#E8EFEB; --ink-2:#C3D1CB; --muted:#8FA098; --line:#25322D; --line-2:#1E2A25;
+  --accent:#00D09C; --accent-ink:#4FE3BC; --accent-soft:#11291F;
+  --warn:#E9B468; --warn-soft:#241C10; --warn-line:#3D2F18;
+  --danger:#FF8474; --danger-soft:#2A1512;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--ff); font-size:16px; line-height:1.45;
+  -webkit-font-smoothing:antialiased; display:flex; justify-content:center}
+.phone{width:100%; max-width:430px; background:var(--surface); display:flex;
+  flex-direction:column; min-height:100%; border-left:1px solid var(--line); border-right:1px solid var(--line)}
+@media (max-width:460px){ .phone{border:0} }
+
+.bar{position:sticky; top:0; z-index:20; background:var(--surface);
+  border-bottom:1px solid var(--line-2); padding:14px 20px 10px; display:flex; align-items:center; gap:10px}
+.mark{font-weight:800; letter-spacing:-.03em; font-size:17px}
+.mark span{color:var(--accent)}
+.chip{margin-left:auto; font:600 10px/1 var(--fm); letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:5px 8px}
+.rail{height:2px; background:var(--line-2)}
+.rail i{display:block; height:100%; width:0; background:var(--accent); transition:width .35s}
+
+.screen{padding:26px 20px 36px; flex:1; display:flex; flex-direction:column}
+.screen[hidden]{display:none!important}
+.eyebrow{font:600 11px/1 var(--fm); letter-spacing:.11em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:10px}
+h1{font-size:25px; line-height:1.18; letter-spacing:-.025em; margin:0 0 6px; font-weight:700; text-wrap:balance}
+h2{font-size:19px; line-height:1.22; letter-spacing:-.02em; margin:0 0 4px; font-weight:700}
+.lede{color:var(--muted); font-size:14.5px; margin:0 0 20px}
+
+.opts{display:flex; flex-direction:column; gap:9px}
+.opt{display:flex; align-items:center; gap:13px; width:100%; text-align:left; background:var(--surface);
+  border:1.5px solid var(--line); border-radius:13px; padding:15px 16px; cursor:pointer; font:inherit; color:var(--ink);
+  transition:border-color .14s, background .14s}
+.opt:hover{border-color:var(--accent); background:var(--accent-soft)}
+.opt:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.opt .ic{flex:none; width:34px; height:34px; border-radius:9px; background:var(--accent-soft); display:grid; place-items:center; font-size:16px}
+.opt b{display:block; font-weight:600; font-size:15px}
+.opt small{display:block; color:var(--muted); font-size:12.5px; margin-top:1px}
+.amts{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+.amt{background:var(--surface); border:1.5px solid var(--line); border-radius:13px; padding:16px 12px; cursor:pointer;
+  font:600 20px/1 var(--fm); color:var(--ink); transition:border-color .14s, background .14s}
+.amt:hover{border-color:var(--accent); background:var(--accent-soft)}
+.amt:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.amt em{display:block; font:500 11px/1.3 var(--ff); font-style:normal; color:var(--muted); margin-top:6px}
+
+.pick{border:1.5px solid var(--accent); border-radius:16px; background:var(--accent-soft); padding:18px; margin-bottom:14px}
+.pick.hold{border-color:var(--warn-line); background:var(--warn-soft)}
+.pick .tag{font:600 10.5px/1 var(--fm); letter-spacing:.1em; text-transform:uppercase; color:var(--accent-ink)}
+.pick.hold .tag{color:var(--warn)}
+.pick h2{margin:10px 0 6px}
+.pick h2 small{display:block; font:500 12px/1.4 var(--fm); color:var(--muted); margin-top:4px}
+.pick p{margin:0; font-size:14.5px; color:var(--ink-2)}
+
+/* returns block */
+.rets{border:1px solid var(--line); border-radius:13px; background:var(--surface); padding:14px 15px; margin-bottom:10px}
+.rets h3{margin:0 0 2px; font-size:14px; letter-spacing:-.01em}
+.rets .note{font-size:11.5px; color:var(--muted); margin:0 0 11px}
+.rtab{width:100%; border-collapse:collapse; font-size:13.5px}
+.rtab th{text-align:right; font:600 10.5px/1 var(--fm); letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); padding:0 0 7px; font-weight:500}
+.rtab th:first-child{text-align:left}
+.rtab td{padding:6px 0; border-top:1px solid var(--line-2); text-align:right;
+  font:500 13.5px/1.3 var(--fm); font-variant-numeric:tabular-nums; color:var(--ink-2)}
+.rtab td:first-child{text-align:left; font:500 13px/1.3 var(--ff); color:var(--ink-2)}
+.rtab tr.us td{color:var(--ink); font-weight:600}
+.rtab tr.us td:first-child{font-weight:700}
+.rtab .sub{display:block; font:400 11px/1.3 var(--ff); color:var(--muted)}
+
+.why{border:1px solid var(--line); border-radius:13px; margin-bottom:10px; background:var(--surface)}
+.why summary{cursor:pointer; list-style:none; padding:13px 15px; font-weight:600; font-size:14.5px; display:flex; align-items:center; gap:9px}
+.why summary::-webkit-details-marker{display:none}
+.why summary::before{content:"+"; font:600 16px/1 var(--fm); color:var(--accent); width:14px}
+.why[open] summary::before{content:"\2212"}
+.why summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px; border-radius:13px}
+.why .in{padding:0 15px 15px; font-size:14px; color:var(--ink-2)}
+.why .in p{margin:0 0 9px}
+.why .in p:last-child{margin:0}
+.why .in strong{color:var(--ink)}
+
+.tabs{display:flex; border:1.5px solid var(--line); border-radius:11px; padding:3px; margin-bottom:12px; background:var(--line-2)}
+.tab{flex:1; border:0; background:transparent; border-radius:8px; padding:9px 6px; cursor:pointer;
+  font:600 12.5px/1.2 var(--ff); color:var(--muted)}
+@media (max-width:360px){ .tab{font-size:11.5px; padding:9px 3px} }
+.tab[aria-selected="true"]{background:var(--surface); color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+
+/* the headline cost line — the thing that broke in testing */
+.paynow{border:1.5px solid var(--warn-line); background:var(--warn-soft); border-radius:14px;
+  padding:16px 18px; margin-bottom:12px}
+.paynow.ok{border-color:var(--accent); background:var(--accent-soft)}
+.paynow .k{font:600 10.5px/1 var(--fm); letter-spacing:.1em; text-transform:uppercase; color:var(--warn); margin-bottom:8px}
+.paynow.ok .k{color:var(--accent-ink)}
+.paynow b{display:block; font:600 30px/1 var(--fm); color:var(--warn); font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.paynow.ok b{color:var(--accent-ink)}
+.paynow .sub{display:block; font-size:13px; color:var(--ink-2); margin-top:8px}
+
+.ledger{border:1px solid var(--line); border-radius:13px; overflow:hidden; background:var(--surface); margin-bottom:12px}
+.ledger .row{display:flex; align-items:baseline; justify-content:space-between; gap:14px;
+  padding:10px 14px; border-bottom:1px solid var(--line-2); font-size:14px}
+.ledger .row:last-child{border-bottom:0}
+.ledger .row span{color:var(--ink-2)}
+.ledger .row small{display:block; color:var(--muted); font-size:11.5px; margin-top:2px}
+.ledger .row b{font:500 14px/1 var(--fm); font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink)}
+.ledger .row.tot{background:var(--line-2)}
+.ledger .row.tot span,.ledger .row.tot b{color:var(--ink); font-weight:700}
+.ledger .row.flat b{color:var(--warn)}
+
+.verdict{border-left:3px solid var(--accent); background:var(--accent-soft); padding:12px 14px;
+  border-radius:0 11px 11px 0; font-size:13.5px; color:var(--ink-2); margin-bottom:12px}
+.verdict.warn{border-left-color:var(--warn); background:var(--warn-soft)}
+.verdict strong{color:var(--ink)}
+.verdict:last-child{margin-bottom:0}
+
+.spacer{flex:1; min-height:20px}
+.cta{width:100%; border:0; border-radius:13px; background:var(--accent); color:#fff;
+  font:700 16px/1 var(--ff); padding:16px; cursor:pointer}
+:root[data-theme="dark"] .cta,:root:not([data-theme="light"]) .cta{color:#04241C}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]) .cta{color:#fff} }
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+.ghost{width:100%; border:1.5px solid var(--line); border-radius:13px; background:transparent; color:var(--ink-2);
+  font:600 15px/1 var(--ff); padding:14px; cursor:pointer; margin-top:9px}
+.ghost:hover{border-color:var(--muted)}
+.ghost:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.back{background:none; border:0; color:var(--muted); font:600 13px/1 var(--ff); cursor:pointer;
+  padding:6px 0; margin-bottom:12px; align-self:flex-start}
+.back:hover{color:var(--ink)}
+.back:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px}
+
+.done-mark{width:56px; height:56px; border-radius:50%; background:var(--accent-soft); border:1.5px solid var(--accent);
+  display:grid; place-items:center; margin-bottom:16px; font-size:25px; color:var(--accent-ink)}
+.stat{display:flex; align-items:baseline; gap:9px; border:1px solid var(--line); border-radius:12px;
+  padding:13px 15px; background:var(--surface); margin-top:12px}
+.stat b{font:600 25px/1 var(--fm); color:var(--accent-ink); font-variant-numeric:tabular-nums}
+.stat span{font-size:13px; color:var(--muted)}
+.next{border:1px solid var(--line); border-radius:13px; padding:15px; margin-top:12px; background:var(--surface)}
+.next h3{margin:0 0 8px; font-size:14px}
+.next ul{margin:0; padding-left:17px; font-size:13.5px; color:var(--ink-2)}
+.next li{margin-bottom:5px}
+.next li:last-child{margin-bottom:0}
+
+.bignum{border:1.5px solid var(--danger); background:var(--danger-soft); border-radius:14px;
+  padding:17px; margin-bottom:14px; text-align:center}
+.bignum b{display:block; font:600 32px/1 var(--fm); color:var(--danger); font-variant-numeric:tabular-nums}
+.bignum span{display:block; font-size:13px; color:var(--ink-2); margin-top:7px}
+.histo{border:1px solid var(--line); border-radius:13px; padding:14px 14px 10px; background:var(--surface); margin-bottom:12px}
+.histo-hd{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:10px}
+.histo-hd span{font-size:12.5px; color:var(--muted)}
+.histo-hd b{font:600 20px/1 var(--fm); font-variant-numeric:tabular-nums}
+.histo-ft{display:flex; justify-content:space-between; font:500 10.5px/1 var(--fm); color:var(--muted); margin-top:6px}
+#spark{display:block; max-width:100%}
+
+.foot{padding:16px 20px 26px; border-top:1px solid var(--line-2); font-size:11.5px; color:var(--muted); line-height:1.5}
+.foot a{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="bar">
+    <div class="mark">first<span>500</span></div>
+    <div class="chip">Concept</div>
+  </div>
+  <div class="rail"><i id="rail"></i></div>
+
+  <!-- 1 -->
+  <section class="screen" id="s1">
+    <div class="eyebrow">Question 1 of 3</div>
+    <h1>What's this money for?</h1>
+    <p class="lede">So we can show you one thing instead of four hundred.</p>
+    <div class="opts">
+      <button class="opt" data-goal="nothing"><span class="ic">&#127765;</span><span><b>Nothing specific</b><small>I just don't want it sitting in my account</small></span></button>
+      <button class="opt" data-goal="trip"><span class="ic">&#9992;&#65039;</span><span><b>A trip</b><small>Goa, Europe, wherever</small></span></button>
+      <button class="opt" data-goal="thing"><span class="ic">&#128241;</span><span><b>A phone or laptop</b><small>Saving up towards it</small></span></button>
+      <button class="opt" data-goal="buffer"><span class="ic">&#128737;&#65039;</span><span><b>A buffer</b><small>In case something goes wrong</small></span></button>
+      <button class="opt" data-goal="future"><span class="ic">&#127793;</span><span><b>The long run</b><small>No deadline</small></span></button>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="screen" id="s2" hidden>
+    <button class="back" data-back="1">&larr; Back</button>
+    <div class="eyebrow">Question 2 of 3</div>
+    <h1>When might you need it back?</h1>
+    <p class="lede">This is the question that decides what you should buy.</p>
+    <div class="opts">
+      <button class="opt" data-horizon="short"><span class="ic">&#9201;&#65039;</span><span><b>Within a year</b><small>Could need it any time</small></span></button>
+      <button class="opt" data-horizon="mid"><span class="ic">&#128197;</span><span><b>One to three years</b><small>Not soon, but not never</small></span></button>
+      <button class="opt" data-horizon="long"><span class="ic">&#128330;</span><span><b>Three years or more</b><small>I can leave it alone</small></span></button>
+      <button class="opt" data-horizon="unsure"><span class="ic">&#129300;</span><span><b>No idea</b><small>That's a real answer</small></span></button>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="screen" id="s3" hidden>
+    <button class="back" data-back="2">&larr; Back</button>
+    <div class="eyebrow">Question 3 of 3</div>
+    <h1>How much to start with?</h1>
+    <p class="lede">Start small. You can change it any time.</p>
+    <div class="amts">
+      <button class="amt" data-amt="100">&#8377;100<em>Just to see it work</em></button>
+      <button class="amt" data-amt="500">&#8377;500<em>Most people start here</em></button>
+      <button class="amt" data-amt="1000">&#8377;1,000<em>A real first step</em></button>
+      <button class="amt" data-amt="5000">&#8377;5,000<em>I've got some saved</em></button>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="screen" id="s4" hidden>
+    <button class="back" data-back="3">&larr; Back</button>
+    <div class="eyebrow">Our pick for you</div>
+    <div class="pick" id="pick">
+      <div class="tag" id="pickTag"></div>
+      <h2 id="pickName"></h2>
+      <p id="pickWhy"></p>
+    </div>
+
+    <div class="rets" id="retsBox">
+      <h3 id="retsTitle">How it has actually done</h3>
+      <p class="note" id="retsNote"></p>
+      <table class="rtab" id="retsTable"></table>
+    </div>
+
+    <details class="why"><summary>Why this one?</summary><div class="in" id="whyLong"></div></details>
+    <details class="why"><summary>Why not the others?</summary><div class="in" id="whyNot"></div></details>
+
+    <div class="spacer"></div>
+    <button class="cta" id="toCost">See what this costs &rarr;</button>
+    <button class="ghost" data-back="1">Start over</button>
+  </section>
+
+  <!-- 5 -->
+  <section class="screen" id="s5" hidden>
+    <button class="back" data-back="4">&larr; Back</button>
+    <div class="eyebrow">Before you confirm</div>
+    <h2 id="costTitle"></h2>
+    <p class="lede" id="costLede"></p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" id="tabFund" role="tab" aria-selected="true">Our pick</button>
+      <button class="tab" id="tabActive" role="tab" aria-selected="false">An active fund</button>
+      <button class="tab" id="tabStock" role="tab" aria-selected="false">One stock</button>
+    </div>
+
+    <div class="paynow" id="paynow"></div>
+    <div class="ledger" id="ledger"></div>
+    <div class="verdict" id="verdict"></div>
+
+    <div class="spacer"></div>
+    <button class="cta" id="confirm">Confirm &#8377;<span id="confAmt">500</span></button>
+    <button class="ghost" data-back="1">Start over</button>
+  </section>
+
+  <!-- 6 -->
+  <section class="screen" id="s6" hidden>
+    <div class="done-mark">&#10003;</div>
+    <h1 id="doneTitle">Done. You're invested.</h1>
+    <p class="lede" id="doneLede"></p>
+    <div class="stat"><b id="secs">0s</b><span>from opening the app to money invested</span></div>
+    <div class="next"><h3>What happens next</h3><ul id="nextList"></ul></div>
+    <div class="spacer"></div>
+    <button class="cta" id="toRed">Skip ahead three weeks &rarr;</button>
+    <button class="ghost" data-back="1">Run it again</button>
+  </section>
+
+  <!-- 7 -->
+  <section class="screen" id="s7" hidden>
+    <div class="eyebrow">Three weeks later</div>
+    <h1>It's red.</h1>
+    <p class="lede" id="redLede"></p>
+    <div class="bignum" id="bignum"></div>
+
+    <div class="histo">
+      <div class="histo-hd">
+        <span>Months this bad or worse, Nifty 50, last 10 years</span>
+        <b id="histoCount"></b>
+      </div>
+      <svg id="spark" viewBox="0 0 300 74" width="100%" height="74" role="img"
+           aria-label="An illustrative fall followed by a recovery over the following months.">
+        <path id="sparkFill" fill="none"></path>
+        <path id="sparkLine" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle id="sparkDot" r="3.5"></circle>
+      </svg>
+      <div class="histo-ft"><span>You are here</span><span>12 months later</span></div>
+    </div>
+
+    <div class="verdict" id="redVerdict"></div>
+
+    <details class="why"><summary>What if it doesn't come back?</summary>
+      <div class="in">
+        <p>Sometimes it doesn't, for a while. After the 2008 crash the Nifty took about <strong>three years</strong> to get back. In March 2020 it fell about 38% in a month and took about <strong>nine months</strong>.</p>
+        <p><strong>Most falls recover inside a year. Some take much longer.</strong> That's the pattern, not a promise.</p>
+        <p>This is why we asked when you need the money. Three years gives a fall room to undo itself. Six months doesn't.</p>
+      </div>
+    </details>
+
+    <div class="spacer"></div>
+    <button class="cta" id="holdBtn">Do nothing</button>
+    <button class="ghost" id="sellBtn">Sell it all</button>
+  </section>
+
+  <div class="foot">
+    Concept prototype for a product case study. Not affiliated with Groww or any fund house named here.
+    No real money moves and nothing here is investment advice.
+    <strong>Fund facts &mdash; expense ratios, exit loads, and 3/5/10-year annualised returns &mdash; were taken from
+    each fund's page on groww.in on 16 Sep 2026, NAV dated 15 Sep 2026.</strong>
+    Past returns are past returns. They are not a forecast and you cannot buy them.
+    Charges are modelled on published Indian rates and are illustrative, not a quote.
+    The 10-year fee comparison assumes 12% a year before costs for every option, purely to hold one variable steady.
+    Recovery figures are approximate.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var state={goal:null,horizon:null,amount:500,view:"fund"};
+  var t0=null;
+  var screens=["s1","s2","s3","s4","s5","s6","s7"];
+
+  function show(n){
+    screens.forEach(function(id,i){ document.getElementById(id).hidden=(i!==n-1); });
+    document.getElementById("rail").style.width=Math.round(Math.min(n,6)/6*100)+"%";
+    window.scrollTo(0,0);
+  }
+  function startClock(){ if(t0===null) t0=Date.now(); }
+
+  var inr=function(n){
+    var s=(Math.round(n*100)/100).toFixed(2).replace(/\.00$/,"");
+    return s.replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  };
+  var money=function(n){ return n<1 ? Math.round(n*100)+" paise" : "₹"+inr(n); };
+
+  var GOALS={nothing:"money you don't have a plan for",trip:"a trip",thing:"something you're saving towards",
+             buffer:"a buffer",future:"the long run"};
+
+  // ---------------------------------------------------------------------
+  // Fund facts: groww.in fund pages, read 16 Sep 2026, NAV 15 Sep 2026.
+  // r3/r5/r10 are TRAILING ANNUALISED returns from Groww's returns table,
+  // NOT the SIP calculator figures on the same page.
+  // ---------------------------------------------------------------------
+  var FUNDS={
+    index:{
+      name:"UTI Nifty 50 Index Fund", sub:"Direct · Growth · 0.25% a year",
+      er:0.0025, kind:"equity", aum:"₹29,485 Cr",
+      r3:5.6, r5:6.7, r10:11.3,
+      load:function(){ return 0; },
+      loadText:"None, ever",
+      years:5, yearsText:"5 years"
+    },
+    liquid:{
+      name:"ICICI Prudential Liquid Fund", sub:"Direct · Growth · 0.20% a year",
+      er:0.0020, kind:"debt", aum:"₹62,798 Cr",
+      r3:7.0, r5:6.3, r10:6.1,
+      // graded, 0.0070% day 1 down to 0.0045% day 6, nil from day 7
+      load:function(y){ return y < 7/365 ? 0.00006 : 0; },
+      loadText:"Tiny, and only inside 7 days",
+      years:0.5, yearsText:"6 months"
+    },
+    balanced:{
+      name:"ICICI Prudential Balanced Advantage Fund", sub:"Direct · Growth · 1.04% a year",
+      er:0.0104, kind:"equity", aum:"₹75,399 Cr",
+      r3:10.5, r5:10.5, r10:11.2,
+      // 1% on units above 30% of the investment, if sold inside 1 year
+      load:function(y){ return y < 1 ? 0.007 : 0; },
+      loadText:"1% on most of it if you sell inside a year",
+      years:2, yearsText:"2 years"
+    }
+  };
+
+  // Real large-cap funds, biggest by AUM, from Groww's own peer table on the
+  // UTI Nifty 50 page. 3Y annualised. These are what people actually hold.
+  var PEERS=[
+    {name:"ICICI Pru Large Cap",  r3:9.31, aum:"₹80,206 Cr"},
+    {name:"Nippon India Large Cap", r3:9.71, aum:"₹54,134 Cr"},
+    {name:"HDFC Large Cap",       r3:7.94, aum:"₹39,933 Cr"}
+  ];
+
+  function product(){
+    if(state.horizon==="short") return "liquid";
+    if(state.horizon==="mid"||state.horizon==="unsure") return "balanced";
+    return "index";
+  }
+
+  // ---------- costs ----------
+  // Published Indian discount-broker rates, Sep 2026.
+  function stockCost(A){
+    var brok=Math.min(20,A*0.001)*2;
+    var stt=A*0.001*2;
+    var dp=15.93;
+    var stamp=A*0.00015;
+    var exch=A*0.0000297*2;
+    var gst=(brok+exch)*0.18;
+    return {rows:[
+      ["Brokerage","₹20 or 0.1% an order, whichever is lower",brok,false],
+      ["Securities transaction tax","0.1% each way",stt,false],
+      ["DP charge on selling","Flat. Same on ₹100 as on ₹1 lakh.",dp,true],
+      ["Stamp duty","0.015% on the buy",stamp,false],
+      ["Exchange + GST","",exch+gst,false]
+    ],total:brok+stt+dp+stamp+exch+gst};
+  }
+
+  // Cost of holding a fund for `years` and then selling.
+  function fundCost(A,F,years){
+    var stamp=A*0.00005;
+    var fee=A*F.er*years;
+    var exit=A*F.load(years);
+    var stt=(F.kind==="equity") ? A*0.00001 : 0;
+    var rows=[
+      ["Commission","Direct plan. There isn't one.",0,false],
+      ["Stamp duty","0.005% when you buy",stamp,false],
+      ["Fund's fee for "+F.yearsText,(F.er*100).toFixed(2)+"% a year, taken daily",fee,false],
+      ["Exit charge",F.loadText,exit,exit>0]
+    ];
+    if(F.kind==="equity") rows.push(["Tax when you sell","0.001% · gains tax is ₹0 below ₹1.25 lakh a year",stt,false]);
+    else rows.push(["Tax when you sell","Gains are taxed at your income slab",0,false]);
+    return {rows:rows,total:stamp+fee+exit+stt};
+  }
+
+  function sipFV(P,annual,years){
+    var r=annual/12,n=years*12;
+    return P*((Math.pow(1+r,n)-1)/r)*(1+r);
+  }
+
+  // ---------- recommendation ----------
+  function renderPick(){
+    var p=product(), A=state.amount, F=FUNDS[p];
+    var el={tag:document.getElementById("pickTag"),name:document.getElementById("pickName"),
+            why:document.getElementById("pickWhy"),long:document.getElementById("whyLong"),
+            not:document.getElementById("whyNot"),card:document.getElementById("pick")};
+    el.card.classList.toggle("hold",p==="liquid");
+    el.name.innerHTML=F.name+"<small>"+F.sub+"</small>";
+
+    if(p==="liquid"){
+      el.tag.textContent="Not the stock market. Still investing.";
+      el.why.textContent="You might need this within a year, so we're not putting it in shares. This pays about 7% a year, comes back in a day, and barely moves.";
+      el.long.innerHTML="<p>It lends your money to very short-term, high-quality borrowers — government paper, big-company debt maturing in weeks. Boring on purpose.</p>"+
+        "<p><strong>Your savings account is the expensive option.</strong> It pays about 2.7%. Inflation is near 5%. Sitting still is a slow loss.</p>"+
+        "<p>No lock-in. Money is back in your bank the next working day.</p>";
+      el.not.innerHTML="<p><strong>An index fund</strong> — right for money you can leave for three years or more. Over a few months, shares are a coin flip.</p>"+
+        "<p><strong>An FD</strong> — fine, but you're locked in and breaking it early costs you.</p>"+
+        "<p><strong>One stock</strong> — one company's luck, plus flat charges that eat small amounts. Next screen.</p>"+
+        "<p><strong>F&amp;O</strong> — not in this app. 89% of under-30 traders lost money on it last year.</p>";
+    }else if(p==="index"){
+      el.tag.textContent="One fund. That's it.";
+      el.why.textContent="₹"+inr(A)+" buys a sliver of India's 50 biggest listed companies in one go. Not the highest-returning thing you can buy. The hardest to get badly wrong.";
+      el.long.innerHTML="<p>It doesn't try to be clever. It buys the index and charges <strong>0.25% a year</strong> — about <strong>₹"+inr(A*0.0025)+" a year</strong> on ₹"+inr(A)+".</p>"+
+        "<p><strong>Be honest about the table above: it has lost to the big active funds over three years.</strong> We still picked it, for one reason. The 0.25% is certain. Their higher returns are not — the leaders change, and you have to pick the winner in advance, this year and every year after.</p>"+
+        "<p>Every Nifty 50 index fund holds the same 50 companies in the same weights, so which one you pick barely matters. That's also why an app can safely pick it for you.</p>"+
+        "<p>You said "+GOALS[state.goal]+", three years or more. That's the shape of money this suits.</p>";
+      el.not.innerHTML="<p><strong>A big active fund</strong> — has beaten this over three years and costs about 4× more. If you'd rather back a manager, that's a real choice. Just know you're paying a certain fee for an uncertain edge.</p>"+
+        "<p><strong>One stock</strong> — fifty companies become one, and flat charges bite hard at this size. Next screen.</p>"+
+        "<p><strong>An FD</strong> — safer, and over three-plus years that safety costs you growth.</p>"+
+        "<p><strong>F&amp;O</strong> — not in this app. 89% of under-30 traders lost money on it last year.</p>";
+    }else{
+      el.tag.textContent="One fund. That's it.";
+      el.why.textContent=(state.horizon==="unsure"
+        ? "You don't know when you'll need it, so we picked the one that holds up either way."
+        : "One to three years is awkward — too long for a savings account, too short for all shares.")+
+        " This holds both shares and bonds, and shifts between them.";
+      el.long.innerHTML="<p>It won't rise like a pure share fund in a good year, and won't fall as hard in a bad one. That's the point when your window is short.</p>"+
+        "<p>It costs <strong>1.04% a year</strong> — about <strong>₹"+inr(A*0.0104)+" a year</strong> on ₹"+inr(A)+". Dearer than an index fund, because someone is actively deciding the mix.</p>"+
+        "<p><strong>Watch the exit charge.</strong> Sell inside a year and you pay 1% on most of your units. The next screen shows it in rupees.</p>"+
+        (state.horizon==="unsure"?"<p>If you later decide you won't touch it for years, move to an index fund. Cheaper.</p>":"");
+      el.not.innerHTML="<p><strong>A pure index fund</strong> — better over five-plus years, too swingy for your window.</p>"+
+        "<p><strong>One stock</strong> — one company's luck, plus flat charges. Next screen.</p>"+
+        "<p><strong>F&amp;O</strong> — not in this app. 89% of under-30 traders lost money on it last year.</p>";
+    }
+    renderReturns(p);
+  }
+
+  function pct(v){ return (v>=0?"+":"−")+Math.abs(v).toFixed(1)+"%"; }
+
+  function renderReturns(p){
+    var F=FUNDS[p];
+    var note=document.getElementById("retsNote");
+    var tbl=document.getElementById("retsTable");
+    var h="<tr><th>Annualised</th><th>3Y</th><th>5Y</th><th>10Y</th></tr>";
+    h+="<tr class='us'><td>"+F.name+"<span class='sub'>our pick · "+(F.er*100).toFixed(2)+"% a year</span></td>"+
+       "<td>"+pct(F.r3)+"</td><td>"+pct(F.r5)+"</td><td>"+pct(F.r10)+"</td></tr>";
+
+    if(p==="index"){
+      note.textContent="Trailing annualised returns from each fund's Groww page, 15 Sep 2026. Past returns. Not a forecast.";
+      PEERS.forEach(function(q){
+        h+="<tr><td>"+q.name+"<span class='sub'>active · "+q.aum+"</span></td>"+
+           "<td>"+pct(q.r3)+"</td><td>—</td><td>—</td></tr>";
+      });
+      h+="</table>";
+      tbl.innerHTML=h;
+      return;
+    }
+    note.textContent=(p==="liquid"
+      ? "Trailing annualised returns from the fund's Groww page, 15 Sep 2026. A liquid fund's job is to not move."
+      : "Trailing annualised returns from the fund's Groww page, 15 Sep 2026. Past returns. Not a forecast.");
+    tbl.innerHTML=h+"</table>";
+  }
+
+  // ---------- cost screen ----------
+  function renderCost(){
+    var A=state.amount, p=product(), F=FUNDS[p], view=state.view;
+
+    document.getElementById("tabFund").setAttribute("aria-selected",String(view==="fund"));
+    document.getElementById("tabActive").setAttribute("aria-selected",String(view==="active"));
+    document.getElementById("tabStock").setAttribute("aria-selected",String(view==="stock"));
+
+    var title=document.getElementById("costTitle"),
+        lede=document.getElementById("costLede"),
+        pay=document.getElementById("paynow"),
+        v=document.getElementById("verdict");
+    var h="";
+
+    if(view==="active"){
+      var gross=0.12,yrs=10;
+      var cheap=sipFV(A,gross-F.er,yrs), dear=sipFV(A,gross-0.018,yrs), put=A*12*yrs;
+      var gap=cheap-dear;
+
+      title.textContent="₹"+inr(A)+" a month for 10 years";
+      lede.textContent="Round-trip charges are the small story. This is the big one.";
+
+      pay.className="paynow";
+      pay.innerHTML="<div class='k'>The fee costs you</div><b>₹"+inr(gap)+"</b>"+
+        "<span class='sub'>over 10 years · that's "+(gap/put*100).toFixed(0)+"% of everything you put in</span>";
+
+      h+="<div class='row'><span>You put in<small>₹"+inr(A)+" a month, 120 months</small></span><b>₹"+inr(put)+"</b></div>";
+      h+="<div class='row'><span>At "+(F.er*100).toFixed(2)+"% a year<small>"+F.name+"</small></span><b>₹"+inr(cheap)+"</b></div>";
+      h+="<div class='row'><span>At 1.8% a year<small>typical regular-plan active fund, sold by a bank or agent</small></span><b>₹"+inr(dear)+"</b></div>";
+      h+="<div class='row tot flat'><span>Difference</span><b>₹"+inr(gap)+"</b></div>";
+
+      v.className="verdict warn";
+      v.innerHTML="<strong>Same money, same years, same market.</strong> The only difference is 1.6% a year in fees. That's what \"direct\" buys you. Both lines assume 12% a year before costs — an assumption, held steady on purpose.";
+
+      document.getElementById("ledger").innerHTML=h;
+      document.getElementById("confAmt").textContent=inr(A);
+      return;
+    }
+
+    if(view==="stock"){
+      var d=stockCost(A);
+      title.textContent="₹"+inr(A)+" in one stock, sold next week";
+      lede.textContent="Every charge below is legal, published and normal. It's the size next to ₹"+inr(A)+" nobody warns you about.";
+
+      pay.className="paynow";
+      pay.innerHTML="<div class='k'>You pay</div><b>₹"+inr(d.total)+"</b>"+
+        "<span class='sub'>in charges · "+(d.total/A*100).toFixed(1)+"% of your ₹"+inr(A)+", before the share even moves</span>";
+
+      d.rows.forEach(function(r){
+        h+="<div class='row"+(r[3]?" flat":"")+"'><span>"+r[0]+(r[1]?"<small>"+r[1]+"</small>":"")+"</span><b>"+
+           (r[2]===0?"₹0":money(r[2]))+"</b></div>";
+      });
+      h+="<div class='row tot'><span>You get back</span><b>₹"+inr(A-d.total)+"</b></div>";
+      document.getElementById("ledger").innerHTML=h;
+
+      v.className="verdict warn";
+      v.innerHTML="<strong>₹15.93 of that is a flat DP charge.</strong> Identical whether you invest ₹"+inr(A)+
+        " or ₹1 lakh — "+(15.93/A*100).toFixed(1)+"% of your money, 0.02% of someone richer's. Flat fees punish small amounts."+
+        "<br><br><strong>Also:</strong> India has no fractional shares, so ₹"+inr(A)+
+        " won't buy one share of Reliance or HDFC Bank. It buys whatever is cheap. That's how first trades end up in penny stocks.";
+
+      document.getElementById("confAmt").textContent=inr(A);
+      return;
+    }
+
+    // our pick, held for the horizon they chose
+    var d=fundCost(A,F,F.years);
+    var wk=fundCost(A,F,7/365);
+
+    title.textContent="₹"+inr(A)+" in "+F.name;
+    lede.textContent="Held for "+F.yearsText+" — the timeline you gave us — then sold.";
+
+    pay.className="paynow ok";
+    pay.innerHTML="<div class='k'>You pay</div><b>₹"+inr(d.total)+"</b>"+
+      "<span class='sub'>in total charges over "+F.yearsText+" · "+
+      (d.total/A*100).toFixed(d.total/A*100<1?2:1)+"% of your ₹"+inr(A)+"</span>";
+
+    d.rows.forEach(function(r){
+      h+="<div class='row"+(r[3]?" flat":"")+"'><span>"+r[0]+(r[1]?"<small>"+r[1]+"</small>":"")+"</span><b>"+
+         (r[2]===0?"₹0":money(r[2]))+"</b></div>";
+    });
+    h+="<div class='row tot'><span>You pay, in total</span><b>₹"+inr(d.total)+"</b></div>";
+    document.getElementById("ledger").innerHTML=h;
+
+    v.className = (p==="balanced") ? "verdict warn" : "verdict";
+    v.innerHTML="<strong>Changed your mind in week one?</strong> Selling after seven days costs "+money(wk.total)+
+      (p==="balanced"
+        ? " — almost all of it the 1% exit charge. This fund is built to be held a year. "
+        : " — there's no penalty for leaving early. ")+
+      "Buying costs you nothing either way. Charges punish moving money, not investing it.";
+
+    document.getElementById("confAmt").textContent=inr(A);
+  }
+
+  // ---------- wiring ----------
+  document.querySelectorAll("[data-goal]").forEach(function(b){
+    b.addEventListener("click",function(){ startClock(); state.goal=b.dataset.goal; show(2); });
+  });
+  document.querySelectorAll("[data-horizon]").forEach(function(b){
+    b.addEventListener("click",function(){ state.horizon=b.dataset.horizon; show(3); });
+  });
+  document.querySelectorAll("[data-amt]").forEach(function(b){
+    b.addEventListener("click",function(){ state.amount=parseInt(b.dataset.amt,10); renderPick(); show(4); });
+  });
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var n=parseInt(b.dataset.back,10);
+      if(n===1){ state={goal:null,horizon:null,amount:500,view:"fund"}; t0=null; }
+      show(n);
+    });
+  });
+  document.getElementById("toCost").addEventListener("click",function(){ state.view="fund"; renderCost(); show(5); });
+  document.getElementById("tabFund").addEventListener("click",function(){ state.view="fund"; renderCost(); });
+  document.getElementById("tabActive").addEventListener("click",function(){ state.view="active"; renderCost(); });
+  document.getElementById("tabStock").addEventListener("click",function(){ state.view="stock"; renderCost(); });
+
+  // ---------- done ----------
+  document.getElementById("confirm").addEventListener("click",function(){
+    var p=product(), A=state.amount, F=FUNDS[p];
+    document.getElementById("secs").textContent=Math.max(1,Math.round((t0?Date.now()-t0:0)/1000))+"s";
+    var lede=document.getElementById("doneLede"), list=document.getElementById("nextList");
+
+    if(p==="liquid"){
+      lede.textContent="₹"+inr(A)+" is going into "+F.name+". Not shares, because you might need it soon.";
+      list.innerHTML="<li><strong>Tomorrow:</strong> units appear. It creeps up most days and almost never falls.</li>"+
+        "<li><strong>Whenever you need it:</strong> withdraw, and it's in your bank next working day.</li>"+
+        "<li><strong>If your timeline changes</strong> to three years or more, an index fund suits it better.</li>";
+    }else{
+      lede.textContent="₹"+inr(A)+" is going into "+F.name+". That's it — you're an investor now, which is a lower bar than anyone made it sound.";
+      list.innerHTML="<li><strong>Tomorrow:</strong> units appear. The number will be slightly different. Normal.</li>"+
+        "<li><strong>Some week soon:</strong> it'll be red. We'll show you how often that's happened before.</li>"+
+        "<li><strong>Next month:</strong> we'll ask if you want to repeat it. Saying yes is the highest-value thing here.</li>";
+    }
+    show(6);
+    document.getElementById("toRed").hidden=(p==="liquid");
+  });
+
+  // ---------- red day ----------
+  function renderRed(){
+    var A=state.amount, p=product(), F=FUNDS[p];
+    var loss=A*0.042;
+    document.getElementById("redLede").textContent=
+      "Your "+F.name+" is down. Nothing has gone wrong, and you haven't lost anything — a fall only becomes a loss when you sell into it.";
+    document.getElementById("bignum").innerHTML=
+      "<b>−₹"+inr(loss)+"</b><span>down 4.2% · worth ₹"+inr(A-loss)+" of the ₹"+inr(A)+" you put in</span>";
+    document.getElementById("histoCount").textContent="about 30";
+
+    var pts=[[0,20],[26,15],[52,30],[78,52],[104,61],[130,55],[156,44],[182,47],[208,33],[234,26],[260,18],[286,10]];
+    var dline=pts.map(function(q,i){ return (i?"L":"M")+q[0]+" "+q[1]; }).join(" ");
+    var line=document.getElementById("sparkLine");
+    line.setAttribute("d",dline); line.setAttribute("stroke","var(--accent)");
+    var fill=document.getElementById("sparkFill");
+    fill.setAttribute("d",dline+" L286 74 L0 74 Z");
+    fill.setAttribute("fill","var(--accent-soft)"); fill.setAttribute("stroke","none");
+    var dot=document.getElementById("sparkDot");
+    dot.setAttribute("cx","130"); dot.setAttribute("cy","61"); dot.setAttribute("fill","var(--danger)");
+
+    var v=document.getElementById("redVerdict");
+    v.className="verdict";
+    v.innerHTML="<strong>Selling now turns a ₹"+inr(loss)+" dip into a ₹"+inr(loss)+" loss.</strong> "+
+      "Doing nothing costs you nothing. That's the whole answer.";
+  }
+  document.getElementById("toRed").addEventListener("click",function(){ renderRed(); show(7); });
+
+  document.getElementById("holdBtn").addEventListener("click",function(){
+    var v=document.getElementById("redVerdict");
+    v.className="verdict";
+    v.innerHTML="<strong>Right answer, and it took no effort.</strong> Most of investing is this — leaving it alone while it's uncomfortable.";
+    document.getElementById("holdBtn").textContent="✓ Doing nothing";
+  });
+
+  document.getElementById("sellBtn").addEventListener("click",function(){
+    var A=state.amount, p=product(), F=FUNDS[p];
+    var loss=A*0.042, d=fundCost(A,F,3/52);
+    var v=document.getElementById("redVerdict");
+    v.className="verdict warn";
+    v.innerHTML="<strong>You can do this — it's your money and we won't block you.</strong> "+
+      "You'd get back ₹"+inr(A-loss-d.total)+", making the ₹"+inr(loss)+" dip permanent and paying "+money(d.total)+" to do it. "+
+      "If you need the money, sell. If it's just uncomfortable, that discomfort is the price of the returns — it isn't a signal.";
+    window.scrollTo(0,document.body.scrollHeight);
+  });
+
+  show(1);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluation Suite (Evals) · Groww GenZ Engine | Prathamesh Deshmane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #04b488;
+    --green-dark: #00825c;
+    --purple: #5367ff;
+    --bg: #090c10;
+    --surface: #12171f;
+    --surface-card: #18202c;
+    --border: #263142;
+    --border-light: #36445a;
+    --text-primary: #f0f6fc;
+    --text-secondary: #94a3b8;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  header {
+    background: rgba(18, 23, 31, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+  }
+  .nav-title { font-size: 14px; font-weight: 700; color: #fff; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    color: var(--text-primary);
+  }
+  .btn:hover { border-color: var(--green); color: var(--green); }
+  .btn-primary { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .content-wrap { max-width: 840px; margin: 40px auto 80px; padding: 0 24px; }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+  .meta-bar strong { color: #fff; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 40px 0 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    background: var(--green);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  p { margin-bottom: 16px; color: #cbd5e1; }
+  ul, ol { margin: 0 0 20px 24px; color: #cbd5e1; }
+  li { margin-bottom: 8px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14.5px;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--surface-card); color: #fff; font-size: 12px; text-transform: uppercase; }
+
+  blockquote {
+    background: var(--surface);
+    border-left: 3px solid var(--green);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 24px 0;
+    color: #e2e8f0;
+  }
+  code { font-family: var(--font-mono); background: var(--surface-card); padding: 2px 6px; border-radius: 4px; color: #38bdf8; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-left">
+    <a href="/" class="back-btn">← Back to Workspace</a>
+    <span class="nav-title">Deliverable 3 · The Evaluations Suite</span>
+  </div>
+  <div class="nav-right">
+    <a href="/evals.md" target="_blank" class="btn">View Raw .md</a>
+    <a href="/app/cost-model.test.mjs" target="_blank" class="btn btn-primary">View Test Suite</a>
+  </div>
+</header>
+
+<div class="content-wrap">
+  <div class="kicker">Verification & Usability Framework</div>
+  <h1>The Evaluation Suite (Evals)</h1>
+  <div class="meta-bar">
+    <div>Methodology: <strong>Dual-Layer Testing</strong></div>
+    <div>Layer 1: <strong>Automated Math & State Crawler</strong></div>
+    <div>Layer 2: <strong>Recorded Think-Aloud Sessions</strong></div>
+  </div>
+
+  <h2>Two Questions, Two Evaluation Layers</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Core Question</th>
+        <th>Evaluation Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Layer 1 (Automated)</strong></td>
+        <td>Does it calculate arithmetic correctly and handle every state permutation?</td>
+        <td>Automated Node test suite (23 assertions) & real browser crawl.</td>
+      </tr>
+      <tr>
+        <td><strong>Layer 2 (Cognitive)</strong></td>
+        <td>Does it change user perception of fees and drive intentional holding behavior?</td>
+        <td>Recorded think-aloud usability interviews against a measured baseline.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Layer 1 — Automated Financial Arithmetic</h2>
+  <p>
+    The foundation of the product is pre-trade cost transparency. If fee numbers are wrong, the value proposition collapses. The suite asserts logic directly from the shipped code:
+  </p>
+  <ul>
+    <li><strong>The Anchor:</strong> ₹500 equity round-trip costs exactly <strong>₹18.22</strong>; ₹100 costs ₹16.39 (16.4% due to flat CDSL depository fees).</li>
+    <li><strong>Compounding Fee Drag:</strong> Mutual fund expense ratios compound daily on a growing NAV balance (+53% higher than naive principal models).</li>
+    <li><strong>Exit Loads:</strong> Balanced Advantage 1% exit fee bites within 12 months and is waived after; index and liquid exit loads follow statutory rules.</li>
+    <li><strong>FD Benchmark:</strong> Matches exact SBI retail term deposit slabs (1yr: 6.25%, 2yr: 6.40%, 3yr: 6.30%, 5yr: 6.05%, 6mo: 5.65%).</li>
+    <li><strong>Sanity Grid:</strong> Tested across 6 amounts (₹100 to ₹1,00,000) × 6 timelines with zero NaNs or negative balances.</li>
+  </ul>
+
+  <h2>Layer 2 — User Testing & Behavioral Cognitive Shifts</h2>
+  <p>Two recorded 35-minute think-aloud sessions were conducted against v1:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Prakhar (21, In-ICP, Never Invested)</th>
+        <th>Pulin (Out-of-ICP, Active Trader)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Charges Guess (Pre-Test)</strong></td>
+        <td>"Under ₹5"</td>
+        <td>"1% at max" (₹5)</td>
+      </tr>
+      <tr>
+        <td><strong>Charges (Post-Test)</strong></td>
+        <td>Measurement contaminated</td>
+        <td><strong>"Forty something... chaalees"</strong> (Moved cleanly)</td>
+      </tr>
+      <tr>
+        <td><strong>Cost Screen Comprehension</strong></td>
+        <td><strong>Failed:</strong> Read ₹43 fee as returns.</td>
+        <td><strong>Failed:</strong> Misinterpreted "DP charge" as Direct Plan.</td>
+      </tr>
+      <tr>
+        <td><strong>First Red Day Reaction</strong></td>
+        <td><strong>Held:</strong> Read recovery data, chose "Do Nothing".</td>
+        <td><strong>Held:</strong> "Waiting is the best thing ever."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <strong>The Core Behavioral Insight:</strong> A knowledge shift is not a behavioral shift. Pulin learned that charges were ₹40, but assumed <em>"this is unavoidable, right?"</em> This proved that showing costs alone is insufficient—the UI must explicitly explain why mutual funds bypass flat depository fees compared to stocks.
+  </blockquote>
+</div>
+
+</body>
+</html>

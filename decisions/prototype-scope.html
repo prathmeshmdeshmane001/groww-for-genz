@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype Scope</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf8; --surface:#ffffff; --ink:#15150f; --muted:#5d5c52; --line:#e4e1d9;
+  --accent:#00b386; --accent-ink:#00715a; --warn:#b4531a; --warn-bg:#fdf1e7;
+  --bad:#b3261e; --bad-bg:#fdefee; --good-bg:#eaf8f3; --quote-bg:#f4f2ec; --new-bg:#eef2fd; --new-ink:#3b5bdb;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131310; --surface:#1c1c18; --ink:#f2f0e9; --muted:#a3a094; --line:#312f29;
+    --accent:#2fd6a8; --accent-ink:#7be3c4; --warn:#e8a06a; --warn-bg:#2a1f15;
+    --bad:#f08d85; --bad-bg:#2b1817; --good-bg:#14261f; --quote-bg:#232320;
+    --new-bg:#191d2e; --new-ink:#9db2f5;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131310; --surface:#1c1c18; --ink:#f2f0e9; --muted:#a3a094; --line:#312f29;
+  --accent:#2fd6a8; --accent-ink:#7be3c4; --warn:#e8a06a; --warn-bg:#2a1f15;
+  --bad:#f08d85; --bad-bg:#2b1817; --good-bg:#14261f; --quote-bg:#232320;
+  --new-bg:#191d2e; --new-ink:#9db2f5;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16.5px; line-height:1.6; -webkit-font-smoothing:antialiased}
+.wrap{max-width:820px; margin:0 auto; padding:52px 16px 96px}
+header{border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:34px}
+.kicker{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent-ink); margin:0 0 10px}
+h1{font-size:2.3rem; line-height:1.12; font-weight:800; margin:0 0 10px; letter-spacing:-.02em}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted); line-height:1.75; margin:0}
+h2{font-size:1.4rem; font-weight:800; letter-spacing:-.01em; margin:48px 0 6px; padding-top:20px; border-top:1px solid var(--line)}
+h2:first-of-type{border-top:none; padding-top:0}
+h2 + .sub{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted); margin:0 0 18px}
+h3{font-size:1.02rem; font-weight:700; margin:26px 0 6px}
+p{margin:0 0 13px}
+ul,ol{margin:0 0 13px; padding-left:21px} li{margin-bottom:6px}
+blockquote{margin:14px 0; padding:12px 16px; background:var(--quote-bg);
+  border-left:3px solid var(--accent); border-radius:0 7px 7px 0; font-size:15.5px}
+blockquote p{margin:0 0 6px} blockquote p:last-child{margin:0}
+blockquote cite{display:block; font-style:normal; font-family:"IBM Plex Mono",monospace;
+  font-size:11px; color:var(--muted); margin-top:7px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:18px 20px; margin:20px 0}
+.card.good{background:var(--good-bg); border-color:transparent}
+.card.warn{background:var(--warn-bg); border-color:transparent}
+.card.bad{background:var(--bad-bg); border-color:transparent}
+.card h3{margin-top:0}
+table{width:100%; border-collapse:collapse; margin:18px 0; font-size:15px}
+th,td{text-align:left; padding:10px 9px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); font-weight:500; border-bottom:1.5px solid var(--ink)}
+code{font-family:"IBM Plex Mono",monospace; font-size:.87em; background:var(--quote-bg); padding:1px 5px; border-radius:4px}
+
+/* screen blocks */
+.scr{border:1px solid var(--line); border-radius:12px; margin:16px 0; background:var(--surface); overflow:hidden}
+.scr > .hd{display:flex; align-items:baseline; gap:11px; padding:14px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap}
+.scr .num{font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600; color:var(--accent-ink);
+  background:var(--good-bg); border-radius:6px; padding:3px 8px; flex:none}
+.scr .nm{font-weight:700; font-size:1.02rem; letter-spacing:-.01em}
+.scr .bd{padding:15px 18px}
+.scr .bd > *:last-child{margin-bottom:0}
+.pill{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+  padding:3px 7px; border-radius:4px; font-weight:500; margin-left:auto; flex:none}
+.pill.new{background:var(--new-bg); color:var(--new-ink)}
+.pill.keep{background:var(--good-bg); color:var(--accent-ink)}
+.pill.fix{background:var(--warn-bg); color:var(--warn)}
+.pill.cut{background:var(--bad-bg); color:var(--bad)}
+.ev{font-size:14px; color:var(--muted); border-top:1px dashed var(--line); margin-top:12px; padding-top:10px}
+.ev b{color:var(--ink); font-weight:600}
+.act{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); margin:34px 0 4px; padding-top:14px; border-top:2px solid var(--line)}
+.act-t{font-size:1.15rem; font-weight:800; margin:0 0 4px; letter-spacing:-.01em}
+.act-d{font-size:14.5px; color:var(--muted); margin:0 0 6px}
+.mock{font-family:"IBM Plex Mono",monospace; font-size:12.5px; line-height:1.55; white-space:pre-wrap;
+  background:var(--quote-bg); border-radius:8px; padding:13px 15px; margin:12px 0; color:var(--ink); overflow-x:auto}
+footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); line-height:1.8}
+@media print{body{background:#fff;color:#000;font-size:11pt}.wrap{max-width:none;padding:0}
+  .scr,.card,table,blockquote{page-break-inside:avoid}h2{page-break-after:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">first500 · prototype scope · draft for review</p>
+  <h1>Screen-by-screen scope</h1>
+  <p class="meta">
+    17 Sep 2026 · built from: survey n=24 · 2 interviews · SEBI 2025 + F&amp;O FY26 · 145 Groww Play reviews · competitor map<br>
+    Brief: <strong>"create a Groww App suited for GenZ users"</strong> — so this is a Groww app, not a feature and not a startup.
+  </p>
+</header>
+
+<h2>The call</h2>
+
+<p><strong>We are building the Groww app a 22-year-old gets after KYC clears.</strong> Same company, same brand,
+same products — a different default surface, chosen for someone with their first paycheck instead of someone with a
+trading account.</p>
+
+<p>The current prototype is a single flow that ends at "done". That was right for testing one hypothesis and it
+tested well with the in-ICP user. It is not a Groww app. The three things it is missing are the three things the
+research keeps pointing at: <strong>a home you come back to</strong>, <strong>a reason to make the second
+investment</strong>, and <strong>a way to check the app instead of trusting it</strong>.</p>
+
+<div class="card good">
+  <h3>The metric, restated</h3>
+  <p>Not signups. Not first investment. <strong>Second investment within 30 days.</strong> Everything below is
+  scoped to that, which is also what lets us put F&amp;O, lending, IPOs and tax filing out of scope with a straight face.</p>
+</div>
+
+<h3>In scope</h3>
+<p>Post-KYC first investment · the home you return to · cost shown before every trade · the red day · the second
+investment · plain-language explainers on anything tappable · a visible statement of what this app deliberately does not have.</p>
+
+<h3>Out of scope — and each has a reason, not just a shrug</h3>
+<table>
+  <tr><th>Out</th><th>Why</th></tr>
+  <tr><td>KYC / account opening</td><td>Groww is already good at it — only 7 of 145 reviews mention it. Not the leak.</td></tr>
+  <tr><td>F&amp;O, intraday, scalping</td><td>43% of F&amp;O traders are under 30; 89% lost money in FY26. Named position against Millions (₹20/order) and Trackk (flagship feature).</td></tr>
+  <tr><td>Personal loans, margin, pledging</td><td>On Groww's live listing today at 13–48% APR. Its presence next to a first investment is the drift we are arguing against.</td></tr>
+  <tr><td>IPOs</td><td>Pulin thinks they are a free lottery with "no stakes". Fixing that is a whole product.</td></tr>
+  <tr><td>Tax filing, insurance, credit score</td><td>Adjacent. Would reintroduce the catalogue we are removing.</td></tr>
+  <tr><td>Social feed / copy-trading</td><td>Would import the finfluencer layer rather than answer it.</td></tr>
+  <tr><td>"AI that learns you over months"</td><td>Cannot be demoed in a single click-through, so it cannot be tested. Screen 11 gets the demoable half.</td></tr>
+</table>
+
+<!-- ======================= ACT 1 ======================= -->
+<p class="act">Act 1 · 1 screen</p>
+<p class="act-t">The wall we're replacing</p>
+<p class="act-d">Opens the prototype. Makes the argument in five seconds, before any of our design has to.</p>
+
+<div class="scr">
+  <div class="hd"><span class="num">00</span><span class="nm">Groww today, post-login</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>A faithful, static recreation of what a first-timer actually lands on: the tab row (Stocks · F&amp;O · Mutual Funds
+    · Commodities), a Fast Exit F&amp;O banner, a personal-loan card, a "trending stocks" strip. One button:
+    <strong>"I have ₹5,000. What do I do?"</strong> — which nothing on the screen answers.</p>
+    <p>Tapping anywhere goes to Screen 01.</p>
+    <div class="ev">
+      <b>Evidence.</b> Groww's own Play listing leads with "Exit your F&amp;O positions instantly", "Pledge your stock
+      holdings", "Personal Loans — APR: 13–48%". Reviews: <i>"the F&amp;O page remains the initial landing page,
+      regardless of the fact that I don't use the F&amp;O feature"</i>; <i>"it will create F&amp;O, Bonds accounts
+      without your concern"</i>. Meanwhile the thing people praise is the beginner experience. <b>The asset is being
+      spent to chase traders</b> — that tension is the whole case study.
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ACT 2 ======================= -->
+<p class="act">Act 2 · 6 screens</p>
+<p class="act-t">The first investment</p>
+<p class="act-d">The existing flow, with the four defects the interviews found, plus the one question the survey now demands.</p>
+
+<div class="scr">
+  <div class="hd"><span class="num">01</span><span class="nm">What's this money for?</span><span class="pill keep">Keep</span></div>
+  <div class="bd">
+    <p>Unchanged. Five goals in months, not decades — nothing specific · a trip · a phone/laptop · a buffer · the long run.</p>
+    <div class="ev"><b>Evidence.</b> 20% of non-investors reject investing because "it's for long term". Goal-wise
+    tracking is the top feature request in the Play reviews. Both participants passed this screen without friction.</div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">02</span><span class="nm">When might you need it back?</span><span class="pill keep">Keep</span></div>
+  <div class="bd">
+    <p>Unchanged, and it is the load-bearing screen. Under a year · 1–3 years · 3+ years · no idea.</p>
+    <div class="ev"><b>Evidence.</b> This is why the red day worked on Prakhar — <i>"mujhe isko dekh ke kuch tension
+    nahi ho rahi hai… kyunki main already sure tha ki main ek dedh saal rukunga."</i> Calm because the horizon was set first.</div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">03</span><span class="nm">How much — now recommended, not asked</span><span class="pill fix">Rework</span></div>
+  <div class="bd">
+    <p>Today this screen asks a blank question and offers ₹100 / ₹500 / ₹1,000 / ₹5,000. <strong>The updated survey
+    says that's backwards.</strong></p>
+    <div class="mock">We'd start you at ₹500.
+
+Small enough that a bad month doesn't matter.
+Big enough that the charges don't eat it.
+You can change this any time, and stop any month.
+
+   [ ₹500 — start here ]          ← primary
+   ₹100   ₹1,000   ₹5,000         ← secondary, still one tap</div>
+    <p>Same four amounts. One of them is now a recommendation with a reason attached.</p>
+    <div class="ev">
+      <b>Evidence.</b> At n=24, <b>"how much should I be investing" became the single most-cited thing nobody ever
+      explained — 12 of 24, ahead of MF-vs-index-vs-ETF (11), charges (11) and tax (11)</b>. The app currently asks
+      the exact question the sample says it wants answered. Also kills Prakhar's SIP misconception in one line —
+      he refused a SIP only because <i>"phir mereko monthly paanch hazaar dena padega na"</i>.
+    </div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">04</span><span class="nm">How much of it can wobble?</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>One screen, three taps. Not a risk questionnaire — a split.</p>
+    <div class="mock">Of your ₹5,000, how much are you happy to see move around?
+
+   ○  None of it        → all steady
+   ●  A small slice     → ₹4,500 steady + ₹500 you can swing with
+   ○  I'm here for it   → ₹3,500 steady + ₹1,500 swing
+
+The steady part is the recommendation. The slice is yours
+to pick — and we'll show you what it costs either way.</div>
+    <p>This is the one genuinely new mechanic, and it does three jobs at once.</p>
+    <div class="ev">
+      <b>Evidence.</b> (1) Pulin raised risk appetite <b>four separate times unprompted</b> — <i>"pehle to mera risk
+      appetite poochna chahiye kisi ko, agar koi mujhe help kar raha hai to"</i> — and proposed this exact mechanic:
+      <i>"apne risk ko partition karke, ki thoda sa risk mein lagao, baaki thoda safe rakho"</i>.
+      (2) It answers his <i>"not enough questions… it's too shallow"</i> without breaking the three-question promise —
+      it makes it four. (3) It is the dossier's <b>"safe home for the thrill"</b>: CFA finds 61% of Gen Z investors
+      gamble vs 29% of non-investors, and right now the only exciting thing in Groww is F&amp;O, which takes 89% of
+      under-30s who touch it. A capped, named, visible slice is somewhere for that to go that isn't options.
+    </div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">05</span><span class="nm">Our pick, and how it's actually done</span><span class="pill fix">Rework</span></div>
+  <div class="bd">
+    <p>Keeps the named fund, the verified expense ratio and the 3/5/10-year past returns added yesterday. Two changes:</p>
+    <ul>
+      <li><strong>Move the argument next to the table, not below it.</strong> Pulin read the numbers, saw large-cap
+      funds beating our index fund, and closed the screen — he never reached the "the 0.25% is certain, their returns
+      are not" line. Counter-evidence and the answer to it have to arrive together.</li>
+      <li><strong>Show the split from Screen 04</strong> — steady part and swing part, priced separately.</li>
+    </ul>
+    <div class="ev">
+      <b>Evidence.</b> <i>"It showed me numbers better but I didn't like the reasoning."</i> — Pulin, 23:58.
+      And on the honest side: UTI Nifty 50 is at +5.6% / +6.7% / +11.3% against a large-cap category average of
+      +15.1% / +15.0% / +13.2%. We show that. The argument has to be strong enough to survive showing it.
+    </div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">06</span><span class="nm">What this costs</span><span class="pill fix">Rework</span></div>
+  <div class="bd">
+    <p>Three fixes, all from the interviews:</p>
+    <ul>
+      <li><strong>Kill the comparison bug.</strong> Today the "active fund" tab silently switches from ₹5,000 once to
+      ₹5,000/month × 120 months. Pulin: <i>"comparison hi fuddu hai."</i> Run it on the amount and frequency the user
+      actually picked.</li>
+      <li><strong>No initialisms.</strong> "DP charge" becomes <i>"Depository fee when you sell — a flat ₹15.93,
+      the same on ₹500 as on ₹1 lakh."</i> Pulin read "DP" and guessed "Direct plan" — on the one line the whole
+      argument rests on.</li>
+      <li><strong>Add the decision, not just the number.</strong> He got ₹40 right and concluded <i>"this forty is
+      unavoidable, right?"</i> So the screen has to close the loop: <i>"Unavoidable on a stock. On the fund we picked
+      it's ₹6.28, because there's no depository fee. That's the whole reason we didn't start you in a stock."</i></li>
+    </ul>
+    <div class="ev">
+      <b>Evidence.</b> 17 of 24 wrong on charges, 15 badly under, and <b>nobody picked "no idea"</b> — everyone was
+      confident and wrong. Prakhar read the ₹43 as money he'd <i>receive</i>. Pulin learned the number and kept the
+      behaviour. This screen has failed differently on every person who has seen it.
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ACT 3 ======================= -->
+<p class="act">Act 3 · 4 screens — the biggest addition</p>
+<p class="act-t">The app you come back to</p>
+<p class="act-d">Everything above already existed. This is what makes it a Groww app instead of a flow, and it's where the actual metric lives.</p>
+
+<div class="scr">
+  <div class="hd"><span class="num">07</span><span class="nm">Done — and what happens next</span><span class="pill fix">Rework</span></div>
+  <div class="bd">
+    <p>Keep the seconds-to-invested timer (it's the demo's best moment and an eval measure). Add one thing: the
+    <strong>date of the second investment</strong>, set now, while intent is high.</p>
+    <div class="mock">Done. You're invested.          58s from opening the app
+
+Next: we'll ask you again on 1 Oct.
+Same ₹500, one tap, no decisions.        [ Change ] [ Not now ]</div>
+    <div class="ev"><b>Evidence.</b> Prakhar's account died in exactly this gap — <i>"demat account activate hone mein
+    time laga tha… us time ke wajah se main distract ho gaya."</i> Not fear, not cost. A delay long enough to lose
+    the thread. The second investment is the metric; ask for it while they're still here.</div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">08</span><span class="nm">Home — what you own, in words</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>The screen that doesn't exist today, and the reason this is an app. Deliberately <em>not</em> a returns dashboard.</p>
+    <div class="mock">Your money
+
+  ₹500 in UTI Nifty 50 Index Fund        ₹502.10   ▲ ₹2.10
+  ─────────────────────────────────────────────────────
+  You own a sliver of 50 companies.
+  Bought 17 Sep. You said you need it after 2029.
+
+  Charges so far: ₹0.31        ← always visible, never a surprise
+  Next: ₹500 on 1 Oct                          [ Do it now ]
+
+  ─────────────────────────────────────────────────────
+  Today's 10-minute read →  "What a Nifty 50 actually is"</div>
+    <div class="ev">
+      <b>Evidence.</b> SEBI names poor performance as <b>87% of dormancy</b> — a home that leads with a red number
+      manufactures the churn. Leading with <i>what you own and why you bought it</i> puts the horizon back on screen
+      every time they open the app. Prakhar never reopened Groww after submitting KYC; this is the screen that would
+      have given him a reason to.
+    </div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">09</span><span class="nm">The red day</span><span class="pill keep">Keep</span></div>
+  <div class="bd">
+    <p>Essentially unchanged — it is the best-performing screen in both interviews. Prakhar read the 2008 and March
+    2020 recovery figures out loud and chose "do nothing" on his own. Pulin: <i>"of course do nothing"</i>, then
+    volunteered <i>"waiting is the best thing ever"</i>.</p>
+    <p>One addition: reachable from Home, not only from a "skip ahead" button, so it reads as part of the app rather
+    than a demo device.</p>
+    <div class="ev"><b>Evidence.</b> 9 of 24 say nobody ever explained what to do when it's showing a loss.
+    Both participants handled it correctly. Don't touch what works.</div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">10</span><span class="nm">The second investment</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>Two weeks on. One tap, no decisions re-asked — this is where "the app remembers you" becomes visible.</p>
+    <div class="mock">Welcome back.
+
+Still 3+ years, still ₹500 a month?        [ Yes, do it ]  [ Change ]
+
+One thing changed since you bought:
+your fund's fee dropped from 0.25% to 0.23%. That's it.
+Nothing else needs your attention.</div>
+    <div class="ev">
+      <b>Evidence.</b> This is the demoable half of your "recursive AI" idea — it does not need a learning model, it
+      needs a second session that visibly doesn't re-ask. Directly answers Pulin's <i>"he's leading himself and not
+      letting me lead"</i> and is literally the success metric.
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ACT 4 ======================= -->
+<p class="act">Act 4 · 2 screens</p>
+<p class="act-t">Teach me to check you</p>
+<p class="act-d">The strongest cross-interview finding, and no competitor ships against it.</p>
+
+<div class="card good">
+  <blockquote style="margin-top:0">
+    <p><strong>Prakhar:</strong> "I don't know which is the source of truth… agar tera investing app hai to main sirf
+    tere AI pe reliable nahi hona chahiye. Mere ko baaki jagah se bhi information milni chahiye."</p>
+    <p><strong>Pulin:</strong> "Jin factors pe market khelta hai, wo agar mujhe koi bataaye taaki main khud dekh paun —
+    kyunki <strong>main apne aap se zyada kisko trust karunga? Kisi ko bhi nahi.</strong>"</p>
+    <cite>Two of two, unprompted, in the closing minutes of both interviews</cite>
+  </blockquote>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">11</span><span class="nm">Tap anything to understand it</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>Every jargon term anywhere in the app is tappable. Opens a sheet, not a page. Three parts: <strong>plain
+    words · the number on your screen right now · where to check it yourself.</strong></p>
+    <div class="mock">Depository fee
+
+A flat ₹15.93 charged when you sell shares. It goes to CDSL,
+not to Groww, and it's the same whether you sell ₹500 or ₹1 lakh.
+
+On your ₹500: that's 3.2% — which is why we didn't start you in a stock.
+
+Check it yourself →  CDSL published tariff · SEBI charges page</div>
+    <div class="ev">
+      <b>Evidence.</b> "Need a tutor, that helps me with this stuff from scratch" — survey free text. 11 of 24 say
+      nobody explained MF vs index vs ETF vs stock, 11 say charges, 11 say tax, 10 say when to sell. Pulin:
+      <i>"seedha jargon mere munh pe na fenke… jisko index fund hi nahi pata, usko kya samajh mein aayega?"</i>
+      The third line is what makes it answer the source-of-truth need rather than adding another voice to trust.
+    </div>
+  </div>
+</div>
+
+<div class="scr">
+  <div class="hd"><span class="num">12</span><span class="nm">The ten-minute read</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>One card on Home, daily. Not a course, not a tab. Sized to a commute, and always about something you own.</p>
+    <div class="ev">
+      <b>Evidence.</b> Pulin handed us the format: <i>"har din notification aa raha hai ki ye aaj padh lo, ten minute
+      read hai… and let's say within one month I am actually able to do things on my own. I would be very grateful."</i>
+      He had already tried and quit Zerodha Varsity — <i>"hafte mahine ka investment hai"</i>. Education tabs go
+      unopened; Instagram gets 14 of 24. The dossier's rule: <b>learning after the money, attached to what they own.</b>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ACT 5 ======================= -->
+<p class="act">Act 5 · 1 screen</p>
+<p class="act-t">What this app doesn't have</p>
+
+<div class="scr">
+  <div class="hd"><span class="num">13</span><span class="nm">The absences, stated</span><span class="pill new">New</span></div>
+  <div class="bd">
+    <p>Reachable from Home. Currently this argument only exists as a sentence inside an expander — in a real app
+    shell, the absence <em>is</em> the design statement.</p>
+    <div class="mock">Things we left out, on purpose
+
+  F&O and intraday    43% of F&O traders are under 30.
+                      89% of them lost money last year.
+
+  Personal loans      Not next to your first investment.
+
+  Trending stocks     A list of what went up recently is not advice.
+
+  Notifications       Only when something needs you. Never to sell you.</div>
+    <div class="ev">
+      <b>Evidence.</b> Users leave Groww for Zerodha citing <i>"no pushing of any stuff"</i> and <i>"I always feel
+      like I am in control"</i>. 29 of 145 reviews complain about ads and upsell. And this is a live disagreement with
+      named companies — Millions ships F&amp;O at ₹20/order; Trackk's flagship is <i>"F&amp;O in the time it takes to
+      make chai."</i> Nobody has taken the other side.
+    </div>
+  </div>
+</div>
+
+<!-- ======================= BUILD ======================= -->
+<h2>Build order, with a cut line</h2>
+<p class="sub">If everything ships, 14 screens. If it doesn't, cut from the bottom.</p>
+
+<table>
+  <tr><th>#</th><th>Screens</th><th>Why this order</th></tr>
+  <tr><td><b>1</b></td><td>03, 04, 05, 06</td><td>The four known defects plus the survey's top finding. Fixes what two people already broke.</td></tr>
+  <tr><td><b>2</b></td><td>07, 08, 10</td><td>Home and the second investment. This is what turns a flow into a Groww app and where the metric lives.</td></tr>
+  <tr><td><b>3</b></td><td>00, 13</td><td>The before-screen and the absences. Cheap, static, and they carry most of the argument.</td></tr>
+  <tr><td><b>4</b></td><td>11</td><td>Tap-to-understand. High value, but every term needs writing.</td></tr>
+  <tr><td><b>5</b></td><td>12</td><td>Ten-minute read. Nice to have; one card is enough to show intent.</td></tr>
+</table>
+
+<div class="card warn">
+  <h3>What I'd cut first, honestly</h3>
+  <p><strong>12</strong> (one static card proves the idea), then <strong>11</strong> down to just the three terms that
+  actually broke — depository fee, expense ratio, exit load. <strong>Don't</strong> cut 08 or 10; without them this is
+  still a flow, not an app, and the brief asked for an app.</p>
+</div>
+
+<h2>What each screen gives the evals doc</h2>
+<table>
+  <tr><th>Screen</th><th>Measure</th><th>Baseline we already have</th></tr>
+  <tr><td>03</td><td>Do they take the recommended amount or override it?</td><td>Both picked ₹5,000 unprompted</td></tr>
+  <tr><td>04</td><td>What split do they choose, and does anyone ask for F&amp;O after seeing it?</td><td>New</td></tr>
+  <tr><td>06</td><td>Charges guess before vs after — <b>same amount both times</b></td><td>Prakhar &lt;₹5 · Pulin ₹5 → ₹40</td></tr>
+  <tr><td>06</td><td>"So what would you do differently?" — the decision, not the number</td><td>Pulin: "it's unavoidable" — lesson failed</td></tr>
+  <tr><td>07</td><td>Seconds from open to invested</td><td>Prakhar 453s (interview time, not task time)</td></tr>
+  <tr><td>08</td><td>Unprompted: can they say what they own and why?</td><td>New</td></tr>
+  <tr><td>09</td><td>Hold or sell on the red day</td><td>2 of 2 held</td></tr>
+  <tr><td>10</td><td>Do they take the second investment?</td><td>New — this is the metric</td></tr>
+  <tr><td>11</td><td>Can they define "depository fee" after tapping it?</td><td>Pulin guessed "Direct plan"</td></tr>
+</table>
+
+<h2>Five things I want you to push back on</h2>
+<ol>
+  <li><strong>Screen 04, the swing slice.</strong> It's the only new mechanic and it cuts against "one decision, pre-made".
+  It's justified by Pulin — who is out of ICP. Prakhar never asked for it. Real risk it's a screen for the wrong user.</li>
+  <li><strong>Screen 00.</strong> Recreating today's Groww to criticise it is a strong opening or a cheap shot,
+  depending on execution. Your call.</li>
+  <li><strong>How far to take Groww's visual identity.</strong> Using their green and their type on a fake app that
+  criticises them is a real question. My instinct: Groww's layout patterns and structure, our own wordmark, a visible
+  "concept" label. You said you want it to look like Groww — tell me how close.</li>
+  <li><strong>13 screens may be too many.</strong> Every screen is defensible on its own; together they may rebuild
+  the catalogue we're deleting. If you want it tighter, 00/12/13 go first.</li>
+  <li><strong>We have no in-ICP user left to test on.</strong> Prakhar has seen the old build; Pulin is activated.
+  Interview 3 should be someone with a Groww account who has never invested — 7 of 24 in the survey fit, and 16 left
+  contact details.</li>
+</ol>
+
+<footer>
+  Sources: survey n=24 (17 Sep) · interviews 1–2 · SEBI Investor Survey 2025 · SEBI F&amp;O FY26 ·
+  145 Groww Play reviews · Groww fund pages 16 Sep · competitor listings 16 Sep.<br>
+  Companions: <a href="../research/problem-dossier.html">problem dossier</a> ·
+  <a href="../research/competitive-landscape.html">competitive landscape</a> ·
+  <a href="../interviews/1-prakhar-analysis.html">interview 1</a> ·
+  <a href="../interviews/2-pulin-analysis.html">interview 2</a><br>
+  first500 · Groww Product Intern case study
+</footer>
+
+</div>
+</body>
+</html>

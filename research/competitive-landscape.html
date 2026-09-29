@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Is Actually Building for Gen Z</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#14181f; --muted:#5b6673; --line:#e3e8ee;
+  --card:#f7f9fb; --accent:#00a37a; --accent2:#0a5cdb;
+  --red:#c9342a; --amber:#b57a18; --green:#1a8f63;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --fg:#e7ecf2; --muted:#98a4b3; --line:#232b36;
+    --card:#161c25; --accent:#00d09c; --accent2:#5aa2ff;
+    --red:#ff6b5e; --amber:#ffc266; --green:#3ddba0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --fg:#e7ecf2; --muted:#98a4b3; --line:#232b36;
+  --card:#161c25; --accent:#00d09c; --accent2:#5aa2ff;
+  --red:#ff6b5e; --amber:#ffc266; --green:#3ddba0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:56px 16px 96px}
+header{border-bottom:3px solid var(--accent);padding-bottom:22px}
+.kicker{font:600 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:17px;margin:0}
+.meta{font:12px/1.7 var(--mono);color:var(--muted);margin-top:18px}
+h2{font-size:clamp(21px,3.4vw,26px);margin:52px 0 6px;letter-spacing:-.01em;scroll-margin-top:20px}
+h2 .num{font:600 13px/1.4 var(--mono);color:var(--accent);display:block;margin-bottom:8px;letter-spacing:.1em}
+h3{font-size:17px;margin:30px 0 8px}
+p{margin:0 0 14px}
+a{color:var(--accent2)}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+small{color:var(--muted)}
+
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:20px 22px;margin:30px 0}
+.tldr h3{margin:0 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+.tldr p:last-child{margin-bottom:0}
+
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{text-align:left;padding:9px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+tbody tr:hover{background:var(--card)}
+.tw{white-space:nowrap}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.num2{font:600 13px/1.4 var(--mono)}
+
+.pill{display:inline-block;font:600 10.5px/1.4 var(--mono);padding:4px 7px;border-radius:4px;letter-spacing:.04em;white-space:nowrap}
+.y{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green)}
+.n{background:color-mix(in srgb,var(--red) 15%,transparent);color:var(--red)}
+.p{background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--amber)}
+
+blockquote{margin:14px 0;padding:12px 16px;border-left:3px solid var(--accent);background:var(--card);
+  border-radius:0 6px 6px 0;font-size:14.5px}
+blockquote p{margin:0 0 8px}
+blockquote p:last-child{margin:0}
+.attr{font:12px/1.5 var(--mono);color:var(--muted);margin-top:8px;display:block}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+@media (max-width:640px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px}
+.box h4{margin:0 0 10px;font-size:15px}
+.box.a{border-top:3px solid var(--accent2)}
+.box.b{border-top:3px solid var(--amber)}
+.box ul{margin:0;padding-left:18px;font-size:14px}
+
+.gap{background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid var(--accent);
+  border-radius:8px;padding:20px 22px;margin:26px 0}
+.gap h3{margin:0 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.gap p:last-child{margin-bottom:0}
+
+details{border:1px solid var(--line);border-radius:8px;margin:14px 0;background:var(--card)}
+summary{cursor:pointer;padding:13px 16px;font-weight:600;font-size:14.5px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B8";display:inline-block;margin-right:9px;color:var(--accent);transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .body{padding:0 16px 16px;font-size:14.5px}
+details .body blockquote{background:var(--bg)}
+
+.note{font-size:13.5px;color:var(--muted);border:1px dashed var(--line);border-radius:8px;padding:13px 16px;margin:18px 0}
+.note strong{color:var(--fg)}
+.src{font-size:13px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:44px 0}
+@media print{
+  body{background:#fff;color:#000}.wrap{padding:0}
+  details{border:0;background:none}details .body{display:block}
+  a{color:#000;text-decoration:underline}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Competitive landscape &middot; Groww Product Intern case study</div>
+  <h1>Round-ups dodge the decision. Brokers dump it. Guidance exists &mdash; just not for the first &#8377;500.</h1>
+  <p class="sub">Every serious Indian investing app aimed at young first-timers &mdash; what they actually built, what the numbers say, and the one gap none of them has closed.</p>
+  <p class="meta">Pulled 16 Sep 2026 &middot; Google Play listings (India) via Jina &middot; Inc42, YourStory, IBS Intelligence &middot; r/personalfinanceindia, r/IndiaInvestments, r/IndianStockMarket</p>
+</header>
+
+<div class="tldr">
+  <h3>The finding</h3>
+  <p>There are two camps, and both dodge the same moment. The <strong>habit apps</strong> (Jar, Deciml, Fello) nailed the psychological entry &mdash; round-ups, &#8377;20 a day, gamified streaks &mdash; but they wrap it around a <em>bad asset</em>, mostly digital gold, and they work by making sure <em>you never make a decision at all</em>. The <strong>broker apps</strong> (Groww, Zerodha, Upstox) have the right products at the right price &mdash; direct mutual funds at 0% commission, index funds, ETFs &mdash; but they hand you a catalogue and walk away.</p>
+  <p><strong>Corrected 17 Sep 2026.</strong> An earlier draft of this page said nobody guides the decision. That is wrong, and Groww itself disproves it: <strong>MF Prime</strong> already asks for risk appetite, time horizon, age and income, takes any amount, and returns a split recommendation across two funds with a "Why these funds?" panel and an AI assistant. See the close read below.</p><p>The narrower claim survives, and it is the one this project is built on: <strong>guidance exists for people who already invest. Nobody guides the first &#8377;500, nobody shows what it costs before you buy, and nobody is there on the first red day.</strong></p>
+</div>
+
+<h2 id="map"><span class="num">THE MAP</span>Who is actually building for Gen Z</h2>
+
+<div class="tscroll">
+<table>
+<thead><tr>
+  <th>App</th><th class="tw">Rating</th><th class="tw">Reviews</th><th class="tw">Installs</th>
+  <th class="tw">Gen Z?</th><th>How they go after them</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>Millions</strong><br><small>Raise Fintech (Dhan's parent)</small></td>
+  <td class="tw num2">4.3</td><td class="tw num2">249</td><td class="tw num2">100K+</td>
+  <td><span class="pill y">EXPLICIT</span></td>
+  <td>Purpose-built, launched ~Jun 2026. <strong>Goal-based investing</strong>, min SIP &#8377;500, &#8377;0 brokerage on equity &amp; ETFs, 0% on direct MF. Markets on <strong>Instagram, Snapchat, YouTube</strong>. The only serious player to build a separate app for this segment.</td>
+</tr>
+<tr>
+  <td><strong>Trackk</strong><br><small>Lightspeed, Info Edge + creator angels</small></td>
+  <td class="tw num2">4.6</td><td class="tw num2">&mdash;</td><td class="tw num2">&mdash;</td>
+  <td><span class="pill y">EXPLICIT</span></td>
+  <td>"Young India's investment platform for <strong>first-time investors</strong>." $3.7M raised. &#8377;0 account and AMC, &#8377;20 equity, &#8377;20 F&amp;O. Flagship discovery features are <strong>Opinion</strong> (swipe to take a side, it reveals a stock) and <strong>Quick Trade</strong> &mdash; a three-tap options builder. See the close read below.</td>
+</tr>
+<tr>
+  <td><strong>Jar</strong></td>
+  <td class="tw num2">4.7</td><td class="tw num2">2.02M</td><td class="tw num2">50M+</td>
+  <td><span class="pill y">IMPLICIT</span></td>
+  <td>Daily savings + UPI round-ups into <strong>digital gold</strong>. Enormous scale &mdash; the habit mechanic is proven. The asset underneath is the problem (see below).</td>
+</tr>
+<tr>
+  <td><strong>Deciml</strong></td>
+  <td class="tw num2">3.5</td><td class="tw num2">&mdash;</td><td class="tw num2">&mdash;</td>
+  <td><span class="pill y">EXPLICIT</span></td>
+  <td>Reads your UPI messages, rounds &#8377;221 &rarr; &#8377;230, invests the &#8377;9 in <strong>mutual funds</strong>. The only app combining the habit mechanic with a sane asset &mdash; and it rates 3.5.</td>
+</tr>
+<tr>
+  <td><strong>Fello</strong></td>
+  <td class="tw num2">3.2</td><td class="tw num2">4.5K</td><td class="tw num2">1M+</td>
+  <td><span class="pill y">EXPLICIT</span></td>
+  <td>Gamified saving, autosave, goal-based SIPs into gold/FD/MF. Lowest rating in the set.</td>
+</tr>
+<tr>
+  <td><strong>StockGro</strong></td>
+  <td class="tw num2">&mdash;</td><td class="tw num2">&mdash;</td><td class="tw num2">35M claimed</td>
+  <td><span class="pill p">WAS</span></td>
+  <td>Started as social / fantasy stock trading for students &mdash; the most Gen Z thing in the market. Has since <strong>pivoted to AI tools plus tips from 150+ SEBI-registered advisors</strong>, aimed at intraday and BTST. The Gen Z social app became a tips service.</td>
+</tr>
+<tr>
+  <td><strong>Groww</strong><br><small>Billionbrains Garage Ventures</small></td>
+  <td class="tw num2">4.8</td><td class="tw num2">2.46M</td><td class="tw num2">100M+</td>
+  <td><span class="pill n">NO</span></td>
+  <td>The incumbent, and still the best-rated. But its <em>own store listing</em> now leads with F&amp;O fast-exit, commodity derivatives, pledging holdings for margin, and <strong>personal loans at 13&ndash;48% APR</strong>.</td>
+</tr>
+<tr>
+  <td><strong>INDmoney</strong></td>
+  <td class="tw num2">4.6</td><td class="tw num2">460K</td><td class="tw num2">10M+</td>
+  <td><span class="pill p">PARTLY</span></td>
+  <td>US stocks and account aggregation pull a young, aspirational crowd. Also now surfaces InstaCash loans at 10&ndash;45% APR.</td>
+</tr>
+<tr>
+  <td><strong>Zerodha Kite</strong></td>
+  <td class="tw num2">4.4</td><td class="tw num2">393K</td><td class="tw num2">10M+</td>
+  <td><span class="pill n">NO</span></td>
+  <td>Deliberately trader-first and deliberately un-nudgy. Stock/ETF SIPs from &#8377;500 exist but are buried. Its <em>restraint</em> is what young switchers praise, not its onboarding.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="src">Ratings, review counts and install counts read off live Google Play India listings on 16 Sep 2026. Dashes are values the page didn't expose on fetch. StockGro's 35M is a self-reported claim on its own site, not a Play figure &mdash; treat it as marketing.</p>
+
+<hr>
+
+<h2 id="camps"><span class="num">THE PATTERN</span>Two camps, one shared blind spot</h2>
+
+<div class="split">
+  <div class="box a">
+    <h4>Camp 1 &mdash; the habit apps</h4>
+    <p style="font-size:14px;margin-bottom:10px"><em>Jar, Deciml, Fello</em></p>
+    <ul>
+      <li><strong>Got right:</strong> starting is effortless. &#8377;20 a day. Spare change. No decision required.</li>
+      <li><strong>Got wrong:</strong> mostly digital gold &mdash; 3% GST on buy, a buy/sell spread, storage charges, then tax on gains.</li>
+      <li><strong>Deeper problem:</strong> they work by <em>removing</em> the decision. The user never learns anything and never graduates.</li>
+      <li><strong>Scoreboard:</strong> Jar 4.7 at huge scale; Deciml 3.5; Fello 3.2.</li>
+    </ul>
+  </div>
+  <div class="box b">
+    <h4>Camp 2 &mdash; the broker apps</h4>
+    <p style="font-size:14px;margin-bottom:10px"><em>Groww, Zerodha, Upstox, INDmoney</em></p>
+    <ul>
+      <li><strong>Got right:</strong> the actual products. Direct mutual funds at 0% commission, index funds, ETFs. Genuinely good, genuinely cheap.</li>
+      <li><strong>Got wrong:</strong> they hand you a catalogue and leave. Choosing is entirely your problem.</li>
+      <li><strong>Deeper problem:</strong> the monetisation pulls toward F&amp;O, margin and lending &mdash; visible in their own store listings.</li>
+      <li><strong>Scoreboard:</strong> Groww 4.8 / 100M+ installs. The scale is real; the activation is not.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="gap">
+  <h3>The unowned moment</h3>
+  <p>A 21-year-old has &#8377;5,000 and thirty seconds of intent. <strong>Camp 1 dodges the decision</strong> &mdash; it invests &#8377;9 of spare change so she never has to choose, and she learns nothing. <strong>Camp 2 dumps the decision</strong> &mdash; here are 1,400 mutual funds, good luck. <strong>Groww will sit with her &mdash; but only through MF Prime, which assumes she has a portfolio to compare against and an income to declare.</strong> At &#8377;0 invested, the ideal-allocation chart has nothing to plot.</p>
+  <p>That gap lines up exactly with what your problem research found: <strong>74% of non-investors are blocked by complexity, and 27% say plainly "I don't know how to start."</strong> The market has answered that with automation, with a catalogue, or with guidance aimed one rung above her.</p>
+</div>
+
+<details>
+<summary>Evidence: why the digital gold asset is the weak link</summary>
+<div class="body">
+<p>Jar's habit mechanic clearly works &mdash; 50M+ installs and 4.7 stars do not happen by accident, and users describe the product itself warmly. The returns are the problem:</p>
+<blockquote>
+<p>"I invested around 8.5k in Jar over 2 months and got back around 8.7k after selling. A net profit of <strong>200 only</strong> because of all the extra gold or savings that they provided. Don't think that it's worth it at a larger scale at all."</p>
+<span class="attr">r/personalfinanceindia &mdash; "Does Jar make sense?"</span>
+</blockquote>
+<blockquote>
+<p>"Stay away from Digital gold. It's a bad scheme. You pay <strong>3% GST and locker charges while buying</strong> and upon selling you will also be taxed on the gains. In short, you'll lose a lot of money on tax and fees. A better alternative is Gold ETFs."</p>
+<span class="attr">r/personalfinanceindia &mdash; "Is Jar app for digital gold investment reliable"</span>
+</blockquote>
+<blockquote>
+<p>"I recently tried jar and it is <strong>very aggressive with buying gold</strong> and withdrawls are risked to gold market i dont want that."</p>
+<span class="attr">r/personalfinanceindia</span>
+</blockquote>
+<p><strong>Worth noting honestly:</strong> Jar rates 4.7 on Play while Reddit is broadly negative on it. That isn't a contradiction &mdash; the store rating measures how the <em>habit</em> feels, and Reddit measures the <em>financial outcome</em>. Both are true. A product can be a delight to use and still be a poor place to put money, and that split is itself a finding: <strong>Gen Z will happily adopt a savings habit before they can evaluate the asset it feeds.</strong> That's an opportunity and a duty of care at the same time.</p>
+</div>
+</details>
+
+<details>
+<summary>Evidence: Groww's own store listing has drifted</summary>
+<div class="body">
+<p>Pulled straight from the live Play description &mdash; this is how Groww currently describes itself to a first-time downloader:</p>
+<blockquote>
+<p>"Exit your F&amp;O positions instantly in a click with Fast Exit &hellip; Commodity Derivatives Trading &hellip; Trade in Gold, Silver, Crude Oil, Natural Gas &hellip; <strong>Pledge your stock holdings to boost your margin and take larger positions</strong> &hellip; Personal Loans &mdash; Tenure: 3 to 60 months, <strong>APR: 13&ndash;48%</strong>"</p>
+<span class="attr">Google Play listing, com.nextbillion.groww, fetched 16 Sep 2026</span>
+</blockquote>
+<p>Compare Millions, built by a competitor specifically for this segment:</p>
+<blockquote>
+<p>"Whether it's your first SIP of just <strong>&#8377;500</strong> or the beginning of a long-term portfolio, Millions makes the share market simple, safe, and approachable &hellip; it empowers you to <strong>start small, learn with confidence, and grow steadily</strong> &hellip; Find us where you scroll! Instagram &middot; Snapchat &middot; YouTube"</p>
+<span class="attr">Google Play listing, com.millions.live</span>
+</blockquote>
+<p>This is a clean, quotable contrast for your write-up. It is not an opinion about Groww &mdash; it is Groww's own copy next to a competitor's, both public, both current.</p>
+</div>
+</details>
+
+<hr>
+
+<h2 id="prime"><span class="num">CLOSE READ</span>Groww MF Prime &mdash; the incumbent already guides</h2>
+
+<p>Walked through the live product on 17 Sep 2026. MF Prime is a tier inside the Groww app, reached from the
+Mutual Funds tab. Its onboarding is called <em>"Let's set up your Prime Strategy"</em> and it collects, in order:</p>
+
+<ul>
+  <li><strong>Risk appetite</strong> &mdash; four levels, each drawn as a volatility sparkline: Very high risk /
+  High risk (Aggressive) / Moderate / Low risk, low returns.</li>
+  <li><strong>Time horizon</strong> &mdash; Short-term (&lt;2 years) / Medium-term (2&ndash;5) / Long-term wealth creation (5+).</li>
+  <li><strong>Age and current annual income.</strong></li>
+</ul>
+
+<p>It then offers <em>"Enter any amount, get recommendations for SIP or lumpsum"</em>, takes a free-typed figure on a
+keypad, and returns a split across two named funds &mdash; in our walkthrough &#8377;5,000 as &#8377;1,000 WhiteOak
+Mid Cap plus &#8377;4,000 Aditya Birla Flexi Cap &mdash; with a <strong>"Why these funds?"</strong> panel, an
+<strong>"Ask GR-1"</strong> AI button, and an <strong>allocation comparison</strong> charting your portfolio against
+the "Prime ideal" across large / mid / small cap, debt and commodity.</p>
+
+<div class="note"><strong>Say this out loud in the write-up rather than hoping nobody notices.</strong> A candidate
+who claims nobody guides the decision, to the company that ships MF Prime, has not opened the product they are
+pitching to. Conceding it and then naming what is still missing is a much stronger position.</div>
+
+<h3>What Prime does not do &mdash; and this is the whole opening</h3>
+<table>
+  <thead><tr><th>What MF Prime does</th><th>What it leaves open</th></tr></thead>
+  <tbody>
+  <tr><td>Profiles risk, horizon, age, income</td><td>Asks for <strong>annual income</strong> before it will help.
+    That is a reasonable question for a HENRY and a strange one for a 21-year-old on a stipend.</td></tr>
+  <tr><td>Recommends real funds with reasons</td><td><strong>Shows no cost anywhere.</strong> Across eight screens
+    there is not one expense ratio, exit load, stamp duty or depository fee. The single largest gap, and the one
+    17 of 24 people in the survey got wrong.</td></tr>
+  <tr><td>"Best Picks by Prime", sorted by 3Y return</td><td>Ranking by trailing return is the exact behaviour behind
+    SEBI's <strong>87% "poor performance"</strong> dormancy figure. It recommends active funds, not index funds.</td></tr>
+  <tr><td>Allocation comparison vs a "Prime ideal"</td><td>Assumes <strong>an existing portfolio</strong>. At
+    &#8377;0 invested the chart has nothing to compare, which is precisely our user.</td></tr>
+  <tr><td>Lives in the Mutual Funds tab</td><td>The app's bottom nav is <strong>Stocks &middot; F&amp;O &middot;
+    Mutual Funds &middot; Loans</strong>. Guidance is one of four tabs and F&amp;O is its peer, sitting second.</td></tr>
+  <tr><td>Handles the buy</td><td><strong>Nothing about the first red day.</strong> No drawdown framing anywhere.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="trackk"><span class="num">CLOSE READ</span>Trackk &mdash; the same user, the opposite answer</h2>
+
+<p>Trackk is the closest thing in the market to the brief's exact ICP, and it is well funded and well made. Its Play Store listing opens: <em>"Trackk is Young India's investment platform for first-time investors."</em> Its homepage says Trackk is for <em>"first-time investors, f&amp;o explorers, hustlers, dreamers, you"</em> &mdash; those four in a single list.</p>
+
+<p>The backer list tells you the distribution strategy: <strong>Lightspeed</strong> and <strong>Info Edge</strong>, alongside angels <strong>Gaurav Munjal, Tanmay Bhat, Varun Mayya, Roman Saini</strong> and <strong>Gaurav Kapur</strong>. That is a creator-economy play, pointed directly at the channel that <strong>11 of 17 people in the primary survey named as their source of money advice</strong>.</p>
+
+<p>Then read the product page for their flagship discovery feature:</p>
+
+<blockquote>
+<p style="font-size:19px;font-weight:700;letter-spacing:-.02em">"F&amp;O in the time it takes to make chai."</p>
+<p>"Pick a stock. Pick a direction. Set how much you can lose. We do the rest."</p>
+<span class="attr">trackk.in/products/fno, fetched 16 Sep 2026</span>
+</blockquote>
+
+<p>The flow is three steps: the user says up or down, the user sets a budget, and <strong>Trackk selects the strike, expiry and lot size</strong>. Their other discovery feature, Opinion, works by swiping to take a side, which then reveals a stock to trade.</p>
+
+<div class="gap">
+  <h3>The contrast this creates</h3>
+  <p>Set that against SEBI's own FY26 study: <strong>43% of individual F&amp;O traders are under 30, and 89% of them lost money.</strong></p>
+  <p><strong>Trackk:</strong> first-time investors, options in three taps.<br>
+  <strong>This case study's app:</strong> first-time investors, no F&amp;O at all, with the 89% figure printed on the screen where a user would go looking for it.</p>
+  <p>The scope decision is no longer a theoretical preference. It is a live disagreement with a named, funded company chasing the identical user.</p>
+</div>
+
+<h3>The fair version of the critique</h3>
+<p>Two things should be conceded, because conceding them makes the argument harder to dismiss:</p>
+<ul>
+<li><strong>"Set how much you can lose" implies defined-risk structures</strong>, which is genuinely more responsible than selling naked options to beginners. Their pricing is also published plainly.</li>
+<li><strong>The app is good.</strong> 4.6 on Play, 4.7 on the App Store, and the single-screen trading design is a real piece of craft.</li>
+</ul>
+<p>The narrower critique is the one that holds: <strong>defined risk does not move the 89% much</strong>, because that figure is driven by repeated small losses and costs rather than single blowups. Making a losing activity faster and more frictionless raises its frequency; it does not change its expected value. An app that is for first-time investors <em>and</em> for "f&amp;o explorers" has to decide which one it optimises the default path for &mdash; and "in the time it takes to make chai" answers that question.</p>
+
+<hr>
+
+<h2 id="millions"><span class="num">CLOSE READ</span>Millions &mdash; your real competitor</h2>
+
+<p>Raise Financial Services &mdash; the $1.2Bn unicorn behind Dhan, founded by ex-Paytm Money CEO Pravin Jadhav &mdash; launched Millions around June 2026 as a <em>separate app</em> for Gen Z and first-timers. Their stated reasoning is almost word for word your own research finding:</p>
+
+<blockquote>
+<p>"The challenge for our industry is that investing experiences have often been built <strong>around products, terminology, and complexity, whereas most people think in terms of goals and outcomes</strong> &hellip; By bringing together goal-based investing with access to a variety of products, we're making investing feel more relevant, approachable, and connected to what new-age traders actually care about."</p>
+<span class="attr">Pravin Jadhav, cofounder &amp; CEO, Raise Financial &mdash; via Inc42, Jun 2026</span>
+</blockquote>
+
+<p><strong>Read this as validation, not as a threat.</strong> A unicorn independently reached your diagnosis and spent real money on it. Say so explicitly in your one-pager &mdash; it shows you checked the market rather than inventing a problem. Then point at what they left on the table:</p>
+
+<div class="tscroll">
+<table>
+<thead><tr><th>What Millions did</th><th>The opening it leaves</th></tr></thead>
+<tbody>
+<tr><td>Goal-based investing as the organising idea</td><td>Right call &mdash; but goals still sit <em>on top of</em> a product catalogue. Picking within the goal is still the user's problem.</td></tr>
+<tr><td>Minimum SIP &#8377;500</td><td>Still ten times Jar's entry point. 14% of non-investors think you need a large amount to start &mdash; &#8377;500 does not fully kill that objection.</td></tr>
+<tr><td>&#8377;0 brokerage on equity &amp; ETFs, 0% on direct MF</td><td>Good, and table stakes now. But <em>zero brokerage is not zero cost</em> &mdash; STT, GST, stamp duty and DP charges still land. Nobody is showing that number before the trade.</td></tr>
+<tr><td><strong>&#8377;20 per order on equity F&amp;O</strong></td><td><strong>The big one.</strong> An app built for Gen Z first-timers still ships F&amp;O. Given 89% of under-30 F&amp;O traders lost money in FY26, this is the most attackable decision in the entire market.</td></tr>
+<tr><td>100K+ installs, 249 reviews, 4.3 stars</td><td>Three months old and tiny. The segment is <em>not</em> locked up. Nothing here is settled.</td></tr>
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<h2 id="etmoney"><span class="num">CLOSE READ</span>ET Money Genius &mdash; proof that paid guidance cannot serve this user</h2>
+
+<p>The most important competitor here is not another app for GenZ. It is the one serious attempt to
+<em>charge</em> for the guidance this project wants to give away, because it settles the business-model
+question before it is asked.</p>
+
+<p><strong>ET Money Genius</strong> launched in <strong>February 2022</strong> (not 2015, as several
+write-ups claim) at <strong>&#8377;249 a month</strong> for advisory &mdash; asset allocation, fund
+selection, rebalancing.</p>
+
+<h3>The arithmetic that kills it at our ticket size</h3>
+<table>
+  <thead><tr><th>If you invest&hellip;</th><th>You pay Genius</th><th>As a share of what you put in that year</th></tr></thead>
+  <tbody>
+  <tr><td>&#8377;5,000 a month (&#8377;60,000 a year)</td><td>&#8377;2,988 a year</td>
+      <td><strong>about 4.8%</strong> &mdash; roughly 20&times; a 0.25% index fund</td></tr>
+  <tr><td><strong>&#8377;500 a month (&#8377;6,000 a year)</strong></td><td>&#8377;2,988 a year</td>
+      <td><strong>about 50% of everything you invest</strong></td></tr>
+  </tbody>
+</table>
+
+<p>At the amount our user actually starts with, <strong>the advice costs as much as the investment</strong>.
+No amount of product quality fixes that. Reddit reached the same conclusion without the spreadsheet:</p>
+
+<blockquote><p>"Genius is not for 5000 rs portfolios."</p>
+<cite>r/IndiaInvestments, on ET Money Genius</cite></blockquote>
+
+<div class="note"><strong>This is the "why Groww" argument, and it is a business-model claim rather than a
+product one.</strong> Guidance for a &#8377;500 investor has to be free, because any subscription large
+enough to fund it is a double-digit percentage of the money being invested. <strong>Only an incumbent that
+earns elsewhere &mdash; on scale, on other products, on the same customer five years later &mdash; can
+afford to give it away.</strong> A standalone startup has to chase &#8377;20L portfolios instead, which is
+exactly what Genius ended up doing.</div>
+
+<h2 id="scope"><span class="num">SO WHAT</span>What this changes about your app</h2>
+
+<p>The landscape sharpens the scope decision rather than replacing it. Three things now have evidence behind them:</p>
+
+<ol>
+<li><strong>Own the <em>first</em> decision and its cost.</strong> Round-ups are taken, gamified saving is taken and rates badly (3.2&ndash;3.5), catalogues are taken, and fund-picking guidance is taken by MF Prime. What is still unowned is the very first one &mdash; and the cost of it, which no app in this table shows before you buy.</li>
+<li><strong>Cutting F&amp;O is now a differentiator, not just a scoping convenience.</strong> Millions, built from scratch for Gen Z, kept it at &#8377;20 an order. Trackk, built for first-time investors, made it the <em>flagship feature</em> and put it three taps from open. Saying "this app has no F&amp;O, here is why, here is the 89% figure" is a position no shipping product in this market has taken &mdash; and there is now a named company on the other side of it.</li>
+<li><strong>Borrow the habit mechanic, fix the asset.</strong> Jar proved Indians in this age group will save daily in tiny amounts &mdash; at 50M+ installs. The flaw isn't the ritual, it's the gold. Take the ritual, point it at a low-cost index fund, and show the true cost. Deciml is closest to this and rates 3.5, so the idea isn't unthought &mdash; it's unexecuted, which is a much better thing to walk into.</li>
+</ol>
+
+<div class="note"><strong>One line worth putting in the one-pager:</strong> "The Gen Z apps got the habit right and the asset wrong. The brokers got the asset right and the habit wrong. I'm building the overlap." That is a positioning claim backed by the table above, not a slogan.</div>
+
+<hr>
+
+<h2 id="method"><span class="num">APPENDIX</span>Method and limits</h2>
+
+<ul>
+<li><strong>Play Store listings</strong> fetched live on 16 Sep 2026 via Jina Reader (free), India storefront. Ratings, review counts, install bands and description copy are as shown on the listing that day.</li>
+<li><strong>Review bodies could not be scraped.</strong> Apify's free tier is capped at 500 reviews total and the 145-review Groww pull from the earlier research exhausted it. So this document uses listing metadata plus Reddit, not fresh review text. That's a real gap: I'm reading Deciml's and Fello's low ratings without being able to read <em>why</em>.</li>
+<li><strong>StockGro and Deciml listings returned truncated pages</strong> on fetch, so their review counts and install bands are missing. Deciml's 3.5 rating comes from Play search results, which is reliable; StockGro's rating I could not confirm at all and have left blank rather than guess.</li>
+<li><strong>StockGro's "35M+ users"</strong> is self-reported on their own site. It is marketing, not a verified figure, and is labelled as such in the table.</li>
+<li><strong>Millions has only 249 reviews.</strong> Its 4.3 rating is statistically thin and heavily weighted toward early adopters. Do not treat it as a quality verdict &mdash; treat the app as evidence of <em>strategy</em>, which is what matters here.</li>
+<li><strong>Reddit skews negative on consumer fintech</strong> generally, and the Jar threads are no exception. I've flagged the 4.7-vs-Reddit split rather than resolving it in either direction.</li>
+<li><strong>Trackk's review count and install band could not be read</strong> &mdash; the Play listing returned a truncated page on fetch. The 4.6 and 4.7 ratings come from Play search results and Trackk's own site respectively. Its $3.7M raise and backer list are self-reported on its homepage; I have not seen them confirmed in filings.</li>
+<li><strong>Not covered:</strong> Upstox, Angel One, Paytm Money, smallcase, Navi, Fi, slice and the crypto apps. Upstox and Angel One are mass-market broker plays with no distinct Gen Z product; the rest are adjacent rather than competing. If you want any of them added, it's a ten-minute pull.</li>
+</ul>
+
+<p class="src" style="margin-top:36px">Compiled 16 September 2026. Companion to the problem-space dossier (<em>genz-investor-research.html</em>).</p>
+
+</div>
+</body>
+</html>

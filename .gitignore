@@ -1,0 +1,19 @@
+# Audio and video of interview participants — never publish these
+*.mp3
+*.mp4
+*.m4a
+*.wav
+
+# Raw machine-transcript dumps (superseded by the cleaned transcripts)
+*-raw.md
+
+# Anything confidential that must never reach a remote
+*seed deck*
+*Seed Deck*
+*.pdf
+
+# Local noise
+.DS_Store
+Thumbs.db
+node_modules/
+.vercel

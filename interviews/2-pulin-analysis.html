@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview 2 — Pulin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf8; --surface:#ffffff; --ink:#15150f; --muted:#5d5c52; --line:#e4e1d9;
+  --accent:#00b386; --accent-ink:#00715a; --warn:#b4531a; --warn-bg:#fdf1e7;
+  --bad:#b3261e; --bad-bg:#fdefee; --good-bg:#eaf8f3; --quote-bg:#f4f2ec;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131310; --surface:#1c1c18; --ink:#f2f0e9; --muted:#a3a094; --line:#312f29;
+    --accent:#2fd6a8; --accent-ink:#7be3c4; --warn:#e8a06a; --warn-bg:#2a1f15;
+    --bad:#f08d85; --bad-bg:#2b1817; --good-bg:#14261f; --quote-bg:#232320;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131310; --surface:#1c1c18; --ink:#f2f0e9; --muted:#a3a094; --line:#312f29;
+  --accent:#2fd6a8; --accent-ink:#7be3c4; --warn:#e8a06a; --warn-bg:#2a1f15;
+  --bad:#f08d85; --bad-bg:#2b1817; --good-bg:#14261f; --quote-bg:#232320;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased}
+.wrap{max-width:760px; margin:0 auto; padding:56px 16px 96px}
+header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:38px}
+.kicker{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent-ink); margin:0 0 10px}
+h1{font-size:2.35rem; line-height:1.12; font-weight:800; margin:0 0 12px; letter-spacing:-.02em}
+.meta{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--muted); line-height:1.8; margin:0}
+.meta a{color:var(--accent-ink)}
+h2{font-size:1.45rem; font-weight:800; letter-spacing:-.01em; margin:52px 0 6px; padding-top:22px; border-top:1px solid var(--line)}
+h2:first-of-type{border-top:none; padding-top:0}
+h3{font-size:1.06rem; font-weight:700; margin:30px 0 6px}
+h2 + .sub{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted); margin:0 0 18px}
+p{margin:0 0 15px}
+ul,ol{margin:0 0 15px; padding-left:22px} li{margin-bottom:8px}
+blockquote{margin:18px 0; padding:14px 18px; background:var(--quote-bg);
+  border-left:3px solid var(--accent); border-radius:0 7px 7px 0; font-size:16.5px}
+blockquote p{margin:0 0 8px} blockquote p:last-child{margin:0}
+blockquote cite{display:block; font-style:normal; font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px; color:var(--muted); margin-top:9px; letter-spacing:.03em}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:20px 22px; margin:22px 0}
+.card.good{background:var(--good-bg); border-color:transparent}
+.card.warn{background:var(--warn-bg); border-color:transparent}
+.card.bad{background:var(--bad-bg); border-color:transparent}
+.card h3{margin-top:0}
+.tag{display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.09em; text-transform:uppercase; padding:3px 8px; border-radius:4px;
+  background:var(--ink); color:var(--bg); margin-bottom:10px; font-weight:500}
+.tag.w{background:var(--warn); color:#fff} .tag.b{background:var(--bad); color:#fff}
+.tag.g{background:var(--accent-ink); color:#fff}
+table{width:100%; border-collapse:collapse; margin:20px 0; font-size:15.5px}
+th,td{text-align:left; padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--muted); font-weight:500; border-bottom:1.5px solid var(--ink)}
+.big{display:flex; gap:14px; flex-wrap:wrap; margin:22px 0}
+.big div{flex:1 1 150px; background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:16px 18px}
+.big .n{font-family:"IBM Plex Mono",monospace; font-size:1.7rem; font-weight:500;
+  line-height:1.1; color:var(--accent-ink); letter-spacing:-.02em}
+.big .l{font-size:13px; color:var(--muted); margin-top:6px; line-height:1.4}
+code{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--quote-bg); padding:1px 5px; border-radius:4px}
+footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); line-height:1.8}
+@media print{
+  body{background:#fff; color:#000; font-size:11.5pt}
+  .wrap{max-width:none; padding:0}
+  h2{page-break-after:avoid} blockquote,.card,table{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">first500 · field research · interview 2 of 3</p>
+  <h1>What Pulin told us</h1>
+  <p class="meta">
+    16 Sep 2026 · 36 min · Hindi/Hinglish · screen-shared, recorded<br>
+    Participant: first full-time job. <strong>Zerodha Coin + Kite, not Groww.</strong> ICICI RD at ₹5,000/month,
+    a Jio BlackRock fund on Coin, gold ETFs on Kite. The first response on the form.<br>
+    Transcript: <a href="2-pulin-transcript.md">pulin-transcript-clean.md</a> · raw ASR:
+    <code>pulin-transcript.md</code> · audio: <code>pulin-groww.mp3</code>
+  </p>
+</header>
+
+<p><strong>One line:</strong> the script fix worked and we got a clean before-and-after on charges — but he learned
+the number without learning the lesson, he found a real bug in the comparison screen, and he wants the app to ask
+him <em>more</em> questions, not fewer. He is also the second participant in a row to end the interview asking to be
+taught how to check the app rather than trust it.</p>
+
+<div class="big">
+  <div><div class="n">₹5 → ₹40</div><div class="l">his charges guess, before and after. Clean this time</div></div>
+  <div><div class="n">"too shallow"</div><div class="l">his verdict on the app</div></div>
+  <div><div class="n">No</div><div class="l">would not pay ₹100/month. Prakhar said yes</div></div>
+  <div><div class="n">2 of 2</div><div class="l">participants who asked to be taught to verify</div></div>
+</div>
+
+<h2>1. The charges eval — it worked, and then it didn't</h2>
+<p class="sub">The fix from interview 1 held. The result is more interesting than a pass</p>
+
+<h3>Before</h3>
+<p>His form answer was ₹5. Asked to confirm it out loud:</p>
+<blockquote>
+  <p><em>Prathamesh:</em> "To tere hisaab se paanch rupaye katne chahiye… wo saari milakar paanch rupaye?"</p>
+  <p><em>Pulin:</em> "Nahi… <strong>ek percent at max.</strong>"</p>
+  <p><em>Prathamesh:</em> "That was your guess." — "Yes, one percent at max."</p>
+  <cite>15:35 – 15:48</cite>
+</blockquote>
+<p>One percent of ₹500 is ₹5. The real answer is ₹18.22, or 3.6%. Wrong by about 3.6×, same direction as everyone
+else — but note he reached for a <em>percentage</em>, not a rupee figure. Same wrong model as Prakhar: charges scale
+with the money, so a flat fee is invisible.</p>
+
+<div class="card good">
+  <span class="tag g">Method fix from interview 1 — confirmed working</span>
+  <h3>After: he answered before being told</h3>
+  <blockquote style="margin-top:0">
+    <p><em>Prathamesh:</em> "Now do you understand how much it will be? Do you want to change your answer to just five?"</p>
+    <p><em>Pulin:</em> "<strong>Kitna aa raha hai — forty something na? …Chaalees na.</strong>"</p>
+    <cite>29:34 – 29:51</cite>
+  </blockquote>
+  <p>Asked, then silence, then his number. That's the clean pre/post interview 1 failed to produce. <strong>This is
+  the measurement the evals doc is built on.</strong></p>
+  <p><strong>One honest caveat:</strong> ₹40 is the figure the app showed for <em>₹5,000</em> in a stock, and the
+  question was about ₹500. He recalled what he saw rather than re-deriving it for the smaller amount. So he learned
+  the order of magnitude, not the rate. For interview 3: ask the post-test on the <em>same</em> amount as the pre-test.</p>
+</div>
+
+<h3>And then the lesson failed</h3>
+<p>Straight after getting the number right, he drew the opposite conclusion to the one the screen was built to produce:</p>
+<blockquote>
+  <p>"But <strong>this forty is unavoidable</strong>, right?"</p>
+  <p>"Kyunki platform to kuch charge nahi kar raha hai — saare bigger players hi hain jo charge kar rahe hain…
+  <strong>ye waali cheezein to unavoidable hain na.</strong> But is ke oopar agar mera platform bhi charge lagaata,
+  to us ki behan ki chop bhai."</p>
+  <cite>29:55 – 30:21</cite>
+</blockquote>
+<p>He is half right — STT, stamp duty and the DP charge really are third-party, not the broker's margin. But the
+point of the screen is that the <strong>flat</strong> ₹15.93 is what makes ₹500 in a single stock a bad idea, and that
+landed as "it's unavoidable, so never mind." He absolved the platform and kept the behaviour.</p>
+
+<div class="card warn">
+  <p><strong>The eval finding that matters for the write-up:</strong> the number moved, the decision didn't. A pre/post
+  on the charges figure is a knowledge test. It is not the same as a behaviour test, and this interview shows the two
+  coming apart in one person, thirty seconds apart. Say that plainly in the evals doc — it's a sharper result than a
+  clean pass would have been.</p>
+</div>
+
+<h2>2. He found a real bug</h2>
+<p class="sub">And diagnosed it faster than we did</p>
+
+<blockquote>
+  <p>"Ek to tune usmein paanch hazaar daale for five years — wo per month waala scene? To <strong>comparison hi fuddu
+  hai</strong> pehli baat."</p>
+  <cite>26:02, on the active-fund tab</cite>
+</blockquote>
+
+<p>He is right and it is our mistake. The user picks <strong>₹5,000 once</strong>. The active-fund tab silently
+switches to <strong>₹5,000 a month for 120 months</strong> — ₹6,00,000 — and compares that. Different amount,
+different frequency, different question. Then:</p>
+
+<blockquote>
+  <p>"Yes, okay, so I've entered six lakh, six lakh. At point two five a year, what does this mean?"</p>
+  <cite>26:19</cite>
+</blockquote>
+<p>And the interviewer's own note on the tape: <em>"Theek hai, agar itni der lag rahi samajhne mein to…"</em> (26:33).</p>
+
+<p><strong>Two of two participants have now failed on this screen.</strong> Prakhar: <em>"wo tab confuse kiya tha jab
+mere ko wo comparison kara raha tha."</em> Pulin named the cause. Fix: run the fee comparison on the amount and
+frequency the user actually chose, or label the switch loudly.</p>
+
+<h2>3. Jargon, not volume</h2>
+<p class="sub">A sharper version of Prakhar's complaint</p>
+
+<p>Reading the cost ledger aloud, he hit a term and guessed wrong:</p>
+<blockquote>
+  <p>"ten rupees de diye, security transfer theek hai, kuch hota hoga — <strong>DP charge on selling… DP kya hota hai?
+  Direct plan</strong> — stamp duty theek hai."</p>
+  <cite>27:11</cite>
+</blockquote>
+<p>DP is Depository Participant. He guessed "Direct plan". The single most important line item on the screen — the flat
+fee the whole argument rests on — is labelled with an initialism he couldn't decode. That is very likely part of why
+the lesson in §1 failed.</p>
+
+<blockquote>
+  <p>"<strong>Seedha jargon mere munh pe na fenke.</strong> Ye main sirf ek beginner ke liye keh raha hoon, jisko kuch
+  bhi nahi pata, jisko index fund hi nahi pata — usko kya samajh mein aayega? To itna jargon na fenke. Like zaroori hai
+  of course, but <strong>kya koi way ho jo itna jargon na fenke aur mere se wo information nikalwa le jo actually
+  zaroori hai aage jaane ke liye?</strong>"</p>
+  <cite>33:03</cite>
+</blockquote>
+
+<p>Prakhar said there was too much text. Pulin says the volume isn't the problem — the undefined terms are. That's a
+better brief: cut initialisms and name things in words, rather than just cutting words. It also makes the case for the
+tap-anything tutor screen, which is still unbuilt.</p>
+
+<h2>4. The app asks too few questions</h2>
+<p class="sub">This contradicts the core design, and it needs handling carefully</p>
+
+<blockquote>
+  <p>"<strong>He's leading himself and not letting me lead.</strong>"</p>
+  <p>"And this is something I am saying because <strong>not enough questions</strong> — kyunki aisi cheez hai ye jismein
+  tum ek question mein answer ya phir kuch direction nahi le sakte. Tumhein thodi cheezein jaanni padengi. Aur kyunki
+  <strong>ye aisa health tracker app thodi hai bhai.</strong>"</p>
+  <p>"Samajh raha hai, <strong>mere paison ka khilwaad ho raha hai.</strong> To mujhe agar saamne se log question
+  poochenge aur jaanenge, to main <strong>zyada secure feel karunga</strong> in that app — ki wo mujhe jaanna chaah raha
+  hai, kyunki wo mere paise laga raha hai."</p>
+  <p>"Haan to <strong>it's too shallow.</strong>"</p>
+  <cite>30:51 – 31:36</cite>
+</blockquote>
+<blockquote>
+  <p>"Main keh raha hoon ki tere app ko dekhne ke baad laga ki <strong>this is so incomplete</strong> — ye ye hona chahiye tha."</p>
+  <cite>33:53</cite>
+</blockquote>
+
+<p>The product's central bet is that three questions is the right number, because the decision is what blocks people.
+Pulin says three questions is so few that it reads as the app not caring where his money goes. <strong>More questions
+would have increased his trust, not his friction.</strong></p>
+
+<div class="card">
+  <span class="tag">How to hold both findings</span>
+  <p>These two participants are not the same user, and the split is clean:</p>
+  <table>
+    <tr><th></th><th>Prakhar</th><th>Pulin</th></tr>
+    <tr><td>Status</td><td>Account open, never invested</td><td>Already investing on two apps</td></tr>
+    <tr><td>Three questions</td><td>Worked — invested in 7½ min</td><td>"Too shallow", "incomplete"</td></tr>
+    <tr><td>Wanted</td><td>The decision taken off him</td><td>The reasoning shown to him</td></tr>
+    <tr><td>Pay ₹100/mo</td><td>Yes</td><td>No</td></tr>
+  </table>
+  <p><strong>Pulin is outside the stated ICP.</strong> The brief is the person who opened a Groww account and never
+  invested. He is already activated — he checks his portfolio daily for fun. So the right reading is not "the app is
+  too shallow", it's "the app is built for the pre-activation user and an activated user can tell."</p>
+  <p>That's a defensible answer <em>and</em> a real limit. Say both in the write-up: the design held for the user it
+  targets, and the first out-of-ICP user rejected it on exactly the axis the design traded away.</p>
+</div>
+
+<h3>The one question he's right about</h3>
+<p>He raised <strong>risk appetite</strong> four separate times, unprompted:</p>
+<blockquote>
+  <p>"Agar mera poora budget hi paanch hazaar hai to main paanch hazaar ke paanch hazaar Nifty Fifty mein nahi daalta.
+  <strong>Pehle to mera risk appetite poochna chahiye</strong> kisi ko, agar koi mujhe help kar raha hai to."</p>
+  <p>"If let's say I have zero risk, my risk appetite is not there, then I would go for something like index funds. But
+  if I am at a very young age and I am open to risks, then I would prefer large caps or even mid or small caps."</p>
+  <cite>24:40 – 25:07</cite>
+</blockquote>
+<p>And his ideal version, which is a concrete feature, not a complaint:</p>
+<blockquote>
+  <p>"Wo mujhe aise bataaye ki 'achha, paanch hazaar daal rahe ho, to aap risk bhi le sakte ho, but aap thoda thoda
+  usko ground bhi kar sakte ho' — <strong>apne risk ko partition karke, ki thoda sa risk mein lagao, baaki thoda safe
+  rakho.</strong>"</p>
+  <p>"Ye to like ek ChatGPT jaisa answer ho gaya. Main use bol raha hoon ki bhai mujhe paanch hazaar invest karne hain,
+  bata de kahaan — wo bol dega 'haan yahaan kar lo bhaiya'. <strong>Aisa nahi hota na. Usko pehle poochna padega ki
+  aapke goals kya hain.</strong>"</p>
+  <cite>31:46 – 32:46</cite>
+</blockquote>
+<p>One question, and a split allocation instead of all-in. That is cheap and it does not break the three-question
+promise — it makes it four.</p>
+
+<h2>5. He rejected the recommendation on reasoning, not numbers</h2>
+<p class="sub">And the new returns table is implicated</p>
+
+<blockquote>
+  <p>"Theek hai, Nifty Fifty ka humein teen saal mein return itna aa raha hai, paanch saal mein itna, das saal mein itna,
+  large cap ka itna aa raha hai, large cap ka itna aa raha hai."</p>
+  <p>…"<strong>Maza nahi aaya mujhe.</strong>"</p>
+  <p>"<strong>It showed me numbers better but I didn't like the reasoning.</strong> While I know that large caps are also
+  not too risky. And usually large cap ke AMC ka yahi goal hota hai ki wo ek index fund ko beat kare."</p>
+  <cite>23:01 – 24:09</cite>
+</blockquote>
+
+<p>He read the returns table added today, out loud, line by line. It worked as a thing to engage with. But it made him
+<em>more</em> confident the index fund was wrong for him, because the large-cap numbers next to it are higher.</p>
+
+<p>That is exactly the risk flagged when the returns table was being argued about, and it showed up on the first user
+who saw it. Two honest readings, and the write-up should pick one:</p>
+<ol>
+  <li><strong>It's working as intended.</strong> He is an informed user who saw the full picture and made a different
+  choice. An app that only persuades people by hiding the counter-evidence isn't the honest one. Informed opt-out is a
+  success, not a failure.</li>
+  <li><strong>The argument is too weak to carry the table.</strong> The "0.25% is certain, their returns are not" line
+  is on the screen but he didn't engage with it at all — he went straight to the numbers.</li>
+</ol>
+<p>Both are true. The fix that serves both: put the certainty argument <em>next to</em> the table rather than below the
+fold, so the counter-evidence and the answer to it arrive together.</p>
+
+<h2>6. What he wants, and it's what Prakhar wanted</h2>
+<p class="sub">Two out of two, unprompted, in the closing minutes</p>
+
+<blockquote>
+  <p>"Ismein na phir <strong>reliability waala factor</strong> aa jaata hai — ki ultimately mere paise ke saath khela ja
+  raha hai na. To <strong>tum jab tak mujhe assurity nahi doge tab tak main kyun karunga.</strong>"</p>
+  <p>"Usse achha — jaise market khelta hai, jin factors pe khelta hai, <strong>wo agar mujhe koi bataaye taaki main khud
+  dekh paun. Kyunki main apne aap se zyada kisko trust karunga? Kisi ko bhi nahi.</strong>"</p>
+  <p>"Agar wo mujhe kisi tareeke se sikha paaye — aisa lecture na de, kuch achha tareeka dhoondhe — why not. Jaise maan
+  le <strong>har din notification aa raha hai ki ye aaj padh lo, ten minute read hai</strong>… and let's say
+  <strong>within one month I am actually able to do things on my own. I would be very grateful for that.</strong>"</p>
+  <cite>35:20 – 36:12, the last substantive thing he said</cite>
+</blockquote>
+
+<p>Prakhar, at the same point in his interview: <em>"I don't know which is the source of truth… main sirf tere AI pe
+reliable nahi hona chahiye. Mere ko baaki jagah se bhi information milni chahiye."</em></p>
+
+<div class="card good">
+  <p><strong>This is now the strongest cross-interview signal in the study.</strong> Two very different users — one who
+  has never invested, one who invests on two platforms daily — independently ended by asking for the same thing:
+  <em>don't just tell me what to buy, teach me enough to check you.</em></p>
+  <p>Pulin adds the mechanism Prakhar didn't: a daily ten-minute read, not a course. He has already tried and abandoned
+  Zerodha Varsity for being too big — <em>"hafte mahine ka investment hai"</em> (13:05). The unmet need isn't content,
+  it's content sized to a commute.</p>
+  <p>This belongs in the 1-pager. It is the one thing both participants asked for and no incumbent ships.</p>
+</div>
+
+<h2>7. Baseline, and one costly misconception</h2>
+
+<table>
+  <tr><th>What he said</th><th>Why it matters</th></tr>
+  <tr><td>Uses Zerodha <strong>Coin + Kite</strong>. Not a Groww user.</td><td>Out of the stated ICP. Frames everything above.</td></tr>
+  <tr><td>ICICI RD, ₹5,000/month. Thinks it pays "chhah saat" percent, isn't sure.</td><td>Already saving monthly — the SIP habit exists, just not in a market product.</td></tr>
+  <tr><td>Jio BlackRock fund on Coin, ₹15–20k in, ~10% up. <em>"Ye main daily dekhta rehta hoon… maza aata hai."</em></td><td>Checks daily for pleasure. The opposite of Prakhar's "ek saal tak nahi sochunga".</td></tr>
+  <tr><td>Gold ETFs on Kite, bought on a flatmate's tip — <em>"agle paanch saal mein heavy scene hone waala hai"</em></td><td>Friends 16/20 in the survey. Here it is, driving a real purchase.</td></tr>
+  <tr><td>Learns from experience, YouTube, ChatGPT. Tried Zerodha Varsity, gave up: <em>"hafte mahine ka investment hai"</em></td><td>Creators 11/20, ChatGPT 5/20. Confirms both, and shows why long-form learning fails.</td></tr>
+  <tr><td>Trust in Zerodha and Groww: <em>"full power trust hai"</em></td><td>Matches Prakhar's 8/10. Trust in the brand is not the bottleneck.</td></tr>
+  <tr><td>Not scared of losing: invests only what he'd shrug off <em>"agar wo amount kal chori ho jaaye"</em></td><td>Almost word for word Prakhar's frame. Self-limiting, not fearful — two for two.</td></tr>
+  <tr><td>Would buy a stock on a tip: <em>"if someone tells me like a reliable person, why not"</em></td><td>The guidance demand is real; the question is only who supplies it.</td></tr>
+</table>
+
+<div class="card bad">
+  <span class="tag b">Quotable — and he is one of the more informed users</span>
+  <h3>He thinks IPOs are a free lottery</h3>
+  <blockquote style="margin-top:0">
+    <p>"IPOs mein scene kya hota hai — ki tumhein ek din mein bees percent tak ka premium mil sakta hai, pachaas percent
+    tak ka premium mil sakta hai. To why not bhai. <strong>Aur usmein kuch stakes bhi nahi hai.</strong> Tum apna paisa
+    daalo — agar tum lottery jeete to premium milega, ek din mein nikaal lo. Aur agar lottery nahi jeet paaye to tumhara
+    broker waapas de deta hai. Waise <strong>very good option.</strong>"</p>
+    <p>On what it costs: "Bahut kam hota hai yaar… normally mutual funds ke jo AMCs hoti hain, <strong>point one percent
+    point two percent.</strong>"</p>
+    <cite>13:58 – 14:48</cite>
+  </blockquote>
+  <p>Two errors in one breath. Listing-day losses are common, so "no stakes" is wrong — the downside is real, it just
+  arrives on day one. And he has priced broker charges using mutual-fund expense ratios, which is the same category
+  confusion the app's cost screen exists to fix.</p>
+  <p>This is a user who reads Varsity, runs a SIP and holds ETFs. If his model of IPO risk looks like this, the
+  <em>"nobody ever explained"</em> gap in the survey is not a beginners-only problem. Good material for the write-up.</p>
+</div>
+
+<h3>His own survey verbatim, expanded</h3>
+<p>The line already quoted in the research dossier is his. Read back to him, he built on it:</p>
+<blockquote>
+  <p><em>Prathamesh, reading his form answer:</em> "The barrier to entry for a beginner seems so high that it's prohibitive
+  on investment because you don't understand any terms."</p>
+  <p><em>Pulin:</em> "Haan — matlab <strong>ek governing factor nahi hai towards any trade. Bahut saari cheezein dekhni
+  padti hain aur mushkil ho jaata hai.</strong> Aur I think aur log isliye nahi karte hain."</p>
+  <cite>19:03 – 19:30</cite>
+</blockquote>
+<p>Asked which "nobody ever explained to me" option he'd add, he picked <strong>"when I'm supposed to sell"</strong> (18:31).</p>
+
+<h2>8. Would he pay? No.</h2>
+
+<blockquote>
+  <p><em>"Would you be willing to pay hundred rupees a month?"</em> — "<strong>Nahi.</strong>"</p>
+  <p><em>Why?</em> — "<strong>Wo app mera haath pakad ke thodi le ke ja raha hai kahin.</strong> Like, is he helping me
+  every decision? Aur agar help kar raha hai, to wo kitna reliable hai — mujhe kuch nahi pata. To nahi."</p>
+  <cite>34:03 – 34:23</cite>
+</blockquote>
+
+<p>Prakhar said yes, Pulin says no. n=2, split 1–1, and both answered on the same axis: <strong>how much the app
+actually holds your hand</strong>, not price. Neither answer is evidence about pricing; together they say willingness
+to pay tracks perceived depth of help.</p>
+<p>He'd pay if returns were guaranteed (34:31) — a condition that cannot exist, so discard it. And the question was
+leading again: "would you pay ₹100" instead of "what would you pay". Still not fixed from interview 1.</p>
+
+<h2>9. For interview 3</h2>
+<ol>
+  <li><strong>Keep the silence.</strong> It produced the clean pre/post. Do not change it.</li>
+  <li><strong>Ask the post-test on the same amount as the pre-test.</strong> Pulin answered ₹40 — the ₹5,000 number —
+  to a ₹500 question. Say "₹500 again" explicitly.</li>
+  <li><strong>Add a behaviour question after the number:</strong> "so what would you do differently?" That is where
+  Pulin's learning broke, and we only caught it because he volunteered it.</li>
+  <li><strong>"What would you pay?"</strong> not "would you pay ₹100". Third time asking for this.</li>
+  <li><strong>Recruit in-ICP if possible</strong> — someone with a Groww account who has never invested. Two of two so
+  far are Zerodha-led or lapsed, and Pulin is fully activated.</li>
+  <li><strong>Screen share worked much better than handing over the phone.</strong> He narrated continuously and read
+  the screen aloud, which is why this transcript is richer. Keep it.</li>
+</ol>
+
+<h2>10. Limits</h2>
+<ul>
+  <li><strong>n = 2</strong>, both friends of the interviewer, both male, both early-career. Friendly bias throughout.</li>
+  <li><strong>Pulin is out of the ICP</strong> — already investing, checks daily. His criticism is real but it is
+  criticism from outside the target user.</li>
+  <li><strong>The post-test amount was mismatched</strong> (§1), so the ₹5 → ₹40 movement is directionally right but
+  not a like-for-like number.</li>
+  <li><strong>ASR at 87.8%.</strong> It mangles names and splits sentences. Quotes above were taken where the meaning
+  is unambiguous; the worst spots are marked <code>[sic]</code> in the transcript.</li>
+  <li><strong>The first ~3 minutes are unrelated banter</strong> and some crude language; it is left in the transcript
+  unedited because the instruction was to change script only.</li>
+  <li><strong>He saw the updated app</strong> (returns table, horizon-aware costs, rewritten cost line). Prakhar saw the
+  older build. The two interviews are therefore not testing the same artifact — worth stating in the evals doc.</li>
+</ul>
+
+<h2>The paragraph for the write-up</h2>
+<div class="card good">
+  <p>Pulin already invests. He runs a ₹5,000 recurring deposit, holds a mutual fund and gold ETFs on Zerodha, and
+  checks his portfolio daily because he enjoys it. He also thought a ₹500 stock round trip cost one percent, believes
+  IPOs are a lottery with no downside, and could not say what a DP charge is. Shown the real number, he got it right —
+  and immediately decided it was unavoidable and therefore fine. Then he said the app was too shallow, that it should
+  have asked him more questions, not fewer, because <em>"mere paison ka khilwaad ho raha hai"</em> — and that the thing
+  he actually wants is not a recommendation at all: <em>"jin factors pe market khelta hai, wo agar mujhe koi bataaye,
+  taaki main khud dekh paun — kyunki main apne aap se zyada kisko trust karunga? Kisi ko bhi nahi."</em> That is the
+  second participant in a row to end on the same request.</p>
+</div>
+
+<footer>
+  Analysis of <a href="2-pulin-transcript.md">pulin-transcript-clean.md</a>, 418 turns, 36:33.<br>
+  Quotes are verbatim from the machine transcript, only rewritten from Devanagari/Urdu script into Latin letters.<br>
+  See also <a href="1-prakhar-analysis.html">Interview 1 — Prakhar</a>.<br>
+  first500 · Groww Product Intern case study · Sep 2026
+</footer>
+
+</div>
+</body>
+</html>

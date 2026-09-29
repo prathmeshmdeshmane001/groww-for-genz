@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Gen Z Opens the Account and Never Invests</title>
+<style>
+:root{
+  --bg:#ffffff; --fg:#14181f; --muted:#5b6673; --line:#e3e8ee;
+  --card:#f7f9fb; --accent:#00a37a; --accent2:#0a5cdb;
+  --red:#c9342a; --amber:#b57a18; --green:#1a8f63;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --fg:#e7ecf2; --muted:#98a4b3; --line:#232b36;
+    --card:#161c25; --accent:#00d09c; --accent2:#5aa2ff;
+    --red:#ff6b5e; --amber:#ffc266; --green:#3ddba0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --fg:#e7ecf2; --muted:#98a4b3; --line:#232b36;
+  --card:#161c25; --accent:#00d09c; --accent2:#5aa2ff;
+  --red:#ff6b5e; --amber:#ffc266; --green:#3ddba0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px;margin:0 auto;padding:56px 16px 96px}
+header{border-bottom:3px solid var(--accent);padding-bottom:22px;margin-bottom:8px}
+.kicker{font:600 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:17px;margin:0}
+.meta{font:12px/1.7 var(--mono);color:var(--muted);margin-top:18px}
+h2{font-size:clamp(21px,3.4vw,26px);margin:52px 0 6px;letter-spacing:-.01em;scroll-margin-top:20px}
+h2 .num{font:600 13px/1.4 var(--mono);color:var(--accent);display:block;margin-bottom:8px;letter-spacing:.1em}
+h3{font-size:17px;margin:30px 0 8px}
+p{margin:0 0 14px}
+a{color:var(--accent2)}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+small{color:var(--muted)}
+
+.tldr{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:20px 22px;margin:30px 0}
+.tldr h3{margin:0 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+.tldr p:last-child{margin-bottom:0}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px}
+.stat b{display:block;font-size:26px;line-height:1.15;letter-spacing:-.02em;color:var(--accent)}
+.stat span{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
+
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+tbody tr:hover{background:var(--card)}
+.tw{white-space:nowrap}
+.tscroll{overflow-x:auto}
+
+.sev{display:inline-block;font:600 11px/1.3 var(--mono);padding:4px 7px;border-radius:4px;letter-spacing:.04em}
+.s1{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.s2{background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--amber)}
+.s3{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green)}
+
+.bar{height:8px;background:var(--line);border-radius:5px;overflow:hidden;margin-top:6px;min-width:90px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+
+.funnel{margin:26px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.step{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .n{font:600 12px/26px var(--mono);text-align:center;width:26px;height:26px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);color:var(--muted)}
+.step.leak{background:color-mix(in srgb,var(--red) 7%,transparent)}
+.step.leak .n{background:var(--red);border-color:var(--red);color:#fff}
+.step h4{margin:0 0 3px;font-size:15.5px}
+.step p{margin:0;font-size:14px;color:var(--muted)}
+.step .tag{display:inline-block;font:600 10.5px/1.4 var(--mono);padding:4px 7px;border-radius:4px;margin-top:8px;
+  background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red);letter-spacing:.05em}
+.step .tag.ok{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green)}
+
+blockquote{margin:14px 0;padding:12px 16px;border-left:3px solid var(--accent);background:var(--card);
+  border-radius:0 6px 6px 0;font-size:14.5px;color:var(--fg)}
+blockquote p{margin:0 0 8px}
+blockquote p:last-child{margin:0}
+.attr{font:12px/1.5 var(--mono);color:var(--muted);margin-top:8px;display:block}
+
+details{border:1px solid var(--line);border-radius:8px;margin:14px 0;background:var(--card)}
+summary{cursor:pointer;padding:13px 16px;font-weight:600;font-size:14.5px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"\25B8";display:inline-block;margin-right:9px;color:var(--accent);transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .body{padding:0 16px 16px;font-size:14.5px}
+details .body blockquote{background:var(--bg)}
+
+.note{font-size:13.5px;color:var(--muted);border:1px dashed var(--line);border-radius:8px;padding:13px 16px;margin:18px 0}
+.note strong{color:var(--fg)}
+.src{font-size:13px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:44px 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:28px 0}
+.toc ol{margin:0;padding-left:20px;font-size:14.5px}
+.toc li{margin-bottom:4px}
+@media print{
+  body{background:#fff;color:#000}
+  .wrap{padding:0}
+  details{border:0;background:none}
+  details .body{display:block}
+  .step.leak{background:#fafafa}
+  a{color:#000;text-decoration:underline}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Problem-space research &middot; Groww Product Intern case study</div>
+  <h1>Gen Z opens the account. Then nothing happens.</h1>
+  <p class="sub">What actually stops 20&ndash;26 year olds in India from making their first real investment &mdash; from SEBI's own survey data, 145 live Groww Play Store reviews, and Reddit threads written by the exact persona.</p>
+  <p class="meta">Prepared 16 Sep 2026 &middot; Sources: SEBI Investor Survey 2025, SEBI F&amp;O study FY26, Google Play (India, newest 145), r/personalfinanceindia, r/IndiaInvestments, r/IndianStockMarket, r/IndianStreetBets, CFA Institute</p>
+</header>
+
+<div class="toc">
+  <ol>
+    <li><a href="#q1">Why they don't invest after opening the account</a></li>
+    <li><a href="#q2">Problems ranked by severity</a></li>
+    <li><a href="#q3">Needs and pain points</a></li>
+    <li><a href="#q4">Exactly where they fall off in the journey</a></li>
+    <li><a href="#imp">What this means for the app you build</a></li>
+    <li><a href="#method">Method, sources, and what I could not get</a></li>
+  </ol>
+</div>
+
+<div class="tldr">
+  <h3>The one-line finding</h3>
+  <p><strong>The account is not the problem. The first &#8377;500 is.</strong> Sign-up is solved &mdash; Groww is genuinely loved for it. What breaks is the gap between "account opened" and "money actually working": a young person with &#8377;5,000 hits a wall of too many options, contradictory advice, and a pre-investment checklist (emergency fund &rarr; term insurance &rarr; health insurance) that makes starting feel illegal before age 25. So they either freeze &mdash; and become one of the 40% dormant &mdash; or they jump to the one thing that feels exciting and self-explanatory: F&amp;O, where 89% of under-30s lose money.</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><b>~207M</b><span>demat accounts in India; fewer than 50M active &mdash; roughly 1 active investor per 4 accounts</span></div>
+  <div class="stat"><b>40%</b><span>of investors are dormant: no fresh investment in the last 1 year (SEBI Investor Survey 2025)</span></div>
+  <div class="stat"><b>~5.9%</b><span>of broking-app installs ever reach a first trade; ~86% never finish activation at all</span></div>
+  <div class="stat"><b>43%</b><span>of all individual F&amp;O traders are now under 30, up from 31% in FY22</span></div>
+  <div class="stat"><b>89%</b><span>of under-30 F&amp;O traders lost money in FY26 &mdash; the worst of any age band</span></div>
+  <div class="stat"><b>56%</b><span>of investors name finfluencers on social media as an information source &mdash; just below friends &amp; family at 59%</span></div>
+</div>
+
+<hr>
+
+<h2 id="q1"><span class="num">QUESTION 01</span>Why would a Gen Z who just opened their first account not actually invest?</h2>
+
+<p>SEBI asked this directly in the <strong>Investor Survey 2025</strong>. The answers are not what most product teams assume. The single biggest bucket is not fear &mdash; it is <em>not knowing where to put the first rupee</em>.</p>
+
+<div class="tscroll">
+<table>
+<thead><tr><th>Barrier bucket</th><th class="tw">Share</th><th>The specific reasons inside it</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Complexity &amp; information gaps</strong><div class="bar"><i style="width:74%"></i></div></td>
+  <td class="tw"><strong>74%</strong></td>
+  <td>Don't know how the product works <strong>28%</strong> &middot; Don't know how to start <strong>27%</strong> &middot; Confused by information overload from different sources <strong>20%</strong> &middot; There are too many options <strong>16%</strong></td>
+</tr>
+<tr>
+  <td><strong>Risk &amp; return concerns</strong><div class="bar"><i style="width:73%"></i></div></td>
+  <td class="tw"><strong>73%</strong></td>
+  <td>Fear of losing money to market risk <strong>34%</strong> &middot; Uncertain about returns <strong>20%</strong> &middot; "It's for long term investment" <strong>20%</strong> &middot; Better returns elsewhere <strong>16%</strong></td>
+</tr>
+<tr>
+  <td><strong>Trust &amp; transparency</strong><div class="bar"><i style="width:51%"></i></div></td>
+  <td class="tw"><strong>51%</strong></td>
+  <td>No trust in the product or the institution <strong>26%</strong> &middot; Worried about rules/policy <strong>20%</strong> &middot; No trust in fund managers <strong>11%</strong></td>
+</tr>
+<tr>
+  <td><strong>Cost</strong><div class="bar"><i style="width:26%"></i></div></td>
+  <td class="tw"><strong>26%</strong></td>
+  <td>Thinks you need a large amount to start <strong>14%</strong> &middot; High fees and charges <strong>13%</strong></td>
+</tr>
+<tr>
+  <td><strong>External influence</strong><div class="bar"><i style="width:18%"></i></div></td>
+  <td class="tw"><strong>18%</strong></td>
+  <td>Not enough money to invest <strong>11%</strong> &middot; Family/friends/advisor told them not to <strong>8%</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="src">Source: SEBI Investor Survey 2025, main report (barriers cited by non-investors). Buckets overlap, so they do not sum to 100.</p>
+
+<h3>What that looks like in real words</h3>
+
+<p>The survey numbers are abstract. The Reddit threads are not. Here is the "too many options / information overload" barrier happening live, in a thread from a 22-year-old earning &#8377;20,000 a month:</p>
+
+<blockquote>
+<p>"I'd like to start investing early and build good financial habits, but I'm a complete beginner and <strong>the amount of information online is overwhelming.</strong>"</p>
+<span class="attr">r/personalfinanceindia &mdash; "22F with salary 20k, how to invest?"</span>
+</blockquote>
+
+<p>She got 21 replies. They told her, in order: build an emergency fund first. Get term insurance. Get health insurance. Watch Zerodha Varsity first. Buy QQQ through Vested instead. Don't invest at all, upskill. Start a gold SIP and spend the rest. Learn the 3-bucket strategy. Understand your risk profile first. <strong>Every single answer was reasonable. Together they are a wall.</strong></p>
+
+<p>The same wall appears in nearly every thread from this persona. The most repeated reply to "I'm 21 and got my first salary, how do I start?" is not an investment &mdash; it is a <strong>three-step prerequisite checklist</strong> (emergency fund &rarr; term insurance &rarr; health insurance) that a 21-year-old living with their parents on a &#8377;15,000 stipend cannot plausibly finish. So starting gets postponed. Which is exactly mistake #8 on a popular list of beginner mistakes:</p>
+
+<blockquote>
+<p>"kept delaying SIPs waiting for the <strong>'perfect time'</strong> to start"</p>
+<span class="attr">r/IndiaInvestments &mdash; "8 mistakes I made as a beginner investor", 254 upvotes</span>
+</blockquote>
+
+<p>One commenter named the whole trap in five words, and the original poster then admitted to it:</p>
+
+<blockquote>
+<p>"&hellip;the <strong>studying-everything trap</strong>. I am guilty of that but as suggested I will start out with nifty50 sip for now and learn as I go."</p>
+<span class="attr">r/personalfinanceindia &mdash; 21M, first salary thread</span>
+</blockquote>
+
+<h3>The mental model is genuinely broken, not just weak</h3>
+
+<p>People do not understand what a broker <em>is</em>. This is a real comment from someone trying to work out the plumbing:</p>
+
+<blockquote>
+<p>"Im so confused. Is it like this? Kuvera/groww will make a demat account for me (like a bank account) and then i can buy the mutual fund from icici/hdfc/uti that will get stored in my demat account opened by kuvera/groww?"</p>
+<span class="attr">r/IndiaInvestments</span>
+</blockquote>
+
+<p>This matters for design. If a user does not know whether their money sits <em>at</em> Groww or moves <em>through</em> Groww, every trust cue in the app is being read wrong.</p>
+
+<h3>And the ones who do start, often start by accident</h3>
+
+<p>The people who succeeded did not resolve the confusion first. They started and learned afterwards:</p>
+
+<blockquote>
+<p>"Like most beginners, <strong>I didn't learn anything before starting.</strong> I opened the app, picked a fund that looked popular and had good past returns, and started a &#8377;500 SIP."</p>
+<span class="attr">r/IndianStockMarket &mdash; "I started with &#8377;500 and zero clarity. 7 years later, I hit &#8377;1 crore at 27." (5,326 upvotes, 812 comments)</span>
+</blockquote>
+
+<div class="note"><strong>Design implication, stated early because it drives everything below:</strong> the winning behaviour is <em>start tiny, then learn</em>. The advice ecosystem &mdash; and to some extent the product &mdash; pushes <em>learn everything, then start</em>. A Gen Z Groww should make the first &#8377;100&ndash;&#8377;500 happen in the first session, and treat learning as something that arrives <em>after</em> the money is in, attached to what the user actually owns.</div>
+
+<hr>
+
+<h2 id="q2"><span class="num">QUESTION 02</span>Problems ranked by severity</h2>
+
+<p>"Severity" here = how many of the persona it hits &times; how badly it blocks or harms them. Ranked from the evidence, not from vibes. Anything marked <span class="sev s1">CRITICAL</span> either stops the investment entirely or actively destroys the user's money.</p>
+
+<div class="tscroll">
+<table>
+<thead><tr><th class="tw">Sev</th><th>Problem</th><th>Evidence</th></tr></thead>
+<tbody>
+<tr>
+  <td class="tw"><span class="sev s1">CRITICAL</span></td>
+  <td><strong>1. Choice paralysis at the "what do I actually buy" step</strong><br><small>Account is open, money is ready, and the user cannot pick. The biggest blocker in the data.</small></td>
+  <td>74% cite complexity/info gaps; 27% specifically say "I don't know how to start"; 16% say "too many options". Confirmed live in every beginner Reddit thread read.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s1">CRITICAL</span></td>
+  <td><strong>2. Drift into F&amp;O and intraday because it is the only thing that feels exciting</strong><br><small>This doesn't just block investing &mdash; it takes their capital and teaches them the market is a scam.</small></td>
+  <td>Under-30s are 43% of individual F&amp;O traders (up from 31% in FY22); <strong>89% of them lost money in FY26</strong>; they carry 53% of aggregate losses on 43% of turnover. Options drive 92% of losses.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s1">CRITICAL</span></td>
+  <td><strong>3. First-trade cost shock on a tiny ticket</strong><br><small>A &#8377;500 share bought and sold costs about <strong>&#8377;18.22, or 3.6%</strong> &mdash; and &#8377;15.93 of that is a flat depository fee, so at &#8377;100 it is 16%. It reads as a scam even when fully legal and disclosed.</small></td>
+  <td>Verbatim below. Also 32 of 145 Play reviews mention charges, 20 of them at 1&ndash;2&#9733;. "Requires large amount to start" is a named barrier at 14%.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s2">HIGH</span></td>
+  <td><strong>4. The prerequisite wall (emergency fund &rarr; term &rarr; health insurance &rarr; then invest)</strong><br><small>Correct advice for a 35-year-old. For a 21-year-old on a stipend it is an indefinite postponement.</small></td>
+  <td>Dominant reply pattern across every first-salary and student thread read. As one commenter put it: "It's not difficult to start investing, it's difficult to stay invested."</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s2">HIGH</span></td>
+  <td><strong>5. No reassurance when the portfolio first goes red</strong><br><small>A first-timer sees &minus;4% and has no frame for whether that is normal. Dormancy follows.</small></td>
+  <td>SEBI names <strong>"Poor Performance" (87%)</strong> as the top driver of investor dormancy, ahead of external influences (75%) and market sentiment (31%).</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s2">HIGH</span></td>
+  <td><strong>6. The app is drifting toward traders and away from the beginner it was built for</strong><br><small>Beginners still praise Groww's simplicity &mdash; but recent complaints are all about trader features invading the default experience.</small></td>
+  <td>Verbatim below: F&amp;O page as the post-login landing screen; a scalper button that misfires on back-navigation; F&amp;O and Bonds accounts created on a stray tap.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s2">HIGH</span></td>
+  <td><strong>7. Advice comes from finfluencers and WhatsApp, and the app does not compete</strong><br><small>The information layer sits outside the product, so the product cannot shape its quality.</small></td>
+  <td>Finfluencers on social media: 56% of investors, essentially tied with friends/family (59%). Online communities 34%. Fintech apps are only 10% of how non-investors first hear about investing.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s3">MEDIUM</span></td>
+  <td><strong>8. Trust and "is this even safe" doubt</strong></td>
+  <td>51% flag trust/transparency; 26% don't trust the product or the institution. In reviews: 24 of 145 mention loss/scam/cheat, 20 at 1&ndash;2&#9733;.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s3">MEDIUM</span></td>
+  <td><strong>9. Notification and upsell fatigue</strong><br><small>Not a blocker to the first investment, but it is the stated reason people leave for Zerodha.</small></td>
+  <td>29 of 145 reviews mention ads/notifications/popups, 22 at 1&ndash;2&#9733;. Reddit users switching to Zerodha cite "no pushing of any stuff" as the reason.</td>
+</tr>
+<tr>
+  <td class="tw"><span class="sev s3">MEDIUM</span></td>
+  <td><strong>10. KYC and account-opening friction</strong><br><small>Real, but smaller than the industry assumes &mdash; and Groww is already good at it.</small></td>
+  <td>Only 7 of 145 reviews mention onboarding/KYC (5 at 1&ndash;2&#9733;). Several reviews praise it: "Signing up took minutes."</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<details>
+<summary>Verbatim evidence for #3 &mdash; the first-trade cost shock</summary>
+<div class="body">
+<blockquote>
+<p>"So i am a beginner and i deposited <strong>500 rs</strong> on Groww&hellip; bought and sold a few shares just for testing the water and earned a 2&ndash;4 rs profit&hellip; I was charged a shocking <strong>64 rs</strong> today for doing all this as DP charges is it normal or what &mdash; i am thinking of withdrawing the remaining 420 rs."</p>
+<span class="attr">r/IndianStockMarket, 157 upvotes, 173 comments</span>
+</blockquote>
+<p>The top reply explains the charges are correct and disclosed (DP charges around &#8377;15.9 per ISIN per sell day, plus STT, GST and stamp duty). The user's own conclusion is the part that matters for product:</p>
+<blockquote>
+<p>"man i really did that strategy today really i feel stupid rn, maybe i will stick to investing in ETF's or MF for long term, <strong>this trading is not for me at all</strong>"</p>
+<span class="attr">Same thread</span>
+</blockquote>
+<p><strong>Read that carefully &mdash; it is the best news in the whole dossier.</strong> He did not quit investing. He self-corrected from trading to ETFs and mutual funds, in public, within one day, after one &#8377;64 lesson. <strong>Note the &#8377;64 is his whole day of trading, not one round trip</strong> &mdash; he made five or six. A single &#8377;500 buy-and-sell is about &#8377;18.22. The lesson is the same and the arithmetic is smaller: quote &#8377;18.22 as the round-trip figure, and &#8377;64 only as his story. The correction happened because the cost finally became visible. It just happened <em>after</em> the money was gone instead of before.</p>
+</div>
+</details>
+
+<details>
+<summary>Verbatim evidence for #6 &mdash; the app drifting toward traders</summary>
+<div class="body">
+<blockquote>
+<p>"Had to rate 3&#9733; down from 5&#9733;&hellip; as soon as we launch the app and authenticate (login), <strong>the F&amp;O page remains the initial landing page</strong>, regardless of the fact that I don't use the F&amp;O feature."</p>
+<span class="attr">Google Play, 28 Aug 2026</span>
+</blockquote>
+<blockquote>
+<p>"Been using this for 4 years but recent 'advanced features' made it hectic. 1. <strong>Scalper button placement is terrible</strong>; whenever I hit back from a chart, it accidentally triggers scalping. Not everyone is a scalper! Give an option to hide it."</p>
+<span class="attr">Google Play, 29 Aug 2026, 2&#9733;</span>
+</blockquote>
+<blockquote>
+<p>"Misleading app, the app will <strong>create F&amp;O, Bonds accounts without your concern</strong>. By mistake if you tap on them, it will show a popup about the feature, but it will not ask your permission to create an account."</p>
+<span class="attr">Google Play, 31 Aug 2026, 1&#9733;</span>
+</blockquote>
+<p>Meanwhile, in the same 145-review pull, the beginner experience is still the thing people love most:</p>
+<blockquote>
+<p>"Best for beginners rather than Zerodha, Upstox. Main reason being no maintenance charges and better UI." &mdash; 5&#9733;</p>
+<p>"Signing up took minutes, the interface is clean&hellip; <strong>No confusing jargon.</strong> Highly recommend for beginners." &mdash; 5&#9733;</p>
+<p>"for a first time investor in the stock market this tool is very simple to understand" &mdash; 5&#9733;</p>
+</blockquote>
+<p><strong>The tension is the insight:</strong> Groww's beginner reputation is an asset it is currently spending to chase traders. A Gen Z-focused app is not a new idea bolted on &mdash; it is defending the thing that already works.</p>
+</div>
+</details>
+
+<details>
+<summary>Verbatim evidence for #9 &mdash; why people leave for Zerodha</summary>
+<div class="body">
+<blockquote><p>"No pushing of any stuff. <strong>Less distractions and unnecessary notifications.</strong>"</p></blockquote>
+<blockquote><p>"The best platform that doesn't push you to do something that you don't want to in the first place."</p></blockquote>
+<blockquote><p>"they never send any notification regarding trending stocks or news. <strong>I always feel like I am in control</strong> instead of some random notification distracting you from your trades."</p>
+<span class="attr">r/IndianStockMarket &mdash; "Switching from Groww to Zerodha", 126 upvotes, 80 comments</span></blockquote>
+<p>And the blunt version, from a different thread:</p>
+<blockquote><p>"it's marketing led company focussed on just <strong>onboarding max users</strong>"</p></blockquote>
+<p>Whether or not that is fair, it is the market's read on the brand &mdash; and it lines up exactly with a funnel that is excellent at sign-up and weak at first investment.</p>
+</div>
+</details>
+
+<hr>
+
+<h2 id="q3"><span class="num">QUESTION 03</span>Needs and pain points</h2>
+
+<p>Split into what they need and the pain point that blocks each one today.</p>
+
+<div class="tscroll">
+<table>
+<thead><tr><th>Need</th><th>What it really means</th><th>Pain point today</th></tr></thead>
+<tbody>
+<tr><td><strong>"Just tell me what to do with &#8377;500"</strong></td><td>A default. One decision, pre-made, defensible, that they can start today and change later.</td><td>The app offers a catalogue. The internet offers eleven contradictory answers. Nobody offers <em>one</em> answer.</td></tr>
+<tr><td><strong>Start impossibly small without feeling stupid</strong></td><td>&#8377;100&ndash;&#8377;500 has to feel like a real, respected investment, not a toy.</td><td>14% of non-investors believe you need a large amount to start. Fixed costs (DP charges, &#8377;20 per sell order) punish small tickets hardest.</td></tr>
+<tr><td><strong>Know the true cost before, not after</strong></td><td>"If I put in &#8377;500 and sell next week, what do I actually get back?"</td><td>Charges are disclosed, but in a contract note after the fact. A single &#8377;500 round trip is &#8377;18.22; the Reddit user who paid &#8377;64 had traded five or six times. Either way it is a trust event, not an accounting one.</td></tr>
+<tr><td><strong>Reassurance when it goes red</strong></td><td>"Is &minus;6% normal or did I mess up?" &mdash; the answer decides whether they stay.</td><td>Nothing in the app frames a drawdown. SEBI names poor performance as the #1 dormancy driver at 87%.</td></tr>
+<tr><td><strong>Learning attached to money they own</strong></td><td>Not a course. A one-line explanation of the thing on screen, at the moment it matters.</td><td>Education is a separate tab people never open. They go to Instagram and YouTube instead (finfluencers: 56%).</td></tr>
+<tr><td><strong>A goal that isn't retirement</strong></td><td>iPhone, Goa trip, laptop, buffer, first bike. Six months to three years, not thirty.</td><td>20% of non-investors reject investing specifically because "it's for long term". The product speaks in decades; this user thinks in months.</td></tr>
+<tr><td><strong>Social proof from peers, not institutions</strong></td><td>"What are other 22-year-olds doing?" beats "past performance of the fund".</td><td>Friends/family 59% and finfluencers 56% are the trusted channels. Fintech apps are 10% of first awareness.</td></tr>
+<tr><td><strong>To feel in control, not sold to</strong></td><td>The absence of nudges is itself a feature. Users switch brokers for it.</td><td>Ads and upsell is the 4th most common complaint theme in recent reviews (29 of 145, 22 at 1&ndash;2&#9733;).</td></tr>
+<tr><td><strong>A safe outlet for the gambling urge</strong></td><td>The excitement is real and will not be lectured away. It needs somewhere to go that isn't options.</td><td>Right now the only exciting-feeling product in the app is F&amp;O, and it wipes out 89% of under-30 accounts that touch it.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note"><strong>On that last row.</strong> Cross-market research (CFA Institute, "Gen Z and Investing" &mdash; US/UK/Canada/China, <em>not</em> India, so treat as directional only) found 50% of Gen Z investors have made a FOMO-driven investment, and 61% of Gen Z investors gamble versus 29% of non-investors. Put next to SEBI's Indian F&amp;O numbers, the safe reading is: the thrill-seeking is real, it is not a knowledge problem, and a product that only says "don't" will lose to one that says "here, safely".</div>
+
+<hr>
+
+<h2 id="q4"><span class="num">QUESTION 04</span>Exactly where they fall off</h2>
+
+<p>This is the standard Indian broking funnel with real leak data mapped onto each step. Red steps are where this persona actually dies.</p>
+
+<div class="funnel">
+  <div class="step"><div class="n">1</div><div>
+    <h4>Install &rarr; mobile + OTP sign-up</h4>
+    <p>Triggered by an ad, a friend, or a finfluencer reel. Intent is high and shallow.</p>
+    <span class="tag ok">Groww is strong here</span>
+  </div></div>
+  <div class="step leak"><div class="n">2</div><div>
+    <h4>PAN &rarr; Aadhaar e-KYC &rarr; bank link + penny drop &rarr; e-sign</h4>
+    <p>The compliance gauntlet. Industry-wide, roughly <strong>86% of finance-app installs never complete activation</strong>. Groww is above average here &mdash; only 7 of 145 recent reviews mention KYC &mdash; but the ones that break, break badly ("applied 12 August, still not opened"; "stuck on the Allow Permissions screen").</p>
+    <span class="tag">Biggest raw-volume leak, but least Groww-specific</span>
+  </div></div>
+  <div class="step"><div class="n">3</div><div>
+    <h4>Account opened</h4>
+    <p>The industry celebrates here. The user has achieved nothing yet.</p>
+    <span class="tag ok">Vanity milestone</span>
+  </div></div>
+  <div class="step leak"><div class="n">4</div><div>
+    <h4>First money transferred in &mdash; <em>or not</em></h4>
+    <p>They have &#8377;5,000 and no idea whether it should go to an FD, a Nifty 50 index fund, digital gold, or a stock a friend mentioned. They open the app, scroll, close the app. This is where the dormant 40% is manufactured.</p>
+    <span class="tag">LEAK #1 &mdash; choice paralysis</span>
+  </div></div>
+  <div class="step leak"><div class="n">5</div><div>
+    <h4>First trade or first SIP</h4>
+    <p>Only <strong>about 5.9% of installs</strong> ever reach this step. The practitioner read matches the data exactly: <em>"the biggest drop-off happens after KYC is complete but before the first trade &mdash; when users are unsure what to buy, afraid of&hellip;"</em> Those who do act often pick by "looked popular, good past returns".</p>
+    <span class="tag">LEAK #2 &mdash; the real activation moment</span>
+  </div></div>
+  <div class="step leak"><div class="n">6</div><div>
+    <h4>First settlement &mdash; the charges land</h4>
+    <p>About &#8377;18.22 on a &#8377;500 round trip &mdash; more if you trade repeatedly, which is how the widely quoted &#8377;64 case happened. STT, GST, stamp duty, depository charges. All legal, all disclosed, all invisible until now. Some withdraw everything. Some decide trading isn't for them and move to ETFs &mdash; which is the <em>good</em> outcome, arrived at expensively.</p>
+    <span class="tag">LEAK #3 &mdash; trust break</span>
+  </div></div>
+  <div class="step leak"><div class="n">7</div><div>
+    <h4>Weeks 2&ndash;8: the portfolio goes red</h4>
+    <p>No frame of reference for a normal drawdown. SEBI's dormancy data puts <strong>"Poor Performance" at 87%</strong> as the reason people stop. They don't close the account. They just stop opening the app.</p>
+    <span class="tag">LEAK #4 &mdash; silent dormancy</span>
+  </div></div>
+  <div class="step leak"><div class="n">8</div><div>
+    <h4>The fork: compound quietly, or chase the thrill</h4>
+    <p>Index funds are correct and boring. F&amp;O is one tab away and feels like the real game &mdash; and the app's own surfaces (F&amp;O landing page, scalper button, one-tap segment activation) point that way. <strong>43% of individual F&amp;O traders are now under 30. 89% of them lost money in FY26.</strong></p>
+    <span class="tag">LEAK #5 &mdash; the expensive one</span>
+  </div></div>
+  <div class="step"><div class="n">9</div><div>
+    <h4>Second investment within 30 days &rarr; habit</h4>
+    <p>The actual finish line. Almost nothing in the current journey is designed to get them here.</p>
+    <span class="tag ok">The metric that should be optimised</span>
+  </div></div>
+</div>
+
+<p><strong>The short version:</strong> the industry optimises steps 1&ndash;3, measures success at step 3, and loses the user at steps 4, 5 and 7. For a Gen Z product, <em>account opened</em> is not the goal. <strong>Second investment within 30 days</strong> is.</p>
+
+<hr>
+
+<h2 id="imp"><span class="num">SO WHAT</span>What this means for the app you build</h2>
+
+<p>Not a spec &mdash; the case study asks you to make the call. These are the design directions the evidence actually supports, each tied back to a leak.</p>
+
+<div class="tscroll">
+<table>
+<thead><tr><th>Direction</th><th class="tw">Fixes</th><th>Why the evidence supports it</th></tr></thead>
+<tbody>
+<tr><td><strong>One default, not a catalogue.</strong> A single recommended first investment based on two or three questions, startable in under 60 seconds, changeable later.</td><td class="tw">Leak #1, #2</td><td>74% blocked by complexity; 27% literally say "I don't know how to start"; the &#8377;1-crore guy picked whatever looked popular anyway.</td></tr>
+<tr><td><strong>Show the cost before the trade, in rupees, on their amount.</strong> "You invest &#8377;500. If you sell next week you get back about &#8377;482."</td><td class="tw">Leak #3</td><td>The &#8377;64-on-&#8377;500 thread, and the &#8377;18.22 a single round trip actually costs. Charges are already disclosed &mdash; they're just disclosed too late to protect trust.</td></tr>
+<tr><td><strong>Goals in months, not decades.</strong> Goa trip, iPhone, buffer &mdash; with the horizon picking the product, not the user.</td><td class="tw">Leak #1, #4</td><td>20% of non-investors reject investing because "it's for long term". Also the top feature request in the Play reviews: goal-wise trackers.</td></tr>
+<tr><td><strong>Drawdown reassurance built into the portfolio screen.</strong> When red, show how often this has happened before and what followed &mdash; without being asked.</td><td class="tw">Leak #4</td><td>"Poor Performance" = 87% of dormancy. No broking app currently addresses this moment.</td></tr>
+<tr><td><strong>A safe home for the thrill.</strong> Paper trading, a small capped "fun" sleeve, or a simulated F&amp;O sandbox that shows the real loss math &mdash; so the urge doesn't walk straight into options.</td><td class="tw">Leak #5</td><td>89% under-30 F&amp;O loss rate. The urge is real; "don't" is not a product.</td></tr>
+<tr><td><strong>Education after the money, not before.</strong> One line, attached to the thing they own, at the moment it matters.</td><td class="tw">Leak #1, #4</td><td>The studying-everything trap. Winners started tiny and learned later. Education tabs go unopened; Instagram gets 56%.</td></tr>
+<tr><td><strong>Defend the beginner default.</strong> Keep F&amp;O, scalping and charts off the default surface for this segment. Make activating a risky segment a deliberate act.</td><td class="tw">Leak #5, churn</td><td>Recent review complaints are all about trader features invading the beginner path. Users leaving for Zerodha cite "no pushing" as the reason.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note"><strong>Worth stating as an assumption in your one-pager:</strong> this research says the problem is <em>activation</em>, not <em>acquisition</em>. If you scope the app around "get the first &#8377;500 invested, and the second one within 30 days", you are aiming at the leak the data actually shows &mdash; and you get a clean, defensible reason to put F&amp;O, intraday, charting, IPOs and tax filing out of scope.</div>
+
+<hr>
+
+<h2 id="method"><span class="num">APPENDIX</span>Method, sources, and what I could not get</h2>
+
+<h3>What was pulled</h3>
+<ul>
+<li><strong>SEBI Investor Survey 2025</strong> (main report, 110 pages) &mdash; non-investor barrier data, dormancy drivers, information sources. Primary regulator survey; the strongest source here.</li>
+<li><strong>SEBI F&amp;O behaviour study, FY26</strong> (via Livemint reporting) &mdash; under-30 participation and loss rates.</li>
+<li><strong>Google Play, Groww (com.nextbillion.groww), India</strong> &mdash; 145 reviews pulled live, sorted newest, covering 2 Jul &ndash; 9 Sep 2026. Every count in this document is out of the 145 actually read.</li>
+<li><strong>Reddit</strong> &mdash; r/personalfinanceindia, r/IndiaInvestments, r/IndianStockMarket, r/IndianStreetBets. About 11 threads read in full including comments, across 11 search queries.</li>
+<li><strong>Industry funnel data</strong> &mdash; Vmobify broking-app funnel breakdown (Sep 2026), which cites Business of Apps for the 86% activation figure.</li>
+<li><strong>CFA Institute, "Gen Z and Investing"</strong> &mdash; used only for directional behavioural colour, clearly marked as non-India.</li>
+</ul>
+
+<h3>Honest limits &mdash; read these before you quote anything</h3>
+<ul>
+<li><strong>The Play Store rating split is not Groww's true rating.</strong> My pull was sorted <em>newest</em>, not <em>most relevant</em>, which heavily oversamples angry users: 55% of the 145 were 1&#9733;. Groww's actual store rating is far higher. Use the <em>theme counts</em> (what people complain about) and the <em>verbatims</em>; do not use the star split as a quality measure.</li>
+<li><strong>X / Twitter was a near-total miss.</strong> Searches returned promotional posts and a brand-name collision with an unrelated Nigerian app called "Grow". That is consistent with X being useful for amplification, not evaluation. No X data is used anywhere in this document.</li>
+<li><strong>Xiaohongshu was skipped</strong> &mdash; it is unreachable from this machine and irrelevant to an Indian audience anyway.</li>
+<li><strong>Reddit skews male, urban, English-speaking and far more financially engaged than the true persona.</strong> The 20-year-old in a tier-3 town who opened an account and quietly did nothing is, almost by definition, not posting about it. Treat Reddit as the articulate tail of the segment, not its centre.</li>
+<li><strong>Two supporting numbers come from weaker sources</strong> and are flagged where used: "2 of 3 demat accounts inactive" (a LinkedIn post citing SEBI) and "56 of every 100 new investors are under 30" (a broker's own blog). The core argument does not depend on either.</li>
+<li><strong>No primary user research.</strong> Everything here is secondhand. If you have even two hours, five WhatsApp voice notes from actual 21-year-olds would strengthen your write-up more than any of this &mdash; and the case study explicitly says assumptions are fine as long as you state them.</li>
+</ul>
+
+<p class="src" style="margin-top:36px">Compiled 16 September 2026. Every percentage in this document traces to a named source above; where a source is weak, it says so in the same sentence.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompting Steer Log · Groww GenZ Engine | Prathamesh Deshmane</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #04b488;
+    --green-dark: #00825c;
+    --bg: #090c10;
+    --surface: #12171f;
+    --surface-card: #18202c;
+    --border: #263142;
+    --border-light: #36445a;
+    --text-primary: #f0f6fc;
+    --text-secondary: #94a3b8;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  header {
+    background: rgba(18, 23, 31, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-left { display: flex; align-items: center; gap: 12px; }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+  }
+  .nav-title { font-size: 14px; font-weight: 700; color: #fff; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    background: var(--surface-card);
+    color: var(--text-primary);
+  }
+  .btn:hover { border-color: var(--green); color: var(--green); }
+
+  .content-wrap { max-width: 840px; margin: 40px auto 80px; padding: 0 24px; }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; }
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+  }
+  .meta-bar strong { color: #fff; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 40px 0 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    background: var(--green);
+    border-radius: 2px;
+    display: inline-block;
+  }
+  p { margin-bottom: 16px; color: #cbd5e1; }
+  ul, ol { margin: 0 0 20px 24px; color: #cbd5e1; }
+  li { margin-bottom: 8px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14.5px;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--surface-card); color: #fff; font-size: 12px; text-transform: uppercase; }
+
+  blockquote {
+    background: var(--surface);
+    border-left: 3px solid var(--green);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 20px 0;
+    color: #e2e8f0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-left">
+    <a href="/" class="back-btn">← Back to Workspace</a>
+    <span class="nav-title">Deliverable 2 · Prompting Steer Log</span>
+  </div>
+  <div class="nav-right">
+    <a href="/prompts.md" target="_blank" class="btn">View Raw .md</a>
+  </div>
+</header>
+
+<div class="content-wrap">
+  <div class="kicker">Development & Prompt Engineering</div>
+  <h1>The Prompting Steer Log</h1>
+  <div class="meta-bar">
+    <div>Methodology: <strong>Prompting & Human Steering</strong></div>
+    <div>Key Value: <strong>Rejected Drafts & Pushbacks Overruled</strong></div>
+  </div>
+
+  <h2>Phase 0 — Ground Rules & Guardrails</h2>
+  <p>
+    Standing instructions were defined prior to prototype development to maintain technical rigor:
+  </p>
+  <ul>
+    <li><strong>No guessing bug causes:</strong> Before writing any fix, categorize as proven from code/logs, provable in seconds, or an open hypothesis.</li>
+    <li><strong>Exhaustive source integrity:</strong> Never omit a data source; if an external API or dataset is unavailable, explicitly document it.</li>
+    <li><strong>Plain language without dumbing down:</strong> Strip financial jargon while preserving all mathematical and regulatory depth.</li>
+  </ul>
+
+  <h2>Key Steering Decisions: Accepted vs. Overruled</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>AI Proposal / Pushback</th>
+        <th>Product Decision</th>
+        <th>Rationale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Delete the "sell next week" stock comparison.</td>
+        <td><strong>Overruled (Kept):</strong> Demoted rather than deleted.</td>
+        <td>It is the only real data point that disproves the misconception that <em>"charges are just a tiny % of my gains"</em>.</td>
+      </tr>
+      <tr>
+        <td>Label projections as "expected gains".</td>
+        <td><strong>Accepted:</strong> Changed to "past trailing returns".</td>
+        <td>Fintech ethics & compliance: a projection is an unsubstantiated forward-looking claim.</td>
+      </tr>
+      <tr>
+        <td>Build a hardcoded static fee lookup table.</td>
+        <td><strong>Accepted:</strong> Replaced with deterministic test-backed formulas.</td>
+        <td>Lookup tables rot quickly; algorithmic functions backed by 23 assertions are verifiable over time.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Groww for GenZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Tokens from Groww's production CSS, 17 Sep 2026.
+   GrowwSans is proprietary; NotoSans is Groww's own declared fallback. */
+:root{
+  --green:#04b488; --green-hover:#04ad83; --green-ink:#00825c;
+  --green-100:#e9faf3; --green-300:#cdf3e3;
+  --purple:#5367ff; --purple-100:#eef0ff;
+  --red:#ed5533; --red-100:#fae9e5;
+  --gold:#8a6d1f; --gold-100:#fef5e3; --gold-line:#f6deab;
+  --bg:#fff; --bg-2:#f8f8f8; --bg-3:#f0f0f2;
+  --line:#dddee1; --line-2:#e9e9eb;
+  --text:#44475b; --text-2:#7c7e8c; --text-3:#8f919d;
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-pill:99px;
+  --ff:"Noto Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --green:#04b488; --green-hover:#24bf92; --green-ink:#46d5a7;
+  --green-100:#0f251d; --green-300:#043c2b; --purple:#98a4ff; --purple-100:#181a2a;
+  --red:#ff5e3b; --red-100:#411d16; --gold:#d8b875; --gold-100:#241f16; --gold-line:#4a3d21;
+  --bg:#060809; --bg-2:#151819; --bg-3:#252525; --line:#414141; --line-2:#2e2e2e;
+  --text:#f8f8f8; --text-2:#b8b8b8; --text-3:#a0a0a0; } }
+:root[data-theme="dark"]{
+  --green:#04b488; --green-hover:#24bf92; --green-ink:#46d5a7;
+  --green-100:#0f251d; --green-300:#043c2b; --purple:#98a4ff; --purple-100:#181a2a;
+  --red:#ff5e3b; --red-100:#411d16; --gold:#d8b875; --gold-100:#241f16; --gold-line:#4a3d21;
+  --bg:#060809; --bg-2:#151819; --bg-3:#252525; --line:#414141; --line-2:#2e2e2e;
+  --text:#f8f8f8; --text-2:#b8b8b8; --text-3:#a0a0a0; }
+
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{margin:0; min-height:100%; background:var(--bg-3); color:var(--text); font-family:var(--ff);
+  font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased; display:flex; justify-content:center}
+.phone{width:100%; max-width:420px; background:var(--bg); min-height:100vh;
+  display:flex; flex-direction:column; position:relative}
+@media (min-width:460px){ .phone{border-left:1px solid var(--line); border-right:1px solid var(--line)} }
+.g-tabs,.tick{scrollbar-width:none; -ms-overflow-style:none}
+.g-tabs::-webkit-scrollbar,.tick::-webkit-scrollbar{display:none}
+
+.bar{position:sticky; top:0; z-index:30; background:var(--bg); padding:13px 16px 11px;
+  display:flex; align-items:center; gap:12px; min-height:52px}
+.bar.bd{border-bottom:1px solid var(--line-2)}
+.back{background:none; border:0; padding:0; cursor:pointer; color:var(--text); font-size:20px; width:24px; text-align:left}
+.bar h2{font-size:16px; font-weight:600; margin:0}
+.logo{display:flex; align-items:center; gap:7px; font-weight:700; font-size:17px; letter-spacing:-.02em}
+.logo i{width:18px; height:18px; border-radius:50%; flex:none;
+  background:linear-gradient(135deg,var(--purple),var(--green))}
+.tagchip{margin-left:auto; font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-3); border:1px solid var(--line); border-radius:var(--r-pill); padding:3px 8px}
+.prog{height:2px; background:var(--line-2)}
+.prog i{display:block; height:100%; width:0; background:var(--green); transition:width .3s}
+
+.screen{flex:1; display:flex; flex-direction:column; padding:8px 16px 24px}
+.screen[hidden]{display:none!important}
+.pad-nav{padding-bottom:84px}
+.step{font-size:12px; font-weight:600; color:var(--text-3); margin-bottom:8px}
+h1{font-size:22px; line-height:1.25; font-weight:700; margin:0 0 6px; letter-spacing:-.02em}
+.sub{color:var(--text-2); font-size:14px; margin:0 0 18px}
+.spacer{flex:1; min-height:16px}
+.lbl{font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3); margin:6px 0 8px}
+
+.opt{display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;
+  background:var(--bg); border:1px solid var(--line); border-radius:var(--r-lg); padding:14px;
+  font:inherit; color:var(--text); margin-bottom:8px; transition:border-color .12s, background .12s}
+.opt:hover,.opt:focus-visible{border-color:var(--green); background:var(--green-100); outline:none}
+.opt[aria-checked="true"]{border-color:var(--green); border-width:2px; padding:13px; background:var(--green-100)}
+.opt .ic{flex:none; width:36px; height:36px; border-radius:var(--r-md); background:var(--bg-2);
+  display:grid; place-items:center; font-size:17px}
+.opt .tx{flex:1; min-width:0}
+.opt b{display:block; font-weight:600; font-size:15px}
+.opt small{display:block; color:var(--text-2); font-size:12.5px; margin-top:1px}
+.opt .chev{color:var(--text-3); font-size:17px; flex:none}
+.opt .spark{flex:none; width:58px; height:40px; border-radius:var(--r-md); background:var(--bg-2)}
+
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
+.chips button{border:1px solid var(--line); background:transparent; border-radius:var(--r-pill);
+  padding:9px 14px; font:600 13.5px var(--ff); color:var(--text-2); cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:var(--green); background:var(--green-100); color:var(--green-ink)}
+
+.amt-wrap{text-align:center; padding:10px 0 2px}
+.amt-lbl{font-size:13px; color:var(--text-3); margin-bottom:6px}
+.amt-val{font-size:38px; font-weight:700; letter-spacing:-.03em; font-variant-numeric:tabular-nums; line-height:1.1}
+.amt-val i{font-style:normal; color:var(--green); animation:blink 1.1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.amt-err{font-size:12.5px; color:var(--red); min-height:17px; margin-top:5px}
+.keys{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:4px}
+.keys button{background:none; border:0; padding:14px 0; font:500 22px var(--ff); color:var(--text);
+  cursor:pointer; border-radius:var(--r-md); font-variant-numeric:tabular-nums}
+.keys button:hover{background:var(--bg-2)}
+
+.card{background:var(--bg); border:1px solid var(--line); border-radius:var(--r-lg); padding:15px; margin-bottom:12px}
+.card.flat{background:var(--bg-2); border-color:transparent}
+.card h3{margin:0 0 3px; font-size:15px; font-weight:600}
+.card .k{font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--text-3); margin-bottom:7px}
+
+.pick{border:1px solid var(--green); background:var(--green-100); border-radius:var(--r-lg); padding:16px; margin-bottom:12px}
+.pick .k{font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--green-ink); margin-bottom:8px}
+.pick h2{font-size:17px; font-weight:700; margin:0 0 2px}
+.pick .kind{font-size:12.5px; color:var(--text-2); margin:0 0 10px}
+.pick .ret{display:flex; align-items:baseline; gap:7px; margin-bottom:10px}
+.pick .ret b{font-size:19px; font-weight:700; color:var(--green-ink); font-variant-numeric:tabular-nums}
+.pick .ret span{font-size:12px; color:var(--text-2)}
+.pick p{margin:0; font-size:14px}
+
+.slider{margin:6px 0 4px}
+.slider input{width:100%; accent-color:var(--green); height:26px}
+.slider .row{display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-3); margin-top:-4px}
+.split{display:flex; gap:10px; margin:12px 0 4px}
+.split div{flex:1; border:1px solid var(--line); border-radius:var(--r-md); padding:11px 12px}
+.split div.sw{border-color:var(--purple); background:var(--purple-100)}
+.split b{display:block; font-size:17px; font-weight:700; font-variant-numeric:tabular-nums}
+.split small{display:block; font-size:11.5px; color:var(--text-2); margin-top:2px}
+
+.rtab{width:100%; border-collapse:collapse; font-size:13.5px}
+.rtab th{font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3); text-align:right; padding:0 0 7px}
+.rtab th:first-child{text-align:left}
+.rtab td{padding:7px 0; border-top:1px solid var(--line-2); text-align:right; font-variant-numeric:tabular-nums; font-weight:600; color:var(--text-2)}
+.rtab td:first-child{text-align:left; font-weight:500; font-size:13px; color:var(--text-2)}
+.rtab tr.us td{color:var(--text)} .rtab tr.us td:first-child{font-weight:700; color:var(--text)}
+.rtab .s{display:block; font-size:11px; font-weight:400; color:var(--text-3)}
+
+.outcome{border:1px solid var(--green-300); background:var(--green-100); border-radius:var(--r-lg); padding:18px; margin-bottom:12px}
+.outcome .k{font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--green-ink); margin-bottom:7px}
+.outcome .v{font-size:32px; font-weight:700; color:var(--green-ink); letter-spacing:-.03em; font-variant-numeric:tabular-nums; line-height:1}
+.outcome .from{font-size:13px; color:var(--text-2); margin-top:8px}
+.outcome .cost{margin-top:13px; padding-top:12px; border-top:1px solid var(--green-300);
+  display:flex; justify-content:space-between; align-items:baseline; gap:10px}
+.outcome .cost span{font-size:13.5px; color:var(--text-2)}
+.outcome .cost b{font-size:17px; font-weight:700; font-variant-numeric:tabular-nums}
+
+details.drop{border:1px solid var(--line); border-radius:var(--r-lg); margin-bottom:12px; background:var(--bg)}
+details.drop summary{cursor:pointer; list-style:none; padding:13px 15px; font-weight:600; font-size:14px; display:flex; align-items:center; gap:8px}
+details.drop summary::-webkit-details-marker{display:none}
+details.drop summary::after{content:"\25BE"; margin-left:auto; color:var(--text-3); font-size:12px}
+details.drop[open] summary::after{content:"\25B4"}
+details.drop .in{padding:0 15px 13px}
+.ledger .li{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 0; border-bottom:1px solid var(--line-2); font-size:14px}
+.ledger .li:last-child{border-bottom:0}
+.ledger .li span{color:var(--text-2)}
+.ledger .li small{display:block; color:var(--text-3); font-size:11.5px; margin-top:2px}
+.ledger .li b{font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap}
+.ledger .li.tot b,.ledger .li.tot span{color:var(--text); font-weight:700}
+.ledger .li.hot b{color:var(--gold)}
+
+.vs{border:1px solid var(--line); border-radius:var(--r-lg); overflow:hidden; margin-bottom:12px}
+.vs .r{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:13px 15px; border-bottom:1px solid var(--line-2)}
+.vs .r:last-child{border-bottom:0}
+.vs .r.me{background:var(--green-100)}
+.vs .n b{display:block; font-size:14px; font-weight:600}
+.vs .n small{display:block; font-size:11.5px; color:var(--text-3); margin-top:1px}
+.vs .v{text-align:right; font-variant-numeric:tabular-nums; flex:none}
+.vs .v b{display:block; font-size:15px; font-weight:700}
+.vs .v small{display:block; font-size:11.5px; color:var(--text-3); margin-top:1px}
+
+.note{border-left:3px solid var(--green); background:var(--green-100); border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:12px 14px; font-size:13.5px; color:var(--text-2); margin-bottom:12px}
+.note.warn{border-left-color:var(--gold); background:var(--gold-100)}
+.note.bad{border-left-color:var(--red); background:var(--red-100)}
+.note b{color:var(--text)}
+
+.cta{width:100%; border:0; border-radius:var(--r-md); background:var(--green); color:#fff; font:600 16px var(--ff); padding:15px; cursor:pointer}
+.cta:hover{background:var(--green-hover)} .cta:disabled{opacity:.35; cursor:default}
+.ghost{width:100%; border:1px solid var(--line); border-radius:var(--r-md); background:transparent; color:var(--text); font:600 15px var(--ff); padding:13px; cursor:pointer; margin-top:8px}
+.ghost:hover{border-color:var(--text-3)}
+.term{border-bottom:1px dashed var(--text-3); cursor:pointer}
+.term::after{content:"?"; font-size:9px; vertical-align:super; color:var(--green-ink); font-weight:700; margin-left:1px}
+
+.nav{position:fixed; left:50%; transform:translateX(-50%); bottom:0; width:100%; max-width:420px; z-index:30;
+  display:flex; background:var(--bg); border-top:1px solid var(--line-2); padding:7px 0 max(7px,env(safe-area-inset-bottom))}
+.nav button{flex:1; background:none; border:0; cursor:pointer; font:600 10.5px var(--ff); color:var(--text-3);
+  display:flex; flex-direction:column; align-items:center; gap:3px; padding:3px 0}
+.nav button em{font-style:normal; font-size:18px; line-height:1}
+.nav button[aria-current="true"]{color:var(--green)}
+.nav[hidden]{display:none!important}
+
+.veil{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:60; display:none}
+.veil.on{display:block}
+.sheet{position:fixed; left:50%; transform:translateX(-50%); bottom:0; width:100%; max-width:420px; background:var(--bg);
+  border-radius:var(--r-xl) var(--r-xl) 0 0; z-index:61; padding:8px 18px 26px; max-height:82vh; overflow-y:auto; display:none}
+.sheet.on{display:block}
+.grab{width:36px; height:4px; border-radius:99px; background:var(--line); margin:4px auto 14px}
+.sheet h3{margin:0 0 8px; font-size:18px; font-weight:700}
+.sheet p{margin:0 0 11px; font-size:14px; color:var(--text-2)}
+.sheet .yours{background:var(--green-100); border-radius:var(--r-md); padding:11px 13px; font-size:13.5px; color:var(--text); margin-bottom:11px}
+.sheet .src{border-top:1px solid var(--line-2); padding-top:11px; font-size:12.5px; color:var(--text-3)}
+.sheet .src b{display:block; color:var(--text-2); font-weight:600; margin-bottom:4px; font-size:11px; letter-spacing:.06em; text-transform:uppercase}
+
+.g-tabs{display:flex; gap:20px; padding:0 16px; border-bottom:1px solid var(--line-2); overflow-x:auto}
+.g-tabs span{padding:10px 0 11px; font-size:14px; font-weight:600; color:var(--text-3); white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-1px}
+.g-tabs span.on{color:var(--text); border-bottom-color:var(--green)}
+.banner{border-radius:var(--r-lg); padding:14px; margin-bottom:10px; font-size:13.5px}
+.banner b{display:block; font-size:14.5px; margin-bottom:2px; font-weight:600}
+.banner.fno{background:var(--purple-100)} .banner.loan{background:var(--gold-100)}
+.tick{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px}
+.tick div{flex:none; border:1px solid var(--line); border-radius:var(--r-md); padding:9px 11px; min-width:104px}
+.tick b{display:block; font-size:12.5px; font-weight:600}
+.tick small{display:block; font-size:12px; margin-top:2px; font-variant-numeric:tabular-nums}
+.askbox{border:1px dashed var(--line); border-radius:var(--r-lg); padding:16px; text-align:center}
+.askbox p{margin:0 0 10px; font-size:15px; font-weight:600}
+.askbox small{display:block; color:var(--text-3); font-size:12.5px; margin-top:9px}
+.up{color:var(--green-ink)} .down{color:var(--red)}
+
+.bucket{border:1px solid var(--line); border-radius:var(--r-lg); padding:15px; margin-bottom:12px}
+.bucket .top{display:flex; align-items:center; gap:11px; margin-bottom:11px}
+.bucket .top .ic{flex:none; width:36px; height:36px; border-radius:var(--r-md); background:var(--bg-2); display:grid; place-items:center; font-size:17px}
+.bucket .top b{display:block; font-size:15px; font-weight:700}
+.bucket .top small{display:block; font-size:12px; color:var(--text-3); margin-top:1px}
+.bar-track{height:7px; border-radius:99px; background:var(--bg-3); overflow:hidden; margin:4px 0 7px}
+.bar-track i{display:block; height:100%; background:var(--green); border-radius:99px}
+.bucket .figs{display:flex; justify-content:space-between; font-size:12.5px; color:var(--text-2)}
+.bucket .figs b{color:var(--text); font-variant-numeric:tabular-nums}
+.row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line-2)}
+.row:last-child{border-bottom:0}
+.row .av{flex:none; width:32px; height:32px; border-radius:var(--r-md); background:var(--bg-2); display:grid; place-items:center; font-size:12px; font-weight:700; color:var(--text-2)}
+.row .nm{flex:1; min-width:0}
+.row .nm b{display:block; font-weight:600; font-size:13.5px}
+.row .nm small{display:block; color:var(--text-3); font-size:11.5px; margin-top:1px}
+.row .val{text-align:right; flex:none; font-variant-numeric:tabular-nums}
+.row .val b{display:block; font-weight:600; font-size:13.5px}
+.row .val small{display:block; font-size:11.5px; margin-top:1px}
+.redstrip{display:flex; gap:11px; align-items:center; width:100%; text-align:left; cursor:pointer;
+  border:1px solid var(--red); background:var(--red-100); border-radius:var(--r-lg); padding:13px 14px; font:inherit; color:var(--text); margin-bottom:12px}
+.redstrip b{display:block; font-size:14px; font-weight:600}
+.redstrip small{display:block; font-size:12.5px; color:var(--text-2); margin-top:1px}
+.read{display:flex; gap:12px; align-items:center; border:1px solid var(--line); border-radius:var(--r-lg);
+  padding:13px 14px; cursor:pointer; background:var(--bg); width:100%; text-align:left; font:inherit; color:var(--text)}
+.read:hover{border-color:var(--green)}
+.read .ic{flex:none; width:34px; height:34px; border-radius:var(--r-md); background:var(--purple-100); display:grid; place-items:center; font-size:15px}
+.read b{display:block; font-size:14px; font-weight:600}
+.read small{display:block; font-size:12px; color:var(--text-3); margin-top:1px}
+.protoctl{border:1px dashed var(--line); border-radius:var(--r-lg); padding:11px 13px; margin-top:14px}
+.protoctl .k{font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:8px}
+.protoctl button{background:none; border:1px solid var(--line); border-radius:var(--r-pill); padding:6px 12px; font:600 12px var(--ff); color:var(--text-2); cursor:pointer; margin:0 6px 6px 0}
+.protoctl button:hover{border-color:var(--text-3)}
+
+.done-tick{width:54px; height:54px; border-radius:50%; background:var(--green-100); border:1px solid var(--green);
+  color:var(--green-ink); display:grid; place-items:center; font-size:25px; margin:6px 0 16px}
+.stat{display:flex; align-items:baseline; gap:9px; border:1px solid var(--line); border-radius:var(--r-lg); padding:13px 15px; margin-bottom:12px}
+.stat b{font-size:24px; font-weight:700; color:var(--green-ink); font-variant-numeric:tabular-nums}
+.stat span{font-size:13px; color:var(--text-2)}
+.bignum{border:1px solid var(--red); background:var(--red-100); border-radius:var(--r-lg); padding:17px; margin-bottom:12px; text-align:center}
+.bignum b{display:block; font-size:30px; font-weight:700; color:var(--red); font-variant-numeric:tabular-nums}
+.bignum span{display:block; font-size:13px; color:var(--text-2); margin-top:6px}
+.hist{border:1px solid var(--line); border-radius:var(--r-lg); padding:14px; margin-bottom:12px}
+.hist .hd{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:9px}
+.hist .hd span{font-size:12.5px; color:var(--text-2)}
+.hist .hd b{font-size:19px; font-weight:700; font-variant-numeric:tabular-nums}
+.hist .ft{display:flex; justify-content:space-between; font-size:10.5px; color:var(--text-3); margin-top:6px}
+.out{border:1px solid var(--line); border-radius:var(--r-lg); padding:14px; margin-bottom:10px}
+.out b{display:block; font-size:14.5px; font-weight:600; margin-bottom:3px}
+.out p{margin:0 0 7px; font-size:13.5px; color:var(--text-2)}
+.out cite{display:block; font-style:normal; font-size:11.5px; color:var(--text-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="bar" id="bar">
+    <button class="back" id="backBtn" hidden aria-label="Back">&#8592;</button>
+    <div class="logo" id="logo"><i></i>Groww</div>
+    <h2 id="barTitle" hidden></h2>
+    <span class="tagchip">Concept</span>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+
+  <!-- 00 -->
+  <section class="screen" id="s00" style="padding-left:0;padding-right:0">
+    <div class="g-tabs"><span class="on">Stocks</span><span>F&amp;O</span><span>Mutual Funds</span><span>Commodities</span><span>IPO</span><span>Loans</span></div>
+    <div style="padding:14px 16px 0">
+      <div class="banner fno"><b>Fast Exit is live</b>Exit your F&amp;O positions instantly in a click.</div>
+      <div class="banner loan"><b>Personal Loan up to &#8377;5,00,000</b>Tenure 3&#8211;60 months &#183; APR 13&#8211;48%</div>
+      <div class="lbl" style="margin-top:16px">Most bought options</div>
+      <div class="tick">
+        <div><b>NIFTY 23600 CE</b><small class="up">+142.5%</small></div>
+        <div><b>SENSEX 74000 PE</b><small class="down">&#8722;4.1%</small></div>
+        <div><b>Suzlon Energy</b><small class="up">+7.8%</small></div>
+        <div><b>YES Bank</b><small class="up">+2.2%</small></div>
+      </div>
+      <div class="askbox">
+        <p>You have &#8377;5,000 and thirty seconds.</p>
+        <button class="cta" id="askBtn">What do I actually do?</button>
+        <small>Nothing on this screen answers that.</small>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-3);margin:16px 0 0;line-height:1.55">
+        This is Groww today, rebuilt from the live app. Everything after this screen is the proposal.</p>
+    </div>
+  </section>
+
+  <!-- 01 · what for -->
+  <section class="screen" id="s01" hidden>
+    <div class="step">Step 1 of 4</div>
+    <h1>What are you saving for?</h1>
+    <p class="sub">Each thing you save for gets its own pot. You can have more than one.</p>
+    <div id="goalOpts"></div>
+  </section>
+
+  <!-- 02 · target + date -->
+  <section class="screen" id="s02" hidden>
+    <div class="step">Step 2 of 4</div>
+    <h1 id="tgtH"></h1>
+    <p class="sub">A rough number is fine. You can change it later.</p>
+    <div class="amt-wrap">
+      <div class="amt-lbl">I want to end up with</div>
+      <div class="amt-val">&#8377;<span id="tgtDisp">0</span><i>|</i></div>
+      <div class="amt-err" id="tgtErr"></div>
+    </div>
+    <div class="lbl">By when?</div>
+    <div class="chips" id="whenChips"></div>
+    <div class="keys" id="tgtKeys"></div>
+    <div class="spacer"></div>
+    <button class="cta" id="toAmt">Next &#8594;</button>
+  </section>
+
+  <!-- 03 · how much now -->
+  <section class="screen" id="s03" hidden>
+    <div class="step">Step 3 of 4</div>
+    <h1>How much can you put in now?</h1>
+    <p class="sub" id="amtSub"></p>
+    <div class="amt-wrap">
+      <div class="amt-lbl">Starting with</div>
+      <div class="amt-val">&#8377;<span id="amtDisp">500</span><i>|</i></div>
+      <div class="amt-err" id="amtErr"></div>
+    </div>
+    <div class="chips" id="amtChips"></div>
+    <div class="keys" id="amtKeys"></div>
+    <div class="spacer"></div>
+    <button class="cta" id="toRisk">Next &#8594;</button>
+  </section>
+
+  <!-- 04 · risk + swing slider -->
+  <section class="screen" id="s04" hidden>
+    <div class="step">Step 4 of 4</div>
+    <h1>How much bouncing can you live with?</h1>
+    <p class="sub">Pick the line you could watch without selling.</p>
+    <div id="riskOpts"></div>
+    <div class="card">
+      <div class="k">Want a punt on the side?</div>
+      <p style="margin:0 0 4px;font-size:13.5px;color:var(--text-2)">
+        Some of your money can go into one riskier bet. Move the slider. Zero is fine.</p>
+      <div class="slider">
+        <input type="range" id="swSlider" min="0" max="100" step="5" value="0" aria-label="Percent in the risky slice">
+        <div class="row" style="border:0;padding:0"><span style="font-size:12.5px;color:var(--text-3)">0%</span>
+          <span style="margin-left:auto;font-size:12.5px;color:var(--text-3)">100%</span></div>
+      </div>
+      <div class="split" id="splitView"></div>
+      <div id="swWarn"></div>
+    </div>
+    <div class="spacer"></div>
+    <button class="cta" id="toPick">Show me what to buy &#8594;</button>
+  </section>
+
+  <!-- 05 · pick -->
+  <section class="screen" id="s05" hidden>
+    <div class="pick" id="pickCard">
+      <div class="k" id="pickK"></div>
+      <h2 id="pickName"></h2>
+      <p class="kind" id="pickKind"></p>
+      <div class="ret"><b id="pickRet"></b><span id="pickRetLbl"></span></div>
+      <p id="pickWhy"></p>
+    </div>
+    <div id="swingCard"></div>
+    <div class="card">
+      <div class="k">How it has actually done</div>
+      <table class="rtab" id="rtab"></table>
+      <p style="font-size:11.5px;color:var(--text-3);margin:10px 0 0">
+        Yearly returns from each fund's page on groww.in, 15 Sep 2026. This is the past. You cannot buy it.</p>
+    </div>
+    <div class="note" id="pickArg"></div>
+    <div class="spacer"></div>
+    <button class="cta" id="toCost">What will I end up with? &#8594;</button>
+  </section>
+
+  <!-- 06 · outcome + cost -->
+  <section class="screen" id="s06" hidden>
+    <h1 id="costTitle" style="font-size:20px"></h1>
+    <p class="sub" id="costSub"></p>
+    <div class="outcome" id="outcome"></div>
+    <div id="gapNote"></div>
+    <details class="drop"><summary>Where every rupee of that charge goes</summary>
+      <div class="in ledger" id="ledger"></div></details>
+    <div class="lbl">The same money in an FD</div>
+    <div class="vs" id="vs"></div>
+    <p style="font-size:12.5px;color:var(--text-2);margin:-4px 0 12px" id="vsNote"></p>
+    <div class="note warn" id="stockAside"></div>
+    <div class="spacer"></div>
+    <button class="cta" id="confirmBtn">Confirm</button>
+  </section>
+
+  <!-- 07 · done -->
+  <section class="screen" id="s07" hidden>
+    <div class="done-tick">&#10003;</div>
+    <h1>Done. You're invested.</h1>
+    <p class="sub" id="doneSub"></p>
+    <div class="stat"><b id="secs">0s</b><span>from opening the app<br>to money invested</span></div>
+    <div class="card">
+      <div class="k">Your next one</div>
+      <h3 id="nextLine"></h3>
+      <p style="margin:4px 0 12px;font-size:13.5px;color:var(--text-2)">
+        Same amount, one tap, nothing to decide again. Most people never make the second one.</p>
+      <button class="cta" id="lockNext">Yes, remind me</button>
+    </div>
+    <div class="spacer"></div>
+    <button class="ghost" id="toHome">Go to home &#8594;</button>
+  </section>
+
+  <!-- 08 · home -->
+  <section class="screen pad-nav" id="s08" hidden>
+    <h1 style="font-size:20px;margin-bottom:14px">Your pots</h1>
+    <div id="redStripSlot"></div>
+    <div id="buckets"></div>
+    <button class="cta" id="addMore" hidden>Add money to a pot</button>
+    <button class="ghost" id="addBucket" style="margin-bottom:14px">+ Start another pot</button>
+    <div class="lbl">Today's 10-minute read</div>
+    <button class="read" id="readBtn">
+      <span class="ic">&#128214;</span>
+      <span><b id="readTitle">What a Nifty 50 actually is</b><small>10 min &#183; about something you own</small></span>
+      <span style="margin-left:auto;color:var(--text-3)">&#8250;</span>
+    </button>
+    <div class="protoctl">
+      <div class="k">Prototype controls &#183; not part of the product</div>
+      <button id="ctlDay1">Day 1</button>
+      <button id="ctlRed">3 weeks later</button>
+      <button id="ctlReset">Start over</button>
+    </div>
+    <div class="spacer"></div>
+  </section>
+
+  <!-- 09 · red day -->
+  <section class="screen" id="s09" hidden>
+    <div class="step">Three weeks later</div>
+    <h1>It's red.</h1>
+    <p class="sub" id="redSub"></p>
+    <div class="bignum" id="bignum"></div>
+    <div class="hist">
+      <div class="hd"><span>Months this bad or worse<br>Nifty 50, last 10 years</span><b>about 30</b></div>
+      <svg viewBox="0 0 300 70" width="100%" height="70" role="img" aria-label="A fall, then a recovery over the following months.">
+        <path id="spkFill" fill="none"></path>
+        <path id="spkLine" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle id="spkDot" r="3.5"></circle>
+      </svg>
+      <div class="ft"><span>You are here</span><span>12 months later</span></div>
+    </div>
+    <div class="note" id="redNote"></div>
+    <details class="drop"><summary>What if it doesn't come back?</summary>
+      <div class="in" style="font-size:13.5px;color:var(--text-2)">
+        <p style="margin:0 0 9px">Sometimes it doesn't, for a while. After the 2008 crash the Nifty took about
+        <b style="color:var(--text)">three years</b> to get back. In March 2020 it fell about 38% in a month and took
+        about <b style="color:var(--text)">nine months</b>.</p>
+        <p style="margin:0">Most falls come back inside a year. Some take much longer. That is the pattern, not a
+        promise. It is why we asked when you need the money.</p>
+      </div></details>
+    <div class="spacer"></div>
+    <button class="cta" id="holdBtn">Do nothing</button>
+    <button class="ghost" id="sellBtn">Sell it all</button>
+  </section>
+
+  <!-- 10 · second investment -->
+  <section class="screen" id="s10" hidden>
+    <div class="step">1 October</div>
+    <h1>Welcome back.</h1>
+    <p class="sub">Two weeks on. We are not asking you everything again.</p>
+    <div class="lbl">Which pot?</div>
+    <div id="bucketPick"></div>
+    <div class="card"><div class="k">Nothing has changed</div><div id="sameRows"></div></div>
+    <div class="note">
+      <b>One thing did change.</b> Your fund's fee went from 0.25% to 0.23% a year. On <span id="feeAmt"></span>
+      that is about 10 paise. We are telling you because we said we would, not because you need to do anything.
+    </div>
+    <div class="spacer"></div>
+    <button class="cta" id="doSecond">Add <span id="secondAmt"></span> again</button>
+    <button class="ghost" id="changeSecond">Back to home</button>
+  </section>
+
+  <!-- 11 · what's not here -->
+  <section class="screen pad-nav" id="s11" hidden>
+    <h1>What we left out</h1>
+    <p class="sub">Four things, and the reason for each.</p>
+
+    <div class="out"><b>F&amp;O and intraday</b>
+      <p>43% of people trading F&amp;O in India are under 30. 89% of them lost money last year.
+      They put up 43% of the turnover and took 53% of the losses.</p>
+      <cite>SEBI study on individual F&amp;O traders, FY26</cite></div>
+
+    <div class="out"><b>Personal loans</b>
+      <p>Groww's own Play Store listing offers loans at 13&#8211;48% a year, on the same screen as investing.
+      We are not putting a 48% loan next to someone's first &#8377;500.</p>
+      <cite>Google Play listing, com.nextbillion.groww, read 16 Sep 2026</cite></div>
+
+    <div class="out"><b>"Most bought" and "trending" lists</b>
+      <p>Groww shows Most Bought Options, Volume Shockers and screens called Resistance Breakouts and
+      RSI Overbought. A list of what went up last week is not advice, and it is how people buy at the top.</p>
+      <cite>Groww app, Stocks and F&amp;O tabs, Sep 2026</cite></div>
+
+    <div class="out"><b>Notifications that sell you things</b>
+      <p>29 of 145 recent Groww reviews complain about ads and pop-ups. People who move to Zerodha say why:
+      "no pushing of any stuff", "I always feel like I am in control".</p>
+      <cite>Google Play reviews, Jul&#8211;Sep 2026 &#183; r/IndianStockMarket</cite></div>
+
+    <div class="note warn">
+      <b>The honest bit.</b> All four make money. Groww can afford to drop them because it earns elsewhere.
+      A new startup could not, which is why this belongs inside Groww and not outside it.</div>
+
+    <div class="note">
+      This is a concept built for a product case study. It is not affiliated with Groww, no real money moves,
+      and nothing here is advice. Fund fees, exit charges and returns were read off each fund's page on
+      groww.in on 16 Sep 2026. Growth figures use each fund's own 10-year record, which is the past, not a forecast.</div>
+    <div class="spacer"></div>
+  </section>
+
+  <nav class="nav" id="nav" hidden>
+    <button data-nav="s08" aria-current="true"><em>&#127968;</em>Home</button>
+    <button data-nav="invest"><em>&#43;</em>New pot</button>
+    <button data-nav="learn"><em>&#128214;</em>Learn</button>
+    <button data-nav="s11"><em>&#128683;</em>Left out</button>
+  </nav>
+</div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="grab"></div><h3 id="shT"></h3><div id="shB"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ verified fund data ============
+   groww.in fund pages, read 16-17 Sep 2026, NAV 15 Sep 2026.
+   r3/r5/r10 are the yearly (annualised) returns from each page's returns
+   table, not the SIP-calculator tiles on the same page. */
+var FUNDS={
+  liquid:{name:"ICICI Prudential Liquid Fund", kind:"Liquid fund · Direct · Growth",
+    er:0.0020,type:"debt",r3:7.0,r5:6.3,r10:6.1, loadTxt:"Tiny, and only in the first 7 days",
+    load:function(y){return y<7/365?0.00006:0;}},
+  shortterm:{name:"ICICI Prudential Short Term Fund", kind:"Short-duration bond fund · Direct · Growth",
+    er:0.0045,type:"debt",r3:7.8,r5:7.1,r10:7.8, loadTxt:"None",
+    load:function(){return 0;}},
+  balanced:{name:"ICICI Pru Balanced Advantage", kind:"Shares and bonds mixed · Direct · Growth",
+    er:0.0104,type:"equity",r3:10.5,r5:10.5,r10:11.2, loadTxt:"1% on most of it if you sell inside a year",
+    load:function(y){return y<1?0.007:0;}},
+  index:{name:"UTI Nifty 50 Index Fund", kind:"Index fund · Direct · Growth",
+    er:0.0025,type:"equity",r3:5.6,r5:6.7,r10:11.3, loadTxt:"None, ever",
+    load:function(){return 0;}},
+  next50:{name:"UTI Nifty Next 50 Index Fund", kind:"Index fund, bigger swings · Direct · Growth",
+    er:0.0042,type:"equity",r3:15.7,r5:10.8,r10:12.4, loadTxt:"None",
+    load:function(){return 0;}}
+};
+var PEERS=[{n:"ICICI Pru Large Cap",r3:9.31,aum:"₹80,206 Cr"},
+           {n:"Nippon India Large Cap",r3:9.71,aum:"₹54,134 Cr"},
+           {n:"HDFC Large Cap",r3:7.94,aum:"₹39,933 Cr"}];
+/* SBI retail term deposit rates, under Rs3 crore, public, w.e.f. 15 Dec 2025.
+   The baseline everyone's parents already understand. */
+function fdRate(months){
+  if(months<6)  return 0.049;
+  if(months<7)  return 0.0565;
+  if(months<12) return 0.059;
+  if(months<24) return 0.0625;
+  if(months<36) return 0.064;
+  if(months<60) return 0.063;
+  return 0.0605;
+}
+
+var GOALS=[
+  {id:"buffer", ic:"\u{1F6E1}\u{FE0F}", t:"A safety net", d:"Money for when something goes wrong", months:6,  tgt:15000},
+  {id:"phone",  ic:"\u{1F4F1}", t:"A phone or laptop", d:"Something you are saving up to buy",   months:18, tgt:60000},
+  {id:"trip",   ic:"✈\u{FE0F}",  t:"A trip",           d:"Goa, Europe, wherever",                months:24, tgt:80000},
+  {id:"long",   ic:"\u{1F331}", t:"Just the long run", d:"No deadline. You want it to grow",      months:60, tgt:500000},
+  {id:"other",  ic:"\u{1F4B0}", t:"Something else",    d:"You tell us",                           months:36, tgt:100000}
+];
+var WHENS=[{m:6,t:"6 months"},{m:12,t:"1 year"},{m:24,t:"2 years"},
+           {m:36,t:"3 years"},{m:60,t:"5 years"},{m:120,t:"10 years"}];
+
+var RISKS=[
+  {id:"vhigh",t:"Very big swings",  d:"It can jump and drop hard", path:"M0 34 L12 12 L20 30 L30 6 L40 28 L50 10 L58 24"},
+  {id:"high", t:"Big swings",       d:"Up and down a lot",         path:"M0 32 L12 22 L20 26 L30 14 L40 20 L50 8 L58 6"},
+  {id:"mod",  t:"Some swings",      d:"The middle",                path:"M0 32 L12 28 L20 30 L30 20 L40 22 L50 14 L58 12"},
+  {id:"low",  t:"Almost no swings", d:"Barely moves",              path:"M0 30 L12 29 L20 28 L30 26 L40 25 L50 23 L58 22"}
+];
+var DEFAULT_SW={vhigh:20,high:10,mod:5,low:0};
+
+/* ============ state ============ */
+var pots=[], draft=null, t0=null, hist=[], cur=null, tgtEntry="", amtEntry="", redMode=false, activePot=0;
+
+function nd(){ return {goal:"long",title:"Just the long run",ic:"\u{1F331}",
+  target:500000,months:60,amount:500,risk:"mod",swPct:0}; }
+
+/* ============ helpers ============ */
+function inr(n){return (Math.round(n*100)/100).toFixed(2).replace(/\.00$/,"").replace(/\B(?=(\d{3})+(?!\d))/g,",");}
+function rs(n){return "₹"+inr(n);}
+function money(n){return n<1?Math.round(n*100)+" paise":rs(n);}
+function pct(v){return (v>=0?"+":"−")+Math.abs(v).toFixed(1)+"%";}
+function yrs(d){return d.months/12;}
+function whenTxt(m){ for(var i=0;i<WHENS.length;i++) if(WHENS[i].m===m) return WHENS[i].t;
+  return m<12?m+" months":(m/12)+" years"; }
+
+/* which fund suits this pot */
+function fundFor(d){
+  if(d.months<=12) return "liquid";
+  if(d.months<=36) return d.risk==="low" ? "shortterm" : "balanced";
+  return d.risk==="low" ? "balanced" : "index";
+}
+/* base = what's already in this pot (0 for a new one); amount = what you're adding now */
+function totalIn(d){ return (d.base||0)+d.amount; }
+function swingAmt(d){ return Math.round(totalIn(d)*d.swPct/100); }
+function steadyAmt(d){ return totalIn(d)-swingAmt(d); }
+
+/* ============ money maths ============
+   A fund's fee comes off the value every day, so it grows with the money.
+   Charging it on the starting amount understates it badly. */
+function rate(F){ return F.r10/100; }
+function grow(A,r,y){ return A*Math.pow(1+r,y); }
+function feeDrag(A,F,y){ var g=rate(F); return grow(A,g,y)-grow(A,g-F.er,y); }
+function netValue(A,F,y){ return grow(A,rate(F)-F.er,y); }
+function fundCost(A,F,y){
+  var stamp=A*0.00005, fee=feeDrag(A,F,y), exit=grow(A,rate(F),y)*F.load(y),
+      stt=(F.type==="equity")?grow(A,rate(F),y)*0.00001:0;
+  var rows=[["Commission","Direct plan. There is none.",0,0],
+    ["Stamp duty","0.005% when you buy",stamp,0],
+    ["The fund's fee over "+whenTxt(Math.round(y*12)),(F.er*100).toFixed(2)+"% a year, taken daily",fee,0,"er"],
+    ["Exit charge",F.loadTxt,exit,exit>0?1:0,"exit"]];
+  rows.push(F.type==="equity"
+    ? ["Tax when you sell","0.001% · tax on gains is ₹0 below ₹1.25 lakh a year",stt,0,"ltcg"]
+    : ["Tax when you sell","Gains taxed at your income slab",0,0,"ltcg"]);
+  return {rows:rows,total:stamp+fee+exit+stt};
+}
+function stockCost(A){
+  var brok=Math.min(20,A*0.001)*2, stt=A*0.001*2, dp=15.93,
+      stamp=A*0.00015, exch=A*0.0000297*2, gst=(brok+exch)*0.18;
+  return {rows:[["Brokerage","₹20 or 0.1% an order, whichever is lower",brok,0],
+    ["Securities transaction tax","0.1% each way",stt,0],
+    ["Depository fee on selling","A flat ₹15.93. Same on ₹500 as on ₹1 lakh.",dp,1,"dp"],
+    ["Stamp duty","0.015% on the buy",stamp,0],
+    ["Exchange + GST","",exch+gst,0]],
+    total:brok+stt+dp+stamp+exch+gst};
+}
+/* what this pot is worth at the target date, both slices together */
+function potValue(d){
+  var y=yrs(d), F=FUNDS[fundFor(d)], st=steadyAmt(d), sw=swingAmt(d);
+  var a=st>0 ? netValue(st,F,y)-(fundCost(st,F,y).total-feeDrag(st,F,y)) : 0;
+  var b=sw>0 ? netValue(sw,FUNDS.next50,y)-(fundCost(sw,FUNDS.next50,y).total-feeDrag(sw,FUNDS.next50,y)) : 0;
+  return {steady:a, swing:b, total:a+b};
+}
+/* monthly top-up needed to actually hit the target */
+function monthlyNeeded(d){
+  var F=FUNDS[fundFor(d)], r=(rate(F)-F.er)/12, n=d.months;
+  var already=potValue(d).total, gap=d.target-already;
+  if(gap<=0) return 0;
+  return gap/((((Math.pow(1+r,n)-1)/r))*(1+r));
+}
+
+/* ============ nav ============ */
+var FLOW={s01:1,s02:2,s03:3,s04:4,s05:5,s06:6};
+var TITLES={s05:"Our pick",s06:"Before you confirm",s09:"Three weeks later",s10:"Welcome back",s11:"What we left out"};
+var NAVON={s08:1,s11:1};
+function go(id,push){
+  closeSheet();                       /* never leave an explainer hanging over a new screen */
+  if(push!==false && cur && cur!==id) hist.push(cur);
+  document.querySelectorAll(".screen").forEach(function(s){s.hidden=(s.id!==id);});
+  cur=id;
+  document.getElementById("prog").style.width=(FLOW[id]?FLOW[id]/6*100:0)+"%";
+  document.getElementById("nav").hidden=!NAVON[id];
+  document.getElementById("nav").querySelectorAll("button").forEach(function(b){
+    b.setAttribute("aria-current",String(b.dataset.nav===id));});
+  document.getElementById("backBtn").hidden=(id==="s00"||id==="s08");
+  document.getElementById("logo").hidden=!!TITLES[id];
+  var t=document.getElementById("barTitle"); t.hidden=!TITLES[id]; t.textContent=TITLES[id]||"";
+  document.getElementById("bar").classList.toggle("bd",id==="s00");
+  window.scrollTo(0,0);
+}
+document.getElementById("backBtn").addEventListener("click",function(){ go(hist.pop()||"s00",false); });
+document.getElementById("nav").addEventListener("click",function(e){
+  var b=e.target.closest("[data-nav]"); if(!b) return;
+  if(b.dataset.nav==="invest") startFlow(); else if(b.dataset.nav==="learn") openRead(); else go(b.dataset.nav); });
+function startFlow(){ if(!t0) t0=Date.now(); draft=nd(); renderGoals(); go("s01"); }
+document.getElementById("askBtn").addEventListener("click",function(){ t0=Date.now(); startFlow(); });
+document.getElementById("addBucket").addEventListener("click",startFlow);
+
+/* ---- 01 ---- */
+function renderGoals(){
+  document.getElementById("goalOpts").innerHTML=GOALS.map(function(g){
+    return '<button class="opt" data-goal="'+g.id+'"><span class="ic">'+g.ic+'</span>'+
+      '<span class="tx"><b>'+g.t+'</b><small>'+g.d+'</small></span><span class="chev">›</span></button>';}).join("");
+  document.getElementById("goalOpts").querySelectorAll("[data-goal]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var g=GOALS.filter(function(x){return x.id===b.dataset.goal;})[0];
+      draft.goal=g.id; draft.title=g.t; draft.ic=g.ic; draft.months=g.months; draft.target=g.tgt;
+      renderTarget(); go("s02"); });});
+}
+
+/* ---- 02 ---- */
+function renderTarget(){
+  document.getElementById("tgtH").textContent="How much do you want for "+lc(draft.title)+"?";
+  tgtEntry=String(draft.target); paintTgt();
+  buildKeys("tgtKeys",function(d){ tgtEntry=tapVal(tgtEntry,d,8); paintTgt(); });
+  document.getElementById("whenChips").innerHTML=WHENS.map(function(w){
+    return '<button data-when="'+w.m+'" aria-pressed="'+(w.m===draft.months)+'">'+w.t+'</button>';}).join("");
+  document.getElementById("whenChips").querySelectorAll("[data-when]").forEach(function(b){
+    b.addEventListener("click",function(){ draft.months=parseInt(b.dataset.when,10); renderTarget(); });});
+}
+function lc(s){ return s.charAt(0).toLowerCase()+s.slice(1); }
+/* "A trip" -> "trip", so "your trip pot" reads instead of "your a trip pot" */
+function readFor(p){
+  if(!p) return {t:"What a Nifty 50 actually is",k:"index"};
+  var f=fundFor(p);
+  if(f==="index"||f==="next50") return {t:"What a Nifty 50 actually is",k:"index"};
+  if(f==="balanced") return {t:"How a balanced fund decides",k:"balanced"};
+  return {t:"Why a bond fund barely moves",k:"bond"};
+}
+function potLabel(s){ return lc(s).replace(/^(a|an|just the)\s+/,""); }
+function paintTgt(){
+  var v=parseInt(tgtEntry||"0",10)||0;
+  document.getElementById("tgtDisp").textContent=tgtEntry===""?"0":inr(v);
+  document.getElementById("tgtErr").textContent = (v>0&&v<1000) ? "Try at least ₹1,000." : "";
+  document.getElementById("toAmt").disabled=!(v>=1000);
+  if(v>=1000) draft.target=v;
+}
+document.getElementById("toAmt").addEventListener("click",function(){ renderAmount(); go("s03"); });
+
+/* ---- 03 ---- */
+function renderAmount(){
+  amtEntry=String(draft.amount); paintAmt();
+  buildKeys("amtKeys",function(d){ amtEntry=tapVal(amtEntry,d,7); paintAmt(); });
+  var opts=[500,1000,2000,5000];
+  document.getElementById("amtChips").innerHTML=opts.map(function(a){
+    return '<button data-amt="'+a+'">'+rs(a)+'</button>';}).join("");
+  document.getElementById("amtChips").querySelectorAll("[data-amt]").forEach(function(b){
+    b.addEventListener("click",function(){ amtEntry=b.dataset.amt; paintAmt(); });});
+}
+function paintAmt(){
+  var v=parseInt(amtEntry||"0",10)||0;
+  document.getElementById("amtDisp").textContent=amtEntry===""?"0":inr(v);
+  document.getElementById("amtErr").textContent=(v>0&&v<100)?"Minimum ₹100. Below that the charges eat too much.":"";
+  document.getElementById("toRisk").disabled=!(v>=100);
+  if(v>=100){ draft.amount=v; }
+  var need=monthlyNeeded(draft);
+  document.getElementById("amtSub").innerHTML = v<100
+    ? "Half the people we asked said nobody ever told them how much to invest. Type any number."
+    : (draft.base
+      ? "You already have <b>"+rs(draft.base)+"</b> in this pot. Adding "+rs(v)+" takes it to <b>"+
+        rs(totalIn(draft))+"</b>. About <b>"+rs(Math.max(0,Math.round(need)))+" a month</b> gets you to "+
+        rs(draft.target)+" by "+whenTxt(draft.months)+"."
+      : "To reach <b>"+rs(draft.target)+"</b> in "+whenTxt(draft.months)+", this one payment gets you part of the "+
+        "way. Adding about <b>"+rs(Math.max(0,Math.round(need)))+" a month</b> would close the gap.");
+}
+document.getElementById("toRisk").addEventListener("click",function(){ renderRisk(); go("s04"); });
+
+function buildKeys(id,fn){
+  var k=document.getElementById(id); if(k.dataset.built) return; k.dataset.built="1";
+  ["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(function(d){
+    var b=document.createElement("button"); b.textContent=d;
+    if(d==="") b.disabled=true; else b.addEventListener("click",function(){ fn(d); });
+    k.appendChild(b); });
+}
+function tapVal(cur,d,max){
+  if(d==="⌫") return cur.slice(0,-1);
+  if(cur.length>=max) return cur;
+  return (cur==="0"?"":cur)+d;
+}
+
+/* ---- 04 · risk + slider ---- */
+function renderRisk(){
+  document.getElementById("riskOpts").innerHTML=RISKS.map(function(r){
+    return '<button class="opt" role="radio" data-risk="'+r.id+'" aria-checked="'+(r.id===draft.risk)+'">'+
+      '<svg class="spark" viewBox="0 0 58 40" aria-hidden="true"><path d="'+r.path+'" fill="none" stroke="'+
+      (r.id===draft.risk?"var(--green)":"var(--text-3)")+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      '<span class="tx"><b>'+r.t+'</b><small>'+r.d+'</small></span></button>';}).join("");
+  document.getElementById("riskOpts").querySelectorAll("[data-risk]").forEach(function(b){
+    b.addEventListener("click",function(){
+      draft.risk=b.dataset.risk; draft.swPct=DEFAULT_SW[draft.risk];
+      document.getElementById("swSlider").value=draft.swPct; renderRisk(); paintSplit(); });});
+  document.getElementById("swSlider").value=draft.swPct;
+  paintSplit();
+}
+document.getElementById("swSlider").addEventListener("input",function(){
+  draft.swPct=parseInt(this.value,10); paintSplit(); });
+function paintSplit(){
+  var sw=swingAmt(draft), st=steadyAmt(draft);
+  document.getElementById("splitView").innerHTML=
+    '<div><b>'+rs(st)+'</b><small>steady · '+(100-draft.swPct)+'%</small></div>'+
+    '<div class="sw"><b>'+rs(sw)+'</b><small>the punt · '+draft.swPct+'%</small></div>';
+  var w=document.getElementById("swWarn");
+  w.innerHTML = draft.swPct>=50
+    ? '<div class="note bad" style="margin:10px 0 0">You are putting <b>'+draft.swPct+'%</b> into one risky bet. '+
+      'We will not stop you. But if it goes to zero you lose '+rs(sw)+', and the pot you set up for '+
+      lc(draft.title)+' will not get there.</div>'
+    : (draft.months<=12 && draft.swPct>0
+      ? '<div class="note warn" style="margin:10px 0 0">You need this money in '+whenTxt(draft.months)+
+        '. A risky slice can easily be down when your date arrives.</div>' : '');
+}
+document.getElementById("toPick").addEventListener("click",function(){ renderPick(); go("s05"); });
+
+/* ---- 05 · pick ---- */
+/* everything in the punt means there is no steady core — the punt IS the holding */
+function allPunt(d){ return steadyAmt(d)===0 && swingAmt(d)>0; }
+function renderPick(){
+  var key=fundFor(draft), st=steadyAmt(draft), sw=swingAmt(draft), N=FUNDS.next50;
+  var solo=allPunt(draft), F=solo?N:FUNDS[key];
+  document.getElementById("pickK").textContent="For "+lc(draft.title)+" · "+whenTxt(draft.months);
+  document.getElementById("pickName").textContent=F.name;
+  document.getElementById("pickKind").textContent=F.kind;
+  document.getElementById("pickRet").textContent=pct(F.r10);
+  document.getElementById("pickRetLbl").textContent="a year over the last 10 years";
+
+  var why={
+    liquid:"You need this money within a year, so it does not go into shares. This pays about 7% a year and comes back in a day. A savings account pays about 2.7%.",
+    shortterm:"You want almost no bouncing, and you need the money in "+whenTxt(draft.months)+". This lends to good borrowers for a year or two. Steadier than shares, better than a savings account.",
+    balanced:whenTxt(draft.months)+" is an awkward gap. Too long for a savings account, too short for all shares. This holds both and moves between them.",
+    index:"This buys a slice of India's 50 biggest companies in one go. Not the highest returning thing you can buy. The hardest one to get badly wrong."
+  }[key];
+  if(solo) why="You put all of it in the risky slice, so this is the whole holding. It follows the 50 companies "+
+    "just below the biggest ones. Same idea as an index fund, bigger swings, nothing steady underneath it.";
+  document.getElementById("pickWhy").textContent=why;
+
+  document.getElementById("swingCard").innerHTML = (sw>0 && !solo)
+    ? '<div class="card"><div class="k">Your punt · '+draft.swPct+'%</div><h3>'+N.name+'</h3>'+
+      '<p class="kind" style="margin:0 0 8px;font-size:12.5px;color:var(--text-2)">'+N.kind+'</p>'+
+      '<div class="ret" style="display:flex;align-items:baseline;gap:7px;margin-bottom:9px">'+
+      '<b style="font-size:18px;font-weight:700;color:var(--green-ink)">'+pct(N.r10)+'</b>'+
+      '<span style="font-size:12px;color:var(--text-2)">a year over 10 years</span></div>'+
+      '<p style="margin:0;font-size:13.5px;color:var(--text-2)">The next 50 biggest companies after the top 50. '+
+      'Same idea, bigger swings. <b style="color:var(--text)">'+rs(sw)+' goes here. If it drops hard, the other '+
+      rs(st)+' is not touched.</b></p></div>' : "";
+
+  var h='<tr><th>Per year</th><th>3Y</th><th>5Y</th><th>10Y</th></tr>'+
+    '<tr class="us"><td>'+F.name+'<span class="s">our pick</span></td><td>'+pct(F.r3)+'</td><td>'+pct(F.r5)+'</td><td>'+pct(F.r10)+'</td></tr>';
+  if(sw>0 && !solo) h+='<tr><td>'+N.name+'<span class="s">your punt</span></td><td>'+pct(N.r3)+'</td><td>'+pct(N.r5)+'</td><td>'+pct(N.r10)+'</td></tr>';
+  if(key==="index") PEERS.forEach(function(q){
+    h+='<tr><td>'+q.n+'<span class="s">managed · '+q.aum+'</span></td><td>'+pct(q.r3)+'</td><td>—</td><td>—</td></tr>';});
+  document.getElementById("rtab").innerHTML=h;
+
+  var arg=document.getElementById("pickArg");
+  if(solo){
+    arg.className="note bad";
+    arg.innerHTML="<b>There is nothing steady in this pot.</b> All "+rs(sw)+" is in the riskier fund. "+
+      "If it has a bad year there is nothing underneath to soften it. That is your call to make, and you can "+
+      "move the slider back any time.";
+  }else if(key==="index"){
+    arg.className="note warn";
+    arg.innerHTML="<b>Look at the table again. Over three years our pick is behind.</b> We are showing you that "+
+      "instead of hiding it. We still picked it because <b>its 0.25% <span class='term' data-term='er'>fee</span> "+
+      "is certain and their extra return is not.</b> The names at the top of that list change every few years, and "+
+      "you would have to guess next year's winner in advance, every year.";
+  }else if(key==="liquid"||key==="shortterm"){
+    arg.className="note";
+    arg.innerHTML="<b>This one is meant to be boring.</b> It will not make you rich. It is for money with a date on it.";
+  }else{
+    arg.className="note warn";
+    arg.innerHTML="<b>Watch the exit charge.</b> Sell inside a year and you pay 1% on most of it. "+
+      "The next screen shows that in rupees.";
+  }
+  bindTerms();
+}
+document.getElementById("toCost").addEventListener("click",function(){ renderCost(); go("s06"); });
+
+/* ---- 06 · outcome ---- */
+function renderCost(){
+  var y=yrs(draft), key=fundFor(draft), F=FUNDS[key], st=steadyAmt(draft), sw=swingAmt(draft);
+  var pv=potValue(draft), d=fundCost(st,F,y);
+  var dsw=sw>0?fundCost(sw,FUNDS.next50,y):{total:0,rows:[]};
+  var totalCost=d.total+dsw.total;
+
+  document.getElementById("costTitle").textContent="In "+whenTxt(draft.months)+", from "+rs(totalIn(draft));
+  document.getElementById("costSub").innerHTML="Grown at <b>"+F.r10.toFixed(1)+"% a year</b>, which is what this "+
+    "fund actually did over the last ten years. The past, not a promise. Every row below uses the same rate, so "+
+    "the only thing changing is cost.";
+
+  document.getElementById("outcome").innerHTML=
+    '<div class="k">You would end up with about</div><div class="v">'+rs(pv.total)+'</div>'+
+    '<div class="from">from '+rs(totalIn(draft))+
+      (draft.base?' in the pot ('+rs(draft.base)+' already there + '+rs(draft.amount)+' now)':' today')+
+      (sw>0?' · '+rs(pv.steady)+' steady + '+rs(pv.swing)+' punt':'')+'</div>'+
+    '<div class="cost"><span>Everything you pay over '+whenTxt(draft.months)+'</span><b>'+rs(totalCost)+'</b></div>';
+
+  var gap=draft.target-pv.total, need=monthlyNeeded(draft);
+  document.getElementById("gapNote").innerHTML = gap>0
+    ? '<div class="note warn"><b>That is '+rs(gap)+' short of your '+rs(draft.target)+'.</b> '+
+      'One payment rarely gets there on its own. About <b>'+rs(Math.round(need))+' a month</b> would.</div>'
+    : '<div class="note"><b>That clears your '+rs(draft.target)+' target.</b> Anything you add on top just gets you there sooner.</div>';
+
+  var h="";
+  d.rows.forEach(function(r){
+    h+='<div class="li'+(r[3]?" hot":"")+'"><span>'+(r[4]?'<span class="term" data-term="'+r[4]+'">'+r[0]+'</span>':r[0])+
+      (r[1]?'<small>'+r[1]+'</small>':'')+'</span><b>'+(r[2]===0?"₹0":money(r[2]))+'</b></div>';});
+  if(sw>0) h+='<div class="li"><span>Your punt\'s own charges<small>'+FUNDS.next50.name+'</small></span><b>'+money(dsw.total)+'</b></div>';
+  h+='<div class="li tot"><span>Total</span><b>'+rs(totalCost)+'</b></div>';
+  document.getElementById("ledger").innerHTML=h;
+
+  /* baseline = the whole pot in a bank FD, not just the safe slice */
+  var fdr=fdRate(draft.months), fd=grow(totalIn(draft),fdr,y), diff=pv.total-fd;
+  document.getElementById("vs").innerHTML=
+    '<div class="r me"><span class="n"><b>What we picked</b><small>'+
+      (allPunt(draft)?FUNDS.next50.name:(sw>0?F.name+' + '+FUNDS.next50.name:F.name))+'</small></span>'+
+    '<span class="v"><b>'+rs(pv.total)+'</b><small>after '+rs(totalCost)+' of charges</small></span></div>'+
+    '<div class="r"><span class="n"><b>A bank FD</b><small>SBI, '+(fdr*100).toFixed(2)+'% for '+whenTxt(draft.months)+'</small></span>'+
+    '<span class="v"><b>'+rs(fd)+'</b><small class="'+(diff>=0?"down":"up")+'">'+
+      rs(Math.abs(diff))+(diff>=0?' less':' more')+'</small></span></div>';
+  document.getElementById("vsNote").innerHTML=
+    diff>=0
+      ? "Same "+rs(totalIn(draft))+", same "+whenTxt(draft.months)+". An FD is guaranteed and this is not — that is "+
+        "the trade. <b>FD interest is also taxed at your income slab, while fund gains under ₹1.25 lakh a year "+
+        "are not taxed at all.</b>"
+      : "<b>Here the FD wins.</b> Over "+whenTxt(draft.months)+" a guaranteed "+(fdr*100).toFixed(2)+
+        "% beats what this fund has done, and we are not going to pretend otherwise. If that is what you want, an FD "+
+        "is a perfectly good answer.";
+
+  var sc=stockCost(totalIn(draft)), dpPct=15.93/totalIn(draft)*100;
+  document.getElementById("stockAside").innerHTML = dpPct>=1
+    ? "<b>What if you bought one share with it and sold next week?</b> "+rs(sc.total)+" gone in charges. That is "+
+      (sc.total/draft.amount*100).toFixed(1)+"% of your money before the share moves at all. ₹15.93 of it is a flat "+
+      "<span class='term' data-term='dp'>depository fee</span>, the same on "+rs(totalIn(draft))+" as on ₹1 lakh. "+
+      "<b>Yes, it is unavoidable on a share.</b> That is the reason we did not start you there. Funds do not have it."
+    : "<b>At your size the flat charges hardly show.</b> One share bought and sold next week would cost "+rs(sc.total)+
+      ", about "+(sc.total/draft.amount*100).toFixed(1)+"%. That is because the ₹15.93 "+
+      "<span class='term' data-term='dp'>depository fee</span> is flat. On ₹500 the same fee is <b>3.2%</b>. "+
+      "<b>Flat fees hurt small amounts, and small is how everyone is told to start.</b>";
+
+  document.getElementById("confirmBtn").textContent="Confirm "+rs(draft.amount);
+  bindTerms();
+}
+
+/* ---- 07 · done ---- */
+function commit(){
+  var F=FUNDS[fundFor(draft)], sw=swingAmt(draft), topUp=(draft.editing!=null);
+  if(topUp){
+    var p=pots[draft.editing];
+    p.target=draft.target; p.months=draft.months; p.risk=draft.risk; p.swPct=draft.swPct;
+    p.amount=totalIn(draft); p.lastAdd=draft.amount;
+    activePot=draft.editing;
+  }else{
+    var np=JSON.parse(JSON.stringify(draft));
+    np.amount=totalIn(draft); np.lastAdd=draft.amount; delete np.base; delete np.editing;
+    pots.push(np); activePot=pots.length-1;
+  }
+  document.getElementById("secs").textContent=Math.max(1,Math.round((t0?Date.now()-t0:0)/1000))+"s";
+  document.querySelector("#s07 h1").textContent = topUp ? "Added. That is two." : "Done. You're invested.";
+  document.getElementById("doneSub").textContent = topUp
+    ? rs(draft.amount)+" added to your "+potLabel(draft.title)+" pot. It now holds "+rs(totalIn(draft))+
+      ", split "+rs(steadyAmt(draft))+" steady"+(sw>0?" and "+rs(sw)+" punt":"")+"."
+    : (allPunt(draft)
+        ? rs(sw)+" goes into "+FUNDS.next50.name+", all of it in the risky slice."
+        : rs(steadyAmt(draft))+" goes into "+F.name+(sw>0?", and "+rs(sw)+" into your punt":""))+
+      " It sits in your "+potLabel(draft.title)+" pot. That is it — you are an investor now.";
+  document.getElementById("nextLine").textContent=rs(draft.amount)+" more on 1 October";
+  go("s07");
+}
+document.getElementById("confirmBtn").addEventListener("click",commit);
+document.getElementById("lockNext").addEventListener("click",function(){
+  this.textContent="✓ Set for 1 Oct"; this.disabled=true; });
+document.getElementById("toHome").addEventListener("click",function(){ renderHome(); go("s08"); });
+
+/* ---- 08 · home, grouped by pot ---- */
+/* What a pot is worth right now. The punt is ALWAYS a share fund, so it falls in a
+   sell-off even when the pot's core fund is a bond fund. Home, the warning strip and
+   the red-day screen all read from here so they cannot disagree. */
+function moves(p,red){
+  var r=(red===undefined)?redMode:red;
+  var F=FUNDS[fundFor(p)], st=steadyAmt(p), sw=swingAmt(p);
+  var coreChg=(r && F.type==="equity") ? -0.042 : 0.0042;
+  var puntChg= r ? -0.042*1.4 : 0.0042*1.4;
+  var core=st*(1+coreChg), punt=sw*(1+puntChg), total=core+punt, put=st+sw;
+  return {F:F,st:st,sw:sw,core:core,punt:punt,total:total,
+          chg: put>0 ? (total/put-1) : 0,
+          loss: Math.max(0, put-total)};   /* net, so it always ties to total vs put */
+}
+function renderHome(){
+  /* only offer the red day if something in here can actually fall */
+  var hit=-1; for(var i=0;i<pots.length;i++){ if(moves(pots[i]).loss>0){ hit=i; break; } }
+  var fell=0; pots.forEach(function(q){ fell+=moves(q).loss; });
+  document.getElementById("redStripSlot").innerHTML = (redMode && hit>=0)
+    ? '<button class="redstrip" id="goRed"><span>⚠️</span><span><b>Markets fell this week</b>'+
+      '<small>Your pots are down '+rs(fell)+' in total. Here is what usually happened next.</small></span>'+
+      '<span style="margin-left:auto;color:var(--text-3)">›</span></button>'
+    : (redMode && pots.length
+      ? '<div class="note" style="margin-bottom:12px"><b>Markets fell this week and nothing here moved.</b> '+
+        'Your money is in bond funds, which lend rather than buy shares. That is what you asked for.</div>' : "");
+  if(redMode && hit>=0) document.getElementById("goRed").addEventListener("click",function(){
+    activePot=hit; renderRed(); go("s09"); });
+
+  document.getElementById("buckets").innerHTML = pots.length ? pots.map(function(p,i){
+    var N=FUNDS.next50, m=moves(p), F=m.F, sw=m.sw, st=m.st, val=m.total, chg=m.chg;
+    var done=Math.min(100,Math.round(val/p.target*100));
+    return '<div class="bucket"><div class="top"><span class="ic">'+p.ic+'</span>'+
+      '<span style="flex:1"><b>'+p.title+'</b><small>'+rs(p.target)+' by '+whenTxt(p.months)+'</small></span>'+
+      '<span style="text-align:right"><b style="font-variant-numeric:tabular-nums">'+rs(val)+'</b>'+
+      '<small class="'+(chg<0?"down":"up")+'" style="display:block;font-size:11.5px">'+pct(chg*100)+'</small></span></div>'+
+      '<div class="bar-track"><i style="width:'+done+'%"></i></div>'+
+      '<div class="figs"><span>'+done+'% of the way</span><span><b>'+rs(p.target-val>0?p.target-val:0)+'</b> to go</span></div>'+
+      '<div style="margin-top:11px">'+
+      '<div class="row"><span class="av">'+F.name.charAt(0)+'</span><span class="nm"><b>'+F.name+'</b>'+
+      '<small>steady</small></span><span class="val"><b>'+rs(m.core)+'</b></span></div>'+
+      (sw>0?'<div class="row"><span class="av" style="background:var(--purple-100)">⚡</span>'+
+        '<span class="nm"><b>'+N.name+'</b><small>your punt</small></span>'+
+        '<span class="val"><b>'+rs(m.punt)+'</b></span></div>':'')+
+      '</div></div>';
+  }).join("") : '<div class="card flat"><p style="margin:0;font-size:13.5px;color:var(--text-2)">No pots yet. Start one below.</p></div>';
+
+  document.getElementById("addMore").hidden = pots.length===0;
+  document.getElementById("readTitle").textContent = readFor(pots[0]).t;
+}
+document.getElementById("addMore").addEventListener("click",function(){ renderSecond(); go("s10"); });
+/* two states you can flip between, both landing on home so they're comparable */
+document.getElementById("ctlRed").addEventListener("click",function(){
+  redMode=true; renderHome(); go("s08",false); });
+document.getElementById("ctlDay1").addEventListener("click",function(){
+  redMode=false; renderHome(); go("s08",false); });
+document.getElementById("ctlReset").addEventListener("click",function(){
+  pots=[]; draft=null; t0=null; hist=[]; redMode=false; go("s00",false); });
+
+/* ---- 09 · red day ---- */
+/* only share funds fall in a share sell-off; the punt is always a share fund */
+function equityIn(p){ var F=FUNDS[fundFor(p)];
+  return (F.type==="equity"?steadyAmt(p):0)+swingAmt(p); }
+function renderRed(){
+  var p=pots[activePot]||draft, m=moves(p,true), F=m.F, base=m.st+m.sw, loss=m.loss;
+  var holder = allPunt(p) ? FUNDS.next50.name
+             : (F.type==="equity" ? F.name : FUNDS.next50.name);
+  document.getElementById("redSub").textContent = base===0
+    ? "Nothing in this pot fell. It is all in "+F.name+", which lends money out rather than buying shares. This is what that looks like on a bad week."
+    : "Your "+holder+" is down. Nothing has gone wrong. You have not lost anything yet — a fall only becomes a loss when you sell.";
+  document.getElementById("bignum").innerHTML = base===0
+    ? "<b>₹0</b><span>this pot holds no shares, so a share sell-off does not touch it</span>"
+    : "<b>−"+rs(loss)+"</b><span>worth "+rs(m.total)+" of the "+rs(base)+" you put in</span>";
+  var pts=[[0,18],[26,13],[52,28],[78,50],[104,58],[130,52],[156,42],[182,45],[208,31],[234,24],[260,16],[286,9]];
+  var dl=pts.map(function(q,i){return (i?"L":"M")+q[0]+" "+q[1];}).join(" ");
+  var ln=document.getElementById("spkLine"); ln.setAttribute("d",dl); ln.setAttribute("stroke","var(--green)");
+  var fl=document.getElementById("spkFill"); fl.setAttribute("d",dl+" L286 70 L0 70 Z");
+  fl.setAttribute("fill","var(--green-100)"); fl.setAttribute("stroke","none");
+  var dt=document.getElementById("spkDot"); dt.setAttribute("cx","130"); dt.setAttribute("cy","58"); dt.setAttribute("fill","var(--red)");
+  var n=document.getElementById("redNote"); n.className="note";
+  n.innerHTML="<b>Selling now turns a "+rs(loss)+" dip into a "+rs(loss)+" loss.</b> Doing nothing costs you nothing. "+
+    "You said you need this money in "+whenTxt(p.months)+".";
+  var hb=document.getElementById("holdBtn"); hb.textContent="Do nothing"; hb.disabled=false;
+}
+document.getElementById("holdBtn").addEventListener("click",function(){
+  var n=document.getElementById("redNote"); n.className="note";
+  n.innerHTML="<b>Right answer, and it took no effort.</b> Most of investing is this: leaving it alone while it feels bad.";
+  this.textContent="✓ Doing nothing"; this.disabled=true; });
+document.getElementById("sellBtn").addEventListener("click",function(){
+  var p=pots[activePot]||draft, m=moves(p,true), F=m.F, base=m.st+m.sw, loss=m.loss, d=fundCost(base,F,3/52);
+  var n=document.getElementById("redNote"); n.className="note bad";
+  n.innerHTML="<b>You can do this. It is your money and we will not block you.</b> You would get back "+
+    rs(base-loss-d.total)+", making the "+rs(loss)+" dip permanent and paying "+money(d.total)+" to do it. "+
+    "If you need the money, sell. If it just feels bad, that feeling is the price of the returns, not a signal.";
+  window.scrollTo(0,document.body.scrollHeight); });
+
+/* ---- 10 · second investment ---- */
+function renderSecond(){
+  document.getElementById("bucketPick").innerHTML=pots.map(function(p,i){
+    return '<button class="opt" data-pot="'+i+'" aria-checked="'+(i===activePot)+'"><span class="ic">'+p.ic+'</span>'+
+      '<span class="tx"><b>'+p.title+'</b><small>'+rs(p.amount)+' in · target '+rs(p.target)+'</small></span></button>';}).join("")+
+    '<button class="opt" id="newPotFromSecond"><span class="ic">+</span><span class="tx"><b>A new pot</b>'+
+    '<small>Saving for something else now</small></span><span class="chev">›</span></button>';
+  document.getElementById("bucketPick").querySelectorAll("[data-pot]").forEach(function(b){
+    b.addEventListener("click",function(){ activePot=parseInt(b.dataset.pot,10); renderSecond(); });});
+  document.getElementById("newPotFromSecond").addEventListener("click",startFlow);
+
+  var p=pots[activePot], F=FUNDS[fundFor(p)], rk=RISKS.filter(function(r){return r.id===p.risk;})[0];
+  var add=p.lastAdd||p.amount;
+  /* every line is changeable — you are not locked into last time's answers */
+  document.getElementById("sameRows").innerHTML=
+    row("goal",  rs(p.target)+" by "+whenTxt(p.months), "your goal")+
+    row("amount",rs(add),                               "adding this time")+
+    row("risk",  rk.t+" · "+p.swPct+"% punt",      "how much bouncing")+
+    '<div class="row"><span class="nm"><b>'+F.name+'</b><small>picked from your goal and timeline</small></span>'+
+    '<span class="val"><b class="up">✓</b></span></div>';
+  document.getElementById("sameRows").querySelectorAll("[data-edit]").forEach(function(b){
+    b.addEventListener("click",function(){ editPot(b.dataset.edit); });});
+  document.getElementById("feeAmt").textContent=rs(steadyAmt(p));
+  document.getElementById("secondAmt").textContent=rs(add);
+}
+function row(k,val,lbl){
+  return '<button class="row" data-edit="'+k+'" style="width:100%;text-align:left;background:none;border:0;'+
+    'border-bottom:1px solid var(--line-2);cursor:pointer;font:inherit;color:var(--text)">'+
+    '<span class="nm"><b>'+val+'</b><small>'+lbl+'</small></span>'+
+    '<span class="val" style="color:var(--green-ink);font-weight:600;font-size:13px">Change</span></button>';
+}
+function editPot(which){
+  var p=pots[activePot];
+  draft=JSON.parse(JSON.stringify(p));
+  draft.editing=activePot;
+  draft.base=p.amount;                 /* already invested */
+  draft.amount=p.lastAdd||p.amount;    /* the top-up you are editing */
+  if(which==="goal"){ renderTarget(); go("s02"); }
+  else if(which==="amount"){ renderAmount(); go("s03"); }
+  else { renderRisk(); go("s04"); }
+}
+/* repeat the same amount into the same pot — this must actually move money,
+   and must not rewrite its own label (that used to destroy #secondAmt). */
+document.getElementById("doSecond").addEventListener("click",function(){
+  var p=pots[activePot]; if(!p) return;
+  draft=JSON.parse(JSON.stringify(p));
+  draft.editing=activePot; draft.base=p.amount; draft.amount=p.lastAdd||p.amount;
+  commit();
+});
+document.getElementById("changeSecond").addEventListener("click",function(){ renderHome(); go("s08"); });
+
+/* ---- explainers ---- */
+var TERMS={
+  dp:{t:"Depository fee",
+    b:"<p>A flat <b>₹15.93</b> when you sell shares. It goes to CDSL, which actually holds your shares, not to your broker.</p><p>It is the same whether you sell ₹500 or ₹1 lakh. That is why it hardly matters to a rich investor and matters a lot to you.</p>",
+    y:function(){var A=draft?draft.amount:(pots[0]?pots[0].amount:500);
+      return "On "+rs(A)+" that one fee is <b>"+(15.93/A*100).toFixed(1)+"%</b> of your money. Funds do not have it.";},
+    s:'CDSL published tariff · SEBI "Charges levied by depositories"'},
+  er:{t:"The fund's fee",
+    b:"<p><b>This is a cost, not a return.</b> It is the fund's yearly fee, taken a little every day out of the price instead of billed to you.</p><p>0.25% a year means ₹2.50 a year for every ₹1,000 you hold. It comes off the value each day, so it grows as your money grows.</p>",
+    y:function(){var p=draft||pots[0]; if(!p) return "";
+      var F=FUNDS[fundFor(p)], st=steadyAmt(p);
+      return "Your fund's fee is <b>"+(F.er*100).toFixed(2)+"%</b> a year. Over "+whenTxt(p.months)+" on "+rs(st)+
+        " that is about <b>"+rs(feeDrag(st,F,yrs(p)))+"</b>. Its <i>return</i> over ten years was "+pct(F.r10)+
+        " a year. Different number entirely.";},
+    s:"The fund's factsheet · AMFI · the fund page on groww.in"},
+  exit:{t:"Exit charge",
+    b:"<p>A penalty for selling too soon, set by the fund. Index funds usually have none. Mixed funds often charge 1% inside a year. Liquid funds charge a tiny amount for six days and nothing after.</p>",
+    y:function(){var p=draft||pots[0]; return p?"Yours: <b>"+FUNDS[fundFor(p)].loadTxt+"</b>.":"";},
+    s:"The scheme information document · the fund page on groww.in"},
+  ltcg:{t:"Tax when you sell",
+    b:"<p>Sell a share fund inside a year and gains are taxed at 20%. Hold longer and it is 12.5%, but only on gains above <b>₹1.25 lakh in a year</b>.</p><p>At what you are starting with, your tax is almost certainly zero. We will tell you when that changes.</p>",
+    y:function(){return "On your amount: <b>₹0</b>. You would need over ₹1.25 lakh of <i>profit</i> in one year first.";},
+    s:"Income Tax Act s.112A · the tax note on any groww.in fund page"}
+};
+function bindTerms(){
+  document.querySelectorAll(".term").forEach(function(el){
+    if(el.dataset.bound) return; el.dataset.bound="1";
+    el.addEventListener("click",function(){ openTerm(el.dataset.term); }); });
+}
+function openTerm(k){
+  var T=TERMS[k]; if(!T) return;
+  document.getElementById("shT").textContent=T.t;
+  document.getElementById("shB").innerHTML=T.b+'<div class="yours">'+T.y()+'</div>'+
+    '<div class="src"><b>Check it yourself</b>'+T.s+'</div>';
+  openSheet();
+}
+function openRead(){
+  var r=readFor(pots[0]||draft), isIdx=r.k==="index";
+  document.getElementById("shT").textContent=r.t;
+  document.getElementById("shB").innerHTML=(r.k==="balanced"
+    ? "<p>A balanced fund holds shares and bonds at the same time, and moves money between them as prices change.</p><p>When shares look expensive it shifts towards bonds. When they look cheap it shifts back. You are paying a manager to make that call, which is why it costs more than an index fund.</p><p>The point is not the highest return. It is a smaller drop when things go wrong, which matters when your date is a couple of years away.</p>"
+    : isIdx
+    ? "<p>The Nifty 50 is just a list: India's 50 biggest listed companies, weighted by size. HDFC Bank and ICICI Bank are about 9% each. Reliance about 8%. The bottom twenty are under 1% each.</p><p>An index fund does not pick any of them. It buys all fifty in those proportions and charges almost nothing. When a company drops out of the top 50 the fund swaps it. Nobody makes a judgement call. That is the whole feature.</p><p>So “is this fund any good” really means “are India's 50 biggest companies any good”. Much easier question.</p>"
+    : "<p>A bond fund lends your money to governments and big companies for short periods. Weeks or months, not years.</p><p>Because the loans are short, not much can go wrong before they are paid back. That is why the line looks like a ramp instead of a heartbeat.</p>")+
+    '<div class="yours">Tomorrow: what a fund’s fee actually pays for. 8 minutes.</div>'+
+    '<div class="src"><b>Check it yourself</b>NSE Nifty 50 factsheet · your fund’s monthly portfolio disclosure</div>';
+  openSheet();
+}
+document.getElementById("readBtn").addEventListener("click",openRead);
+function openSheet(){ document.getElementById("veil").classList.add("on"); document.getElementById("sheet").classList.add("on"); }
+function closeSheet(){ document.getElementById("veil").classList.remove("on"); document.getElementById("sheet").classList.remove("on"); }
+document.getElementById("veil").addEventListener("click",closeSheet);
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeSheet(); });
+
+/* boot */
+draft=nd(); renderGoals(); renderTarget(); renderAmount(); renderRisk(); bindTerms(); go("s00",false);
+
+})();
+</script>
+</body>
+</html>

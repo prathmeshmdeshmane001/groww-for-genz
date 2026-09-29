@@ -1,0 +1,21 @@
+{
+  "name": "groww-for-genz",
+  "version": "1.0.0",
+  "description": "Designing Groww for the GenZ investor - Case Study & Interactive Prototype",
+  "type": "module",
+  "scripts": {
+    "test": "node app/cost-model.test.mjs",
+    "survey": "python3 research/survey-analysis.py",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "groww",
+    "genz",
+    "fintech",
+    "product-management",
+    "case-study"
+  ],
+  "author": "Prathamesh Deshmane",
+  "license": "MIT"
+}

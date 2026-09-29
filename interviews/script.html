@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview Field Script</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#FCFDFC; --surface:#FFFFFF; --ink:#101714; --ink-2:#36443E; --muted:#66756E;
+  --line:#E0E7E3; --line-2:#EFF3F1;
+  --accent:#00875F; --accent-soft:#E4F3ED;
+  --stop:#B3352A; --stop-soft:#FBEBE9;
+  --mark:#8A5A05; --mark-soft:#FBF2E1;
+  --ff:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1210; --surface:#151D19; --ink:#E9EFEB; --ink-2:#C2D0CA; --muted:#8B9A93;
+    --line:#26322D; --line-2:#1D2823;
+    --accent:#3ED8A6; --accent-soft:#11291F;
+    --stop:#FF8272; --stop-soft:#2A1512;
+    --mark:#EBB669; --mark-soft:#251D10;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1210; --surface:#151D19; --ink:#E9EFEB; --ink-2:#C2D0CA; --muted:#8B9A93;
+  --line:#26322D; --line-2:#1D2823;
+  --accent:#3ED8A6; --accent-soft:#11291F;
+  --stop:#FF8272; --stop-soft:#2A1512;
+  --mark:#EBB669; --mark-soft:#251D10;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--ff);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding-block:44px 90px;padding-left:16px;padding-right:16px}
+
+header{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:6px}
+.kick{font:600 11px/1.4 var(--fm);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+h1{font-size:clamp(26px,4.6vw,34px);line-height:1.12;letter-spacing:-.025em;margin:0 0 8px;font-weight:800}
+.sub{color:var(--muted);font-size:15px;margin:0}
+
+h2{font-size:12px;font-family:var(--fm);font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+   color:var(--accent);margin:44px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h3{font-size:17px;margin:24px 0 7px;letter-spacing:-.015em;font-weight:700}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 12px;padding-left:20px}
+li{margin-bottom:6px}
+small{color:var(--muted)}
+b,strong{font-weight:700}
+
+/* timing rail */
+.block{display:grid;grid-template-columns:62px 1fr;gap:16px;margin-bottom:22px}
+@media (max-width:540px){ .block{grid-template-columns:1fr;gap:6px} }
+.clock{font:600 11px/1.4 var(--fm);letter-spacing:.06em;color:var(--muted);padding-top:4px;text-transform:uppercase}
+.body-col{border-left:2px solid var(--line);padding-left:16px}
+@media (max-width:540px){ .body-col{padding-left:12px} }
+
+/* say-this */
+.say{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+     border-radius:0 9px 9px 0;padding:11px 14px;margin:9px 0;font-size:15px;color:var(--ink-2)}
+.say em{color:var(--muted);font-style:normal;font-size:13px;display:block;margin-top:5px}
+
+/* rules */
+.rules{display:grid;gap:9px;margin:14px 0}
+.rule{display:grid;grid-template-columns:26px 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);
+      border-radius:10px;padding:13px 15px}
+.rule .n{font:700 13px/1.5 var(--fm);color:var(--accent)}
+.rule b{display:block;font-size:15px;margin-bottom:2px}
+.rule span{font-size:13.5px;color:var(--muted);line-height:1.5}
+
+.stop{background:var(--stop-soft);border:1px solid var(--stop);border-radius:10px;padding:14px 16px;margin:16px 0}
+.stop h4{margin:0 0 8px;font-size:12px;font-family:var(--fm);letter-spacing:.11em;text-transform:uppercase;color:var(--stop)}
+.stop ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+.stop li{margin-bottom:5px}
+.stop li:last-child{margin-bottom:0}
+
+.mark{background:var(--mark-soft);border-left:3px solid var(--mark);border-radius:0 9px 9px 0;
+      padding:12px 15px;margin:14px 0;font-size:14px;color:var(--ink-2)}
+.mark strong{color:var(--ink)}
+
+/* capture lines */
+.cap{border:1px dashed var(--line);border-radius:9px;padding:12px 15px;margin:10px 0;background:var(--surface)}
+.cap .lbl{font:600 10.5px/1.4 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.ln{border-bottom:1px solid var(--line);height:23px;margin-bottom:7px}
+.ln:last-child{margin-bottom:0}
+
+/* tables */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 10.5px/1.4 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+td.fill{border-bottom:1px solid var(--ink);min-width:88px}
+tbody tr:last-child td{border-bottom:1px solid var(--line)}
+
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 15px}
+.card .tag{font:600 10px/1.4 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+.card b{display:block;font-size:14.5px;margin-bottom:4px}
+.card span{font-size:13px;color:var(--muted);line-height:1.45}
+
+.chk{list-style:none;padding:0;margin:12px 0}
+.chk li{display:grid;grid-template-columns:20px 1fr;gap:10px;margin-bottom:8px;font-size:14.5px}
+.chk li::before{content:"";width:14px;height:14px;border:1.5px solid var(--muted);border-radius:3px;margin-top:4px}
+
+hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+.foot{font-size:12.5px;color:var(--muted);margin-top:40px;line-height:1.55}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .wrap{max-width:100%;padding:0}
+  h2{color:#000;margin-top:22px}
+  .say,.rule,.card,.cap{border-color:#bbb}
+  .stop{background:#fff;border-color:#000}
+  .stop h4{color:#000}
+  .mark{background:#fff;border-left-color:#000}
+  .ln{border-bottom:1px solid #999}
+  .block{page-break-inside:avoid}
+  .pagebreak{page-break-before:always}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kick">Field script &middot; Gen Z investing &middot; 3 sessions &times; 25 min</div>
+  <h1>Interview script</h1>
+  <p class="sub">Print one copy per person. Structure to follow, not words to read out. The goal is what they <em>do</em>, not what they say about it.</p>
+  <p class="sub" style="margin-top:8px;font-size:13.5px"><strong>Two measurements matter more than everything else:</strong> the charges guess before and after, and seconds to first investment. If a session runs short, protect those and drop the rest.</p>
+</header>
+
+<h2>Before they arrive</h2>
+<ul class="chk">
+  <li>App link tested in <strong>incognito</strong>, open in a tab, sitting on question 1</li>
+  <li>Recording ready &mdash; phone voice memo is fine, or screen record if remote</li>
+  <li>Their survey answers open in another tab, so you can compare live</li>
+  <li>This sheet printed, pen in hand</li>
+  <li>Phone on silent. Yours, not theirs</li>
+</ul>
+
+<div class="mark"><strong>The one rule that decides whether this is worth doing:</strong> you are testing the app, not defending it. Every time you explain something, you delete a finding. If they can't work it out, <em>that is the result</em>.</div>
+
+<h2>Who to pick</h2>
+<div class="who">
+  <div class="card"><span class="tag">Priority 1</span><b>Opened, never invested</b><span>Six of your seventeen. This person is your entire thesis and nobody else interviewing for this role will have talked to one.</span></div>
+  <div class="card"><span class="tag">Priority 2</span><b>Invested once, then stopped</b><span>Three of seventeen. They've been through the drop-off you're trying to fix, so they can tell you where it happened.</span></div>
+  <div class="card"><span class="tag">Priority 3</span><b>Trades or invests regularly</b><span>Tells you what the pull feels like from inside, and whether your app is patronising to someone who's past this stage.</span></div>
+</div>
+
+<h2>Six rules for you, not them</h2>
+<div class="rules">
+  <div class="rule"><div class="n">01</div><div><b>Count to five after every question.</b><span>The silence feels unbearable to you and normal to them. The best answer almost always arrives after the pause you wanted to fill.</span></div></div>
+  <div class="rule"><div class="n">02</div><div><b>Never explain the app.</b><span>"What does this mean?" &rarr; <em>"What do you think it means?"</em> Then wait. Their guess is the data.</span></div></div>
+  <div class="rule"><div class="n">03</div><div><b>Never defend it.</b><span>Criticism &rarr; <em>"Say more about that."</em> Nothing else. Not "ah that's because&hellip;"</span></div></div>
+  <div class="rule"><div class="n">04</div><div><b>Ask about the past, never the future.</b><span>"What did you do last time?" predicts behaviour. "Would you use this?" predicts nothing &mdash; everyone says yes to a friend.</span></div></div>
+  <div class="rule"><div class="n">05</div><div><b>Watch their hands, not their face.</b><span>Where the thumb hovers before it taps is the hesitation. Note it. They won't mention it and won't remember it.</span></div></div>
+  <div class="rule"><div class="n">06</div><div><b>Write the exact words.</b><span>Paraphrase is lost evidence. One verbatim quote is worth a paragraph of your own analysis in the write-up.</span></div></div>
+</div>
+
+<hr>
+
+<h2>Part 0 &mdash; Setting up</h2>
+<div class="block">
+  <div class="clock">2 min</div>
+  <div class="body-col">
+    <p>Get consent on the record, then lower the stakes. They will want to be nice to you; your job is to make that feel unhelpful.</p>
+    <div class="say">Ask if you can record. Say it's only for you, so you're not scribbling while they talk.</div>
+    <div class="say">Tell them: you didn't design this to be admired, compliments are useless to you, and the most helpful thing they can do is get stuck and say so out loud.
+    <em>Do not say "I built this" more than once. The less ownership you show, the harsher they'll be.</em></div>
+  </div>
+</div>
+
+<h2>Part 1 &mdash; Baseline, before they see anything</h2>
+<div class="mark"><strong>Do not open the app in this section.</strong> These answers are your before-measurement. Once they've seen the app you can never collect them again.</div>
+
+<div class="block">
+  <div class="clock">1 min</div>
+  <div class="body-col">
+    <h3>1. Where they're at</h3>
+    <p>Confirm what the survey said, in their words. Money coming in, from what, and whether any of it currently goes anywhere.</p>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">2 min</div>
+  <div class="body-col">
+    <h3>2. The &#8377;5,000 question &mdash; time this</h3>
+    <div class="say">"I've just given you &#8377;5,000. You don't need it for a year. What do you actually do with it?"
+    <em>Start a timer. Say nothing until they answer. If they ask a clarifying question, say "whatever you'd really do."</em></div>
+    <p>You want three things: <strong>how long they took</strong>, <strong>their exact words</strong>, and whether they <strong>changed their mind</strong> mid-answer. Hesitation here is the choice-paralysis finding in the flesh.</p>
+    <div class="cap"><div class="lbl">Seconds to answer &middot; verbatim &middot; did they waver</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">1 min</div>
+  <div class="body-col">
+    <h3>3. The charges question &mdash; your key measurement</h3>
+    <div class="say">"You put &#8377;500 into a stock. You sell it next week. Roughly how much do you think you pay in charges?"
+    <em>Make them commit to a number. "No idea" is a valid answer &mdash; write it down as that.</em></div>
+    <p>Real answer is about <strong>&#8377;18</strong>, mostly a flat &#8377;15.93 DP charge. You'll ask this again at the end. <strong>The gap between the two answers is your headline eval result.</strong></p>
+    <div class="cap"><div class="lbl">Their guess &middot; before</div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">3 min</div>
+  <div class="body-col">
+    <h3>4. The last time they tried</h3>
+    <div class="say">"Take me back to the last time you thought about investing, or actually opened an app to do it. What happened?"</div>
+    <p>Then keep pulling on the thread. <em>"And then what?" &middot; "What stopped you?" &middot; "What were you doing right before that?"</em></p>
+    <p>If they opened an account: <strong>what made them do it that day</strong>, and <strong>what happened after</strong>. The gap between those two answers is your funnel leak, described by someone who fell through it.</p>
+    <div class="cap"><div class="lbl">Where exactly it stalled</div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">1 min</div>
+  <div class="body-col">
+    <h3>5. The debt question</h3>
+    <div class="say">"Do you owe anyone money right now? EMI, BNPL, education loan, credit card, a friend?"</div>
+    <p>This is testing someone else's theory &mdash; that debt is a sharper pain than investing for this age group, and a better place to start. If all three say yes and it's clearly what they worry about, you need a line about it in the write-up. If they say no, you've closed it with your own evidence.</p>
+    <div class="cap"><div class="lbl">Owes / doesn't &middot; does it worry them</div><div class="ln"></div></div>
+  </div>
+</div>
+
+<hr class="pagebreak">
+
+<h2>Part 2 &mdash; The app</h2>
+<div class="mark">Hand over the phone, or ask them to share their screen. <strong>Say nothing beyond the task.</strong> No tour, no "so basically it&hellip;". Start your timer on the first tap.</div>
+
+<div class="block">
+  <div class="clock">6 min</div>
+  <div class="body-col">
+    <h3>Task 1 &mdash; "Invest &#8377;500. Go."</h3>
+    <p>That's the whole instruction. Then be quiet and watch.</p>
+    <p>Ask them to narrate: <em>"Say what you're thinking, even if it's boring."</em> If they go silent for a while, prompt once with <em>"what are you looking at?"</em> &mdash; not "what's confusing?", which puts the answer in their mouth.</p>
+    <div class="stop">
+      <h4>When it goes wrong</h4>
+      <ul>
+        <li><strong>They get stuck</strong> &rarr; let them stay stuck a full 30 seconds. Count it. That number is a finding.</li>
+        <li><strong>They ask you what to tap</strong> &rarr; "what would you do if I wasn't here?"</li>
+        <li><strong>They blast through in 15 seconds</strong> &rarr; "what did you just buy?" If they can't say, they didn't read it, and that is a result.</li>
+        <li><strong>They say "this is nice"</strong> &rarr; "what's the most annoying thing about it?"</li>
+      </ul>
+    </div>
+    <div class="cap"><div class="lbl">Seconds to invested &middot; help requests &middot; every hesitation and where</div><div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">3 min</div>
+  <div class="body-col">
+    <h3>Task 2 &mdash; "How much would it cost you to sell next week?"</h3>
+    <p>Don't point at anything. You're testing whether the cost screen is <em>findable</em>, not whether it's readable once found.</p>
+    <p>Once they find it, ask what surprised them. If they flip to the other tabs unprompted, note it &mdash; that's the comparison doing its job on its own.</p>
+    <div class="cap"><div class="lbl">Found it? &middot; how long &middot; what they said when they saw the number</div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">3 min</div>
+  <div class="body-col">
+    <h3>Task 3 &mdash; the red day</h3>
+    <p>On the finished screen, point only at <strong>"Skip ahead three weeks"</strong>. Say nothing else.</p>
+    <div class="say">"You're down. What do you do?"
+    <em>Then shut up completely. Whatever they tap first is the answer &mdash; hold or sell.</em></div>
+    <p>After they choose, ask <em>"why?"</em> Then check whether they noticed <strong>"What if it doesn't come back?"</strong> at all, and whether they'd trust the app more or less for including it.</p>
+    <div class="cap"><div class="lbl">Held or sold &middot; their reason &middot; reaction to the honest bit</div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<hr>
+
+<h2>Part 3 &mdash; After</h2>
+
+<div class="block">
+  <div class="clock">2 min</div>
+  <div class="body-col">
+    <h3>6. Ask the charges question again</h3>
+    <div class="say">"Same question as at the start. &#8377;500 in a stock, sold next week. How much in charges?"</div>
+    <p><strong>This is your evals deliverable.</strong> Wrong &rarr; right means the screen worked. Wrong &rarr; still wrong means it didn't, which is just as useful and far more honest than a pass mark you awarded yourself.</p>
+    <div class="cap"><div class="lbl">Guess before &rarr; guess after</div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">3 min</div>
+  <div class="body-col">
+    <h3>7. The closing four</h3>
+    <div class="say">"If you had to describe this app to a friend in one sentence, what would you say?"
+    <em>The best question in the whole script. If their sentence isn't roughly your pitch, your positioning is wrong, not theirs.</em></div>
+    <div class="say">"What confused you? Be specific &mdash; which screen, which word."</div>
+    <div class="say">"If you could change one thing, what?"</div>
+    <div class="say">"Honestly &mdash; would you have finished that on your own, at home, with nobody watching?"
+    <em>The only future-tense question worth asking, because it invites a no.</em></div>
+    <div class="cap"><div class="lbl">Their one-sentence description, exact words</div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="clock">2 min</div>
+  <div class="body-col">
+    <h3>8. Two strategy questions &mdash; last, after everything else is banked</h3>
+    <div class="say">"If this app cost &#8377;99 a month, would you pay for it?"
+    <em>Watch the face before the words. India's one real attempt at paid retail guidance charges &#8377;249/month &mdash; which is 50% of what your user invests in a year at &#8377;500 a month. This question turns that from someone else's evidence into yours.</em></div>
+    <div class="say">"Would you want it to show you other options too?"
+    <em>The highest-stakes design bet in the app. A competitor built to kill decision fatigue ended up giving users 10&ndash;15 funds; that drift starts with exactly this request. If they ask for more, the one-default bet has a crack in it and the write-up should say so.</em></div>
+    <div class="cap"><div class="lbl">Pay yes/no + reaction &middot; wants more options yes/no</div><div class="ln"></div><div class="ln"></div></div>
+  </div>
+</div>
+
+<div class="mark"><strong>Watch for, don't ask:</strong> does anyone try to buy a specific stock? A funded competitor is betting its whole product on "stocks first" for this exact user. If yours reach for that unprompted, note it &mdash; but never prompt it, or you've planted the idea and lost the finding.</div>
+
+<div class="stop">
+  <h4>The real risk in today's sessions</h4>
+  <ul>
+    <li>You have just read three competitors' decks. <strong>You will walk in wanting to confirm things.</strong></li>
+    <li>The entire value of these sessions is that they can prove you wrong &mdash; about the cost screen, about one default, about the horizon question being the right opener.</li>
+    <li>Your friends will help you be right. The stopwatch won't. <strong>Trust the stopwatch.</strong></li>
+  </ul>
+</div>
+
+<hr>
+
+<h2>Scorecard &mdash; fill this in immediately after</h2>
+<p>Behaviour, not opinion. These are your friends and they will be kind; a stopwatch won't be. Copy this into your evals doc as-is.</p>
+
+<div class="tw">
+<table>
+<thead><tr><th>Measure</th><th>Target</th><th>P1</th><th>P2</th><th>P3</th></tr></thead>
+<tbody>
+<tr><td>Seconds to first investment</td><td>under 60</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Finished with no help</td><td>yes</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Times they asked for help</td><td>0</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Could say what they bought</td><td>yes</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Charges guess &mdash; before</td><td>&mdash;</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Charges guess &mdash; after</td><td>near &#8377;18</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Found the cost screen unaided</td><td>yes</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Red day: held or sold</td><td>held</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Their one-sentence pitch matched yours</td><td>yes</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Would finish it alone at home</td><td>yes</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Would pay &#8377;99/month</td><td>&mdash;</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Asked for more options</td><td>no</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+<tr><td>Tried to buy a specific stock</td><td>&mdash;</td><td class="fill"></td><td class="fill"></td><td class="fill"></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Five minutes while it's fresh</h3>
+<p>Before you speak to anyone else, write down:</p>
+<ul>
+  <li><strong>The one moment they hesitated longest.</strong> Screen, and what they were looking at.</li>
+  <li><strong>The best thing they said</strong>, word for word, no cleaning up.</li>
+  <li><strong>One thing you'd change</strong> before the next session &mdash; and if it's a five-minute fix, make it. Two people seeing v1 and one seeing v2 is a stronger evals story than three people seeing the same flaw.</li>
+</ul>
+
+<div class="mark"><strong>Don't fix everything between sessions.</strong> Change one thing at a time, or you won't know which change did what &mdash; and "we moved X after P1 couldn't find it, and P2 found it in four seconds" is the single most credible sentence you can put in the evals deliverable.</div>
+
+<p class="foot">Field script for the Groww product intern case study, 16 Sep 2026. Companion to the problem dossier, the competitive landscape, and the prototype. Timings add to roughly 27 minutes &mdash; budget 35 and let the good tangents run.</p>
+
+</div>
+</body>
+</html>
