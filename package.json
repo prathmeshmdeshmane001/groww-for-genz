@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node app/cost-model.test.mjs",
     "survey": "python3 research/survey-analysis.py",
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "serve": "node server.js"
   },
   "keywords": [
     "groww",
