@@ -151,6 +151,13 @@
     padding: 16px 16px 24px;
     overflow-y: auto;
     position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .simulator-pane::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
   .sim-header {
     display: flex;
@@ -337,6 +344,13 @@
     height: 100%;
     border: none;
     background: #fff;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .screen-bezel iframe::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   /* Right Column: PM Portfolio Content */
