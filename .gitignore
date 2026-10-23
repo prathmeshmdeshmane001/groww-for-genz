@@ -3,6 +3,8 @@
 *.mp4
 *.m4a
 *.wav
+!brag-output/brag.mp4
+!brag-output/composition/assets/music/*.mp3
 
 # Raw machine-transcript dumps (superseded by the cleaned transcripts)
 *-raw.md
