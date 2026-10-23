@@ -10,6 +10,16 @@
 > **Prathamesh Deshmane · FinTech Product Case Study & Architecture · September 2026**  
 > *A dedicated onboarding engine engineered for first-time investors immediately after KYC clearance — solving the activation drop-off where 86% of users stall.*
 
+<p align="center">
+  <video src="brag-output/brag.mp4" controls="controls" width="100%" poster="brag-output/brag.jpg" style="max-width: 840px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <a href="brag-output/brag.mp4">
+      <img src="brag-output/brag.jpg" alt="Groww GenZ Launch Video Preview" width="100%" style="max-width: 840px; border-radius: 14px;" />
+    </a>
+  </video>
+  <br />
+  <em>🎬 <strong>Launch Video (20s)</strong> · Pots, Not Products · Real Fee Compounding Drag · First Red Day Defense</em>
+</p>
+
 ---
 
 ## 📱 Live Prototypes
