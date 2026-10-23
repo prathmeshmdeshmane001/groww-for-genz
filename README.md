@@ -14,8 +14,6 @@
   <a href="https://github.com/prathmeshmdeshmane001/groww-for-genz/raw/main/brag-output/brag.mp4">
     <img src="brag-output/brag.gif" alt="Groww GenZ Launch Video" width="100%" style="max-width: 840px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
   </a>
-  <br />
-  <em>🎬 <strong>Launch Video (20s)</strong> — Playing above · <a href="https://github.com/prathmeshmdeshmane001/groww-for-genz/raw/main/brag-output/brag.mp4">Click to open full video with sound & music</a> · <a href="https://groww-for-genz.vercel.app">Live Interactive Prototype ↗</a></em>
 </p>
 
 ---
