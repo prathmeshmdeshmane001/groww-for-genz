@@ -1,0 +1,3 @@
+74% of first-time GenZ investors drop off immediately after KYC. We replaced 5,000 mutual funds with goal-based pots, proved real daily NAV compounding fee drag, and engineered the "First Red Day Defense" to prevent Day-1 churn.
+
+Live case study & interactive iPhone 17 prototype: https://groww-for-genz.vercel.app

@@ -1,0 +1,347 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"scene1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene1",
+        "dataAttributes": {},
+        "sourceFile": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"scene1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"scene2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene2",
+        "dataAttributes": {},
+        "sourceFile": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"scene2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"scene3\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene3",
+        "dataAttributes": {},
+        "sourceFile": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"scene3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"scene4\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#scene4",
+        "dataAttributes": {},
+        "sourceFile": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"scene4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 20,
+    "samples": [
+      1.111,
+      3.333,
+      5.556,
+      7.778,
+      10,
+      12.222,
+      14.444,
+      16.667,
+      18.889
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.111,
+      5.556,
+      10,
+      14.444,
+      18.889
+    ],
+    "checked": 37,
+    "passed": 37
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 21 text elements stay under it for 0.5 s or more, the smallest \"PSYCHOLOGICAL GUARDRAIL\" at 15 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "PSYCHOLOGICAL GUARDRAIL",
+        "selector": "#s3Stack > div:nth-of-type(1) > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 1201.64,
+          "y": 383.81,
+          "width": 207,
+          "height": 20
+        },
+        "time": 10.25,
+        "times": [
+          0,
+          4.75,
+          7.75,
+          7.75,
+          9.625,
+          9.625,
+          9.625,
+          9.625,
+          9.625,
+          9.625,
+          9.625,
+          10.25,
+          10.25,
+          10.25,
+          10.25,
+          10.25,
+          10.25,
+          10.75,
+          15.375,
+          16.5,
+          17
+        ],
+        "fontPx": 15,
+        "floorPx": 28,
+        "seconds": 4.75,
+        "elements": [
+          {
+            "selector": "#s3Stack > div:nth-of-type(1) > div:nth-of-type(1)",
+            "text": "PSYCHOLOGICAL GUARDRAIL",
+            "fontPx": 15,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s3Stack > div:nth-of-type(2) > div:nth-of-type(1)",
+            "text": "VERIFIED CODEBASE",
+            "fontPx": 15,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "div.calc-pill",
+            "text": "Deterministic Financial Engine",
+            "fontPx": 15.54,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "div.calc-label",
+            "text": "You Would End Up With About",
+            "fontPx": 15.54,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "div.author-label",
+            "text": "Product Strategy, Architecture & Prototypes by",
+            "fontPx": 15.9,
+            "time": 16.5,
+            "seconds": 3.5
+          },
+          {
+            "selector": "#s2Tag",
+            "text": "Architecture Principle #1",
+            "fontPx": 18,
+            "time": 4.75,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s3Stack > div:nth-of-type(1) > p:nth-of-type(1)",
+            "text": "Normalizes -4.2% market drawdowns before panic selling.",
+            "fontPx": 18,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s3Stack > div:nth-of-type(2) > p:nth-of-type(1)",
+            "text": "Automated test suite verifying daily NAV compounding fee drag.",
+            "fontPx": 18,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "div.calc-amount-box > div:nth-of-type(3) > span:nth-of-type(1)",
+            "text": "Actual 6-Month Liquid Expense:",
+            "fontPx": 19.42,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "div.calc-amount-box > div:nth-of-type(4) > span:nth-of-type(1)",
+            "text": "Stock Roundtrip Depository Drag:",
+            "fontPx": 19.42,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#s3Calc > div:nth-of-type(3)",
+            "text": "Flat ₹15.93 CDSL equity fees destroy ₹500 investments. Liquid funds keep fee drag at ₹0.51.",
+            "fontPx": 19.42,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#s1Badge",
+            "text": "FinTech Product Case Study",
+            "fontPx": 20,
+            "time": 0,
+            "seconds": 4.5
+          },
+          {
+            "selector": "#s2Cards > div:nth-of-type(1) > div:nth-of-type(3)",
+            "text": "Micro-SIP for college earners.",
+            "fontPx": 20,
+            "time": 7.75,
+            "seconds": 1.75
+          },
+          {
+            "selector": "#s2Cards > div:nth-of-type(2) > div:nth-of-type(3)",
+            "text": "4 clear goals replace 5,000 tickers.",
+            "fontPx": 20,
+            "time": 7.75,
+            "seconds": 1.75
+          },
+          {
+            "selector": "span.fee-good",
+            "text": "₹0.51",
+            "fontPx": 21.36,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "span.fee-bad",
+            "text": "₹18.22 Fee",
+            "fontPx": 21.36,
+            "time": 9.625,
+            "seconds": 5.375
+          },
+          {
+            "selector": "#s4Logo",
+            "text": "Groww GenZ",
+            "fontPx": 23.64,
+            "time": 15.375,
+            "seconds": 4.625
+          },
+          {
+            "selector": "#s3Stack > div:nth-of-type(1) > h4:nth-of-type(1)",
+            "text": "🛡️ The First Red Day Defense",
+            "fontPx": 24,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s3Stack > div:nth-of-type(2) > h4:nth-of-type(1)",
+            "text": "✅ 23 / 23 Math Assertions",
+            "fontPx": 24,
+            "time": 10.25,
+            "seconds": 4.75
+          },
+          {
+            "selector": "#s4Url",
+            "text": "groww-for-genz.vercel.app ↗",
+            "fontPx": 24,
+            "time": 17,
+            "seconds": 3
+          },
+          {
+            "selector": "#s3Val > span:nth-of-type(1)",
+            "text": "from ₹500 today",
+            "fontPx": 26,
+            "time": 10.75,
+            "seconds": 4.25
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 160
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

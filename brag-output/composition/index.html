@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Groww GenZ - Brag Launch Video</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #060809;
+        --surface: #10151c;
+        --surface-card: #182230;
+        --green: #24bf92;
+        --green-bright: #46d5a7;
+        --purple: #7084ff;
+        --red: #ff6b57;
+        --gold: #f5c451;
+        --text: #ffffff;
+        --text-sub: #d1d5db;
+        --text-muted: #94a3b8;
+        --border: #263345;
+        --font-main: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: var(--font-main);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 10%, #152238 0%, #060809 70%);
+      }
+
+      /* Ambient Light Glows */
+      .glow-orb {
+        position: absolute;
+        width: 800px;
+        height: 800px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(36, 191, 146, 0.16) 0%, transparent 70%);
+        top: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Scene Container */
+      .scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      /* =========================================
+         SCENE 1: The Problem / The Stat
+         ========================================= */
+      .s1-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 1300px;
+        padding: 0 40px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 24px;
+        border-radius: 99px;
+        background: rgba(36, 191, 146, 0.15);
+        border: 1px solid rgba(36, 191, 146, 0.4);
+        color: var(--green-bright);
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        font-family: var(--font-mono);
+      }
+      .badge i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--green-bright);
+        box-shadow: 0 0 12px var(--green-bright);
+      }
+      .stat-giant {
+        font-size: 180px;
+        font-weight: 800;
+        line-height: 0.95;
+        letter-spacing: -0.05em;
+        color: #ffffff;
+        background: linear-gradient(180deg, #ffffff 40%, #a7f3d0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 18px;
+        font-variant-numeric: tabular-nums;
+        font-family: var(--font-mono);
+      }
+      .s1-title {
+        font-size: 56px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+        margin-bottom: 18px;
+      }
+      .s1-sub {
+        font-size: 30px;
+        line-height: 1.4;
+        color: var(--text-sub);
+        max-width: 1000px;
+      }
+
+      /* =========================================
+         SCENE 2: Pots, Not Products
+         ========================================= */
+      .s2-grid {
+        display: grid;
+        grid-template-columns: 460px 840px;
+        gap: 70px;
+        align-items: center;
+        max-width: 1440px;
+        width: 100%;
+        padding: 0 60px;
+      }
+      .phone-frame {
+        width: 380px;
+        height: 780px;
+        background: #000000;
+        border-radius: 54px;
+        padding: 10px;
+        box-shadow: 0 0 0 2px #64748b, 0 0 0 5px #1e293b, 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(36, 191, 146, 0.2);
+        position: relative;
+        margin: 0 auto;
+      }
+      .phone-screen {
+        width: 100%;
+        height: 100%;
+        background: #0b0f14;
+        border-radius: 44px;
+        overflow: hidden;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        color: #ffffff;
+      }
+      .phone-island {
+        width: 110px;
+        height: 28px;
+        background: #000;
+        border-radius: 20px;
+        margin: 0 auto 20px;
+      }
+      .phone-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+      .phone-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 800;
+        font-size: 18px;
+      }
+      .phone-brand i {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--purple), var(--green));
+      }
+      .mock-pot {
+        background: var(--surface-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .mock-pot.active {
+        border-color: var(--green);
+        background: rgba(36, 191, 146, 0.14);
+      }
+      .mock-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #1e293b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+      .mock-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      .mock-desc {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* Content side */
+      .s2-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .section-tag {
+        font-size: 18px;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        color: var(--green-bright);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .section-headline {
+        font-size: 64px;
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+      }
+      .card-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 10px;
+      }
+      .feature-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+      }
+      .feature-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+      }
+      .feature-name {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+      .feature-desc {
+        font-size: 20px;
+        color: var(--text-sub);
+        line-height: 1.35;
+      }
+
+      /* =========================================
+         SCENE 3: The Engine: Compounding Cost Drag
+         ========================================= */
+      .s3-grid {
+        display: grid;
+        grid-template-columns: 800px 520px;
+        gap: 60px;
+        align-items: center;
+        max-width: 1440px;
+        width: 100%;
+        padding: 0 60px;
+      }
+      .calc-display {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 38px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      }
+      .calc-pill {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 99px;
+        background: rgba(36, 191, 146, 0.15);
+        color: var(--green-bright);
+        font-size: 16px;
+        font-weight: 700;
+        font-family: var(--font-mono);
+        margin-bottom: 18px;
+      }
+      .calc-amount-box {
+        background: var(--surface-card);
+        border-radius: 20px;
+        padding: 26px;
+        margin-bottom: 22px;
+        border: 1px solid rgba(36, 191, 146, 0.35);
+      }
+      .calc-label {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--green-bright);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .calc-val {
+        font-size: 68px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: #ffffff;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+        font-family: var(--font-mono);
+      }
+      .calc-val span {
+        font-size: 26px;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-left: 14px;
+        font-family: var(--font-main);
+      }
+      .calc-fee-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid var(--border);
+        font-size: 20px;
+      }
+      .fee-good {
+        color: var(--green-bright);
+        font-weight: 700;
+        font-family: var(--font-mono);
+        font-size: 22px;
+      }
+      .fee-bad {
+        color: var(--red);
+        font-weight: 700;
+        font-family: var(--font-mono);
+        font-size: 22px;
+        text-decoration: line-through;
+      }
+      .metrics-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .stack-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 26px;
+      }
+      .stack-box h4 {
+        font-size: 24px;
+        color: #ffffff;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .stack-box p {
+        font-size: 18px;
+        color: var(--text-sub);
+        line-height: 1.45;
+      }
+
+      /* =========================================
+         SCENE 4: Outro & Executive Credits
+         ========================================= */
+      .s4-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 1200px;
+      }
+      .logo-pill {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 26px;
+        border-radius: 99px;
+        background: var(--surface-card);
+        border: 1px solid var(--border);
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        margin-bottom: 24px;
+      }
+      .logo-pill i {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--purple), var(--green));
+      }
+      .s4-title {
+        font-size: 72px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        color: #ffffff;
+        margin-bottom: 14px;
+      }
+      .s4-sub {
+        font-size: 30px;
+        color: var(--green-bright);
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-family: var(--font-mono);
+      }
+      .author-box {
+        padding: 20px 42px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        margin-bottom: 28px;
+      }
+      .author-label {
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+      .author-name {
+        font-size: 38px;
+        font-weight: 800;
+        color: #ffffff;
+      }
+      .url-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 34px;
+        border-radius: 99px;
+        background: var(--green);
+        color: #060809;
+        font-size: 24px;
+        font-weight: 800;
+        box-shadow: 0 10px 30px rgba(36, 191, 146, 0.4);
+        font-family: var(--font-mono);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Composition Root -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-fps="30"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="glow-orb" id="glowOrb"></div>
+
+      <!-- SCENE 1: The Problem (0.0s – 4.5s) -->
+      <div class="clip scene" id="scene1" data-start="0" data-duration="4.5" data-track-index="1">
+        <div class="s1-wrap">
+          <div class="badge" id="s1Badge">
+            <i></i> FinTech Product Case Study
+          </div>
+          <div class="stat-giant" id="s1Stat">74%</div>
+          <h1 class="s1-title" id="s1Title">First-Time GenZ Investors Drop Off After KYC</h1>
+          <p class="s1-sub" id="s1Sub">
+            Novices don't lack capital. A 5,000-fund catalog causes choice paralysis.
+          </p>
+        </div>
+      </div>
+
+      <!-- SCENE 2: Pots, Not Products (4.5s – 9.5s) -->
+      <div class="clip scene" id="scene2" data-start="4.5" data-duration="5.0" data-track-index="2">
+        <div class="s2-grid">
+          <div class="phone-frame" id="s2Phone" data-layout-ignore>
+            <div class="phone-screen" data-layout-ignore>
+              <div class="phone-island" data-layout-ignore></div>
+              <div class="phone-header" data-layout-ignore>
+                <div class="phone-brand" data-layout-ignore><i></i> Groww GenZ</div>
+                <div data-layout-ignore style="font-size:12px; font-weight:700; color:var(--green-bright); background:rgba(36,191,146,0.15); padding:4px 8px; border-radius:6px;">PROTOTYPE</div>
+              </div>
+              <div data-layout-ignore style="font-size:18px; font-weight:800; margin-bottom:4px;">Choose Your Pot</div>
+              <div data-layout-ignore style="font-size:12px; color:var(--text-sub); margin-bottom:16px;">Allocation by horizon, not ticker search</div>
+
+              <div class="mock-pot active" id="pot1" data-layout-ignore>
+                <div class="mock-icon" data-layout-ignore>🛡️</div>
+                <div data-layout-ignore>
+                  <div class="mock-title" data-layout-ignore>Safety Net (Emergency)</div>
+                  <div class="mock-desc" data-layout-ignore>ICICI Liquid Fund · ₹500 min</div>
+                </div>
+              </div>
+              <div class="mock-pot" id="pot2" data-layout-ignore>
+                <div class="mock-icon" data-layout-ignore>✈️</div>
+                <div data-layout-ignore>
+                  <div class="mock-title" data-layout-ignore>Goa Trip (Short-Term)</div>
+                  <div class="mock-desc" data-layout-ignore>Short-Term Debt · 6-12 Months</div>
+                </div>
+              </div>
+              <div class="mock-pot" id="pot3" data-layout-ignore>
+                <div class="mock-icon" data-layout-ignore>📱</div>
+                <div data-layout-ignore>
+                  <div class="mock-title" data-layout-ignore>New Gadget</div>
+                  <div class="mock-desc" data-layout-ignore>Balanced Advantage · 1-3 Years</div>
+                </div>
+              </div>
+              <div class="mock-pot" id="pot4" data-layout-ignore>
+                <div class="mock-icon" data-layout-ignore>🚀</div>
+                <div data-layout-ignore>
+                  <div class="mock-title" data-layout-ignore>The Long Run</div>
+                  <div class="mock-desc" data-layout-ignore>Nifty 50 Index Fund · 5+ Years</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="s2-content">
+            <div class="section-tag" id="s2Tag">Architecture Principle #1</div>
+            <h2 class="section-headline" id="s2Title">Pots, Not Products.</h2>
+            <p style="font-size:28px; color:var(--text-sub); line-height:1.4;" id="s2Desc">
+              Goal-driven buckets. Horizon determines asset allocation.
+            </p>
+            <div class="card-row" id="s2Cards">
+              <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-name">₹500 Entry Floor</div>
+                <div class="feature-desc">Micro-SIP for college earners.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-name">Zero Catalog Bloat</div>
+                <div class="feature-desc">4 clear goals replace 5,000 tickers.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3: The Reality Engine (9.5s – 15.0s) -->
+      <div class="clip scene" id="scene3" data-start="9.5" data-duration="5.5" data-track-index="3">
+        <div class="s3-grid">
+          <div class="calc-display" id="s3Calc">
+            <div class="calc-pill">Deterministic Financial Engine</div>
+            <div class="calc-amount-box">
+              <div class="calc-label">You Would End Up With About</div>
+              <div class="calc-val" id="s3Val">₹514.51 <span>from ₹500 today</span></div>
+              <div class="calc-fee-row">
+                <span style="color:var(--text-sub)">Actual 6-Month Liquid Expense:</span>
+                <span class="fee-good">₹0.51</span>
+              </div>
+              <div class="calc-fee-row">
+                <span style="color:var(--text-sub)">Stock Roundtrip Depository Drag:</span>
+                <span class="fee-bad">₹18.22 Fee</span>
+              </div>
+            </div>
+            <div style="font-size:20px; color:var(--text-sub); line-height:1.45;">
+              Flat ₹15.93 CDSL equity fees destroy ₹500 investments. Liquid funds keep fee drag at ₹0.51.
+            </div>
+          </div>
+
+          <div class="metrics-stack" id="s3Stack">
+            <div class="stack-box">
+              <div style="font-size:15px; font-weight:700; color:var(--green-bright); font-family:var(--font-mono); margin-bottom:6px;">PSYCHOLOGICAL GUARDRAIL</div>
+              <h4>🛡️ The First Red Day Defense</h4>
+              <p>Normalizes -4.2% market drawdowns before panic selling.</p>
+            </div>
+            <div class="stack-box">
+              <div style="font-size:15px; font-weight:700; color:var(--green-bright); font-family:var(--font-mono); margin-bottom:6px;">VERIFIED CODEBASE</div>
+              <h4>✅ 23 / 23 Math Assertions</h4>
+              <p>Automated test suite verifying daily NAV compounding fee drag.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4: Habit Loop & Outro (15.0s – 20.0s) -->
+      <div class="clip scene" id="scene4" data-start="15.0" data-duration="5.0" data-track-index="4">
+        <div class="s4-wrap">
+          <div class="logo-pill" id="s4Logo">
+            <i></i> Groww GenZ
+          </div>
+          <h1 class="s4-title" id="s4Title">Post-KYC Activation & 30-Day Habit Engine</h1>
+          <div class="s4-sub" id="s4Sub">The North Star: 2nd Investment Within 30 Days</div>
+
+          <div class="author-box" id="s4Author">
+            <div class="author-label">Product Strategy, Architecture & Prototypes by</div>
+            <div class="author-name">Prathamesh Deshmane</div>
+          </div>
+
+          <div class="url-badge" id="s4Url">
+            groww-for-genz.vercel.app ↗
+          </div>
+        </div>
+      </div>
+
+      <!-- Audio Elements with exact media durations -->
+      <audio id="bg-music" data-start="0" data-duration="20" data-track-index="10" data-volume="0.32" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"></audio>
+      <audio id="sfx-stat" data-start="0.6" data-duration="0.12" data-track-index="11" data-volume="0.75" src="assets/sfx/impact/impactSoft_medium_000.ogg"></audio>
+      <audio id="sfx-pot1" data-start="5.1" data-duration="0.60" data-track-index="12" data-volume="0.70" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-pot2" data-start="5.9" data-duration="0.11" data-track-index="13" data-volume="0.70" src="assets/sfx/interface/drop_001.ogg"></audio>
+      <audio id="sfx-pot3" data-start="6.7" data-duration="0.10" data-track-index="14" data-volume="0.70" src="assets/sfx/interface/click_001.ogg"></audio>
+      <audio id="sfx-chime" data-start="10.8" data-duration="1.48" data-track-index="15" data-volume="0.85" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
+      <audio id="sfx-outro" data-start="15.8" data-duration="0.12" data-track-index="16" data-volume="0.75" src="assets/sfx/impact/impactSoft_medium_000.ogg"></audio>
+    </div>
+
+    <!-- GSAP Master Animation Timeline -->
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ambient background glow pulse
+      tl.to("#glowOrb", { scale: 1.15, opacity: 0.8, duration: 4, repeat: 4, yoyo: true, ease: "sine.inOut" }, 0);
+
+      // ==========================================
+      // SCENE 1: The Stat (0.0s - 4.5s)
+      // Frame 0 shows initial bold presence
+      // ==========================================
+      tl.set("#scene1", { opacity: 1, pointerEvents: "auto" }, 0);
+      tl.fromTo("#s1Badge", { opacity: 0.8, y: 0 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0);
+      tl.fromTo("#s1Stat", { opacity: 0.9, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.2)" }, 0);
+
+      // Counter animation: count 0 to 74
+      const counterObj = { val: 50 };
+      tl.to(counterObj, {
+        val: 74,
+        duration: 0.9,
+        ease: "power2.out",
+        onUpdate: () => {
+          const el = document.getElementById("s1Stat");
+          if (el) el.textContent = Math.round(counterObj.val) + "%";
+        }
+      }, 0.2);
+
+      tl.fromTo("#s1Title", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.6);
+      tl.fromTo("#s1Sub", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.9);
+
+      // Scene 1 Exit (4.2s)
+      tl.to("#scene1", { opacity: 0, scale: 1.05, duration: 0.35, ease: "power2.in" }, 4.15);
+
+      // ==========================================
+      // SCENE 2: Pots, Not Products (4.5s - 9.5s)
+      // ==========================================
+      tl.set("#scene2", { opacity: 1, pointerEvents: "auto" }, 4.5);
+      tl.fromTo("#s2Phone", { opacity: 0, x: -60, rotateY: 15 }, { opacity: 1, x: 0, rotateY: 0, duration: 0.7, ease: "power3.out" }, 4.5);
+      tl.fromTo("#s2Tag", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 4.6);
+      tl.fromTo("#s2Title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.8);
+      tl.fromTo("#s2Desc", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 5.0);
+
+      // Sequential Pot cards in Phone (beat-grid aligned)
+      tl.fromTo("#pot1", { opacity: 0, x: 25 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 5.1);
+      tl.fromTo("#pot2", { opacity: 0, x: 25 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 5.9);
+      tl.fromTo("#pot3", { opacity: 0, x: 25 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 6.7);
+      tl.fromTo("#pot4", { opacity: 0, x: 25 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 7.5);
+      tl.fromTo("#s2Cards", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.6);
+
+      // Scene 2 Exit (9.2s)
+      tl.to("#scene2", { opacity: 0, x: -40, duration: 0.35, ease: "power2.in" }, 9.15);
+
+      // ==========================================
+      // SCENE 3: The Engine: Compounding Drag (9.5s - 15.0s)
+      // ==========================================
+      tl.set("#scene3", { opacity: 1, pointerEvents: "auto" }, 9.5);
+      tl.fromTo("#s3Calc", { opacity: 0, scale: 0.94, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "power3.out" }, 9.5);
+      // Number counter for ₹514.51
+      const amtObj = { val: 500 };
+      tl.to(amtObj, {
+        val: 514.51,
+        duration: 0.9,
+        ease: "power2.out",
+        onUpdate: () => {
+          const el = document.getElementById("s3Val");
+          if (el) el.innerHTML = "₹" + amtObj.val.toFixed(2) + " <span>from ₹500 today</span>";
+        }
+      }, 9.8);
+      tl.fromTo("#s3Stack", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 10.1);
+
+      // Scene 3 Exit (14.6s)
+      tl.to("#scene3", { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, 14.6);
+
+      // ==========================================
+      // SCENE 4: Outro & Executive Credits (15.0s - 20.0s)
+      // ==========================================
+      tl.set("#scene4", { opacity: 1, pointerEvents: "auto" }, 15.0);
+      tl.fromTo("#s4Logo", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 15.2);
+      tl.fromTo("#s4Title", { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 15.5);
+      tl.fromTo("#s4Sub", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 15.9);
+      tl.fromTo("#s4Author", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 16.3);
+      tl.fromTo("#s4Url", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 16.8);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

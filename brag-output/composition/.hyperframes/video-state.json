@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "historyId": "58c8ef6c-65ab-4633-a925-aa116071102d",
+  "currentRevision": "e18ccfc8-0124-40de-8574-8e21772f0337",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "fd0ea55029dfc62c31614321d782f47476d3d5daaaa4116b56318ed501911f1b",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/fd/fd0ea55029dfc62c31614321d782f47476d3d5daaaa4116b56318ed501911f1b"
+    },
+    "CLAUDE.md": {
+      "hash": "fd0ea55029dfc62c31614321d782f47476d3d5daaaa4116b56318ed501911f1b",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/fd/fd0ea55029dfc62c31614321d782f47476d3d5daaaa4116b56318ed501911f1b"
+    },
+    "assets/sfx/casino/card-slide-1.ogg": {
+      "hash": "006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/00/006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690"
+    },
+    "assets/sfx/impact/impactBell_heavy_000.ogg": {
+      "hash": "94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/94/94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f"
+    },
+    "assets/sfx/impact/impactSoft_medium_000.ogg": {
+      "hash": "7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/7d/7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3"
+    },
+    "assets/sfx/interface/click_001.ogg": {
+      "hash": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/cc/ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9"
+    },
+    "assets/sfx/interface/drop_001.ogg": {
+      "hash": "692ee3a6f1821402ca649ff735bee9591dc4846c8098fc7d6a90fd15fa57c1af",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/69/692ee3a6f1821402ca649ff735bee9591dc4846c8098fc7d6a90fd15fa57c1af"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/53/53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "96a349f7ab69b2aca44bbe355e247e64e7b991dfcff54035fc498e07c4ebbbda",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/96/96a349f7ab69b2aca44bbe355e247e64e7b991dfcff54035fc498e07c4ebbbda"
+    },
+    "meta.json": {
+      "hash": "857a1c4ddee5534f001efab9ec8ba99839941ac85f0dbe3b1f842acc34804f2d",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/85/857a1c4ddee5534f001efab9ec8ba99839941ac85f0dbe3b1f842acc34804f2d"
+    },
+    "package.json": {
+      "hash": "93e0a0f0aa43e181a4d5f81405d1aeeae0d69edf28b45e50a299b26b2fc6fd1b",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/93/93e0a0f0aa43e181a4d5f81405d1aeeae0d69edf28b45e50a299b26b2fc6fd1b"
+    },
+    "assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3": {
+      "hash": "5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1",
+      "content": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/58/5888d4bd2ba0119b87a94e502ae2cc401c08192945cc5e5c2f8e8a33aa47a0a1"
+    }
+  },
+  "revisions": {
+    "41c30dec-c04b-47c4-8442-3a07ed01b1e0": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792750833110,
+      "endedAt": 1792750833110,
+      "files": {
+        "index.html": {
+          "before": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/e3/e3a044b70410bd2c2dbfe02b7a60ee7bf92355e5998c3d5bc33b141f677cb955",
+          "after": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/52/525b90aafa3b953065f354d714468c1d49f3d944d0b70596cf1837d9725d628a"
+        }
+      }
+    },
+    "e18ccfc8-0124-40de-8574-8e21772f0337": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792750909943,
+      "endedAt": 1792750909944,
+      "files": {
+        "index.html": {
+          "before": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/52/525b90aafa3b953065f354d714468c1d49f3d944d0b70596cf1837d9725d628a",
+          "after": "/Users/prathameshdeshmane/.cache/hyperframes/history/58c8ef6c-65ab-4633-a925-aa116071102d/blobs/96/96a349f7ab69b2aca44bbe355e247e64e7b991dfcff54035fc498e07c4ebbbda"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "e18ccfc8-0124-40de-8574-8e21772f0337",
+      "id": "c76b5217-2004-4243-b5b3-094bcc309b43"
+    },
+    "revisions": {
+      "41c30dec-c04b-47c4-8442-3a07ed01b1e0": [
+        {
+          "id": "94a8da5a-d948-438a-a406-88a55d455a1a",
+          "scope": "project",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792750837270,
+          "contentHash": "c0e039c2d1ee2615e51bb3ec954798ea6511c4bbd4be0ea3a441645ca85f4319",
+          "revision": "41c30dec-c04b-47c4-8442-3a07ed01b1e0",
+          "inputFingerprint": "61c7069e9b6bded54673d01b11e63d5fa4632931c06edb6cae9113ccc9eec5c6",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "6ae6b1c7-976e-4dd1-980b-b21ec31a5e2d"
+        }
+      ],
+      "e18ccfc8-0124-40de-8574-8e21772f0337": [
+        {
+          "id": "c76b5217-2004-4243-b5b3-094bcc309b43",
+          "scope": "project",
+          "report": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/.hyperframes/artifacts/checks/c76b5217-2004-4243-b5b3-094bcc309b43.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792750912210,
+          "contentHash": "762891601fea10a36a2fe071d50c90b6ceab8121a3a58fa9d8ed3fb6750ae75a",
+          "revision": "e18ccfc8-0124-40de-8574-8e21772f0337",
+          "inputFingerprint": "459dc0d13a7c760162efc3b6f1001513b079118a020c935ce00d84d9ec6e91f4",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "7bc8fa9b-dae0-4065-a036-8ef5b6cd39cb",
+        "scope": "project",
+        "report": "/Users/prathameshdeshmane/submission-groww-main/brag-output/composition/.hyperframes/artifacts/checks/7bc8fa9b-dae0-4065-a036-8ef5b6cd39cb.json",
+        "metadata": {
+          "ok": true,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792750699518,
+        "contentHash": "f68a7d18068f7055fc03b3578f1f23b566100173cc4ef2927ed6c67f2715d491",
+        "revision": null,
+        "inputFingerprint": "d417376ff21e73c570c4b5f101c47e49d2df6d23d4e7243f3ce6819673ea8084",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "6ae6b1c7-976e-4dd1-980b-b21ec31a5e2d",
+      "completedAt": 1792750941091,
+      "output": "/Users/prathameshdeshmane/submission-groww-main/brag-output/brag.mp4",
+      "status": "completed",
+      "revision": "e18ccfc8-0124-40de-8574-8e21772f0337"
+    },
+    "retainedRevisions": [
+      "e18ccfc8-0124-40de-8574-8e21772f0337"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}
